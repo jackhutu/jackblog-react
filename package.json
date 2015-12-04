@@ -1,0 +1,58 @@
+{
+  "name": "redux-todomvc-example",
+  "version": "0.0.0",
+  "description": "Redux TodoMVC example",
+  "scripts": {
+    "start": "node server.js",
+    "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register --require ./test/setup.js",
+    "test:watch": "npm test -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rackt/redux.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rackt/redux/issues"
+  },
+  "homepage": "http://rackt.github.io/redux",
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "bootstrap-sass": "^3.3.5",
+    "classnames": "^2.1.2",
+    "history": "^1.13.1",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "react-redux": "^4.0.0",
+    "react-router": "^1.0.0",
+    "redux": "^3.0.0",
+    "redux-router": "^1.0.0-beta5"
+  },
+  "devDependencies": {
+    "babel-core": "^5.6.18",
+    "babel-loader": "^5.1.4",
+    "babel-plugin-react-transform": "^1.1.0",
+    "compass-mixins": "^0.12.7",
+    "css-loader": "^0.23.0",
+    "expect": "^1.8.0",
+    "express": "^4.13.3",
+    "image-webpack-loader": "^1.6.2",
+    "jsdom": "^5.6.1",
+    "mocha": "^2.2.5",
+    "node-libs-browser": "^0.5.2",
+    "node-sass": "^3.4.2",
+    "raw-loader": "^0.5.1",
+    "react-addons-test-utils": "^0.14.0",
+    "react-transform-hmr": "^1.0.0",
+    "redux-devtools": "^3.0.0-beta-3",
+    "redux-devtools-dock-monitor": "^1.0.0-beta-3",
+    "redux-devtools-log-monitor": "^1.0.0-beta-3",
+    "sass-loader": "^3.1.2",
+    "style-loader": "^0.12.3",
+    "todomvc-app-css": "^2.0.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.9.11",
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-hot-middleware": "^2.2.0"
+  }
+}
