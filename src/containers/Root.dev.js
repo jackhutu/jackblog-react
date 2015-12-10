@@ -5,6 +5,7 @@ import {ReduxRouter} from 'redux-router'
 import {Route,IndexRoute} from 'react-router'
 import Home from './Home'
 import Main from './Main'
+import Article from '../components/Article'
 
 export default class Root extends Component{
 	render(){
@@ -15,6 +16,7 @@ export default class Root extends Component{
 			    <ReduxRouter>
 			    	<Route path="/" component={Home}>
 			    		<IndexRoute component={Main}/>
+			    		<Article path="/article/:id" component={Article} />
 						</Route>
 			    </ReduxRouter>
 			    <DevTools />
@@ -23,11 +25,3 @@ export default class Root extends Component{
 		)
 	}
 }
-//<Route path="/index" component={Main} />
-/*
-<Route path="/user" component={User}>
-	<IndexRoute component={ChildA}/>
-	<Route path="/childA" component={ChildA} />
-	<Route path="/childB" component={ChildB} />
-</Route>
- */

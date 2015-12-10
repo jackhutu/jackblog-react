@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Tags from '../components/main/tags'
 import Articles from '../components/main/articles'
 import * as TodoActions from '../actions/todos'
+import Sidebar from '../components/Sidebar'
 
 class Main extends Component {
   constructor(props){
@@ -17,23 +18,30 @@ class Main extends Component {
   }
 
   render() {
-    const { actions,children,tagList,articleList } = this.props
+    const { actions,children,indexImg,tagList,articleList } = this.props
     return (
-      <div className="col-sm-7 col-sm-offset-3 main-content">
-        <Tags tagList={tagList} />
-        <Articles articleList={articleList} />
+      <div className="row">
+        <Sidebar indexImg={indexImg} />
+        <div className="col-sm-7 col-sm-offset-3 main-content">
+          <Tags tagList={tagList} />
+          <Articles articleList={articleList} />
+        </div>
       </div>
     )
   }
 }
 
 Main.propTypes = {
+  indexImg: PropTypes.string.isRequired,
+  tagList: PropTypes.array.isRequired,
+  articleList: PropTypes.array.isRequired,
   children: PropTypes.node,
   actions: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
   return {
+    indexImg: state.indexImg,
     tagList: state.tagList,
     articleList: state.articleList
   }

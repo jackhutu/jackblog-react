@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { routerStateReducer } from 'redux-router'
 import {CHANGE_STYLE_MODE,GET_INDEX_IMG} from '../constants/ActionTypes'
 import tagList from './tag'
-import articleList from './article'
+import {articleList, articleDetail} from './article'
 
 function styleMode(state = "day-mode", action) {
 	switch(action.type){
@@ -27,6 +27,7 @@ const rootReducer = combineReducers({
 	styleMode,
 	tagList,
 	articleList,
+	articleDetail,
   router: routerStateReducer
 })
 

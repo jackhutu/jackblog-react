@@ -1,4 +1,4 @@
-import {CHANGE_STYLE_MODE,GET_INDEX_IMG,TAG_LIST,ARTICLE_LIST} from '../constants/ActionTypes'
+import {CHANGE_STYLE_MODE,GET_INDEX_IMG,TAG_LIST,ARTICLE_LIST,ARTICLE_DETAIL} from '../constants/ActionTypes'
 import fetch from 'isomorphic-fetch'
 const API_ROOT = 'http://localhost:9000/api/'
 import img from '../assets/images/shanghai.jpg'
@@ -80,5 +80,11 @@ function fetchArticleList(){
 export function getArticleList() {
 	return (dispatch, getState) => {
 		return dispatch(fetchArticleList())
+	}
+}
+//获取文章详情
+export function getArticleDetail() {
+	return {
+		type: ARTICLE_DETAIL
 	}
 }
