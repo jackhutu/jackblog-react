@@ -1,5 +1,0 @@
-export const CHANGE_STYLE_MODE= 'CHANGE_STYLE_MODE'
-export const GET_INDEX_IMG = 'GET_INDEX_IMG'
-export const TAG_LIST = 'TAG_LIST'
-export const ARTICLE_LIST = 'ARTICLE_LIST'
-export const ARTICLE_DETAIL = 'ARTICLE_DETAIL'

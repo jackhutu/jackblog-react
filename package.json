@@ -18,6 +18,7 @@
   },
   "homepage": "http://rackt.github.io/redux",
   "dependencies": {
+    "axios": "^0.8.0",
     "bootstrap": "^3.3.5",
     "bootstrap-sass": "^3.3.5",
     "classnames": "^2.1.2",
@@ -27,12 +28,14 @@
     "html-webpack-plugin": "^1.7.0",
     "isomorphic-fetch": "^2.2.0",
     "react": "^0.14.0",
+    "react-cookie": "^0.4.2",
     "react-dom": "^0.14.0",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.0",
     "redux": "^3.0.0",
     "redux-router": "^1.0.0-beta5",
-    "redux-thunk": "^1.0.0"
+    "redux-thunk": "^1.0.0",
+    "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
     "babel-core": "^6.3.15",

@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
 import { routerStateReducer } from 'redux-router'
-import {CHANGE_STYLE_MODE,GET_INDEX_IMG} from '../constants/ActionTypes'
+import {CHANGE_STYLE_MODE,GET_INDEX_IMG,CHANGE_OPTIONS,GET_CAPTCHAURL} from '../actions/ActionTypes'
 import tagList from './tag'
-import {articleList, articleDetail} from './article'
+import {articleList, articleDetail,prenextArticle} from './article'
+import {commentList} from './comment'
+import {auth,captchaUrl} from './auth'
 
 function styleMode(state = "day-mode", action) {
 	switch(action.type){
@@ -21,6 +23,17 @@ function indexImg(state = "", action) {
 			return state
 	}
 }
+function options(state = {currentPage: 1, itemsPerPage: 8,sortName:'publish_time',tagId: ''}, action) {
+	switch(action.type){
+		case CHANGE_OPTIONS:
+		return Object.assign({},state,action.option)
+		default: 
+		return state
+	}
+}
+
+
+
 
 const rootReducer = combineReducers({
 	indexImg,
@@ -28,6 +41,11 @@ const rootReducer = combineReducers({
 	tagList,
 	articleList,
 	articleDetail,
+	commentList,
+	prenextArticle,
+	options,
+	captchaUrl,
+	auth,
   router: routerStateReducer
 })
 

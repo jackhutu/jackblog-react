@@ -1,6 +1,4 @@
-import { combineReducers } from 'redux'
-//import { routerStateReducer } from 'redux-router'
-import {TAG_LIST} from '../constants/ActionTypes'
+import {TAG_LIST} from '../actions/ActionTypes'
 
 export default function tagList(state=[], action) {
 	switch(action.type){
@@ -10,9 +8,3 @@ export default function tagList(state=[], action) {
 		return state
 	}
 }
-
-// const tagReducer = combineReducers({
-// 	tagList
-// })
-
-// export default tagReducer

@@ -4,16 +4,27 @@ import {Link} from 'react-router'
 
 //列表View
 export default class Articles extends Component{
+  constructor(props) {
+  	super(props)
+    this.noContent = false;
+  }
+	componentDidUpdate(prevProps) {
+		const {articleList} = prevProps
+		if(articleList.length > 0){
+			this.noContent = true;
+		}
+	}
 	render(){
+		const {articleList} = this.props
 		return (
 			<ul className="article-list list-unstyled clearfix">
-				{
-					this.props.articleList.map((article,i)=>
+				{articleList.length > 0&&
+					articleList.map((article,i)=>
 						<li className={(article.images.length > 0)?"article-item have-img":"article-item" } key={i}>
-							{(article.images.length > 0)?
+							{(article.images.length > 0)&&
 								<Link to={'/article/' + article._id } className="wrap-img">
 								<img src={article.images[0].url + '?imageView2/2/w/100/h/100'} />
-								</Link>:'' }
+								</Link>}
 							<div>
 							  <p className="list-top">               
 							  <span className="time">{ customTime(article.publish_time) }</span>
@@ -30,6 +41,7 @@ export default class Articles extends Component{
 						</li>
 					)
 				}
+				{articleList.length < 1&& this.noContent && <li className="no-content">正在大力回车...</li>}
 			</ul>
 		)
 	}

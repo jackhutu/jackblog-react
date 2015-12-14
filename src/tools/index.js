@@ -1,14 +1,14 @@
 export function customTime(item) {
-	var nowTime = new Date().getTime();
-	var minuteTime = 60*1000;
-	var hourTime = 60*minuteTime;
-	var dayTime = 24*hourTime;
-	var monthTime = dayTime * 30;
-	var yearTime = monthTime * 12;
+	let nowTime = new Date().getTime();
+	let minuteTime = 60*1000;
+	let hourTime = 60*minuteTime;
+	let dayTime = 24*hourTime;
+	let monthTime = dayTime * 30;
+	let yearTime = monthTime * 12;
 
-  var publishTime = new Date(item).getTime();
-  var historyTime = parseInt(nowTime) - parseInt(publishTime);
-  var descTime;
+  let publishTime = new Date(item).getTime();
+  let historyTime = parseInt(nowTime) - parseInt(publishTime);
+  let descTime;
   if(historyTime >= yearTime){
     //按年算
     descTime = parseInt(historyTime/yearTime) + '年前';
@@ -29,3 +29,14 @@ export function customTime(item) {
   }
   return descTime;
 }
+
+export function formatDate(time) {
+  let tmpDate = new Date(time)
+  let year = tmpDate.getFullYear()
+  let mathon = tmpDate.getMonth() + 1
+  let day = tmpDate.getDate()
+  let hours = tmpDate.getHours()
+  let minutes = tmpDate.getMinutes()
+  return year + '.' + mathon + '.' + day + ' ' + hours + ':' + minutes
+}
+

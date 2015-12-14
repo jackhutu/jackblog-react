@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Header from '../components/Header'
-import * as TodoActions from '../actions/todos'
+import Header from '../components/header'
+import * as Actions from '../actions'
+import * as AuthActions from '../actions/auth'
 
 class Home extends Component {
   constructor(props){
@@ -10,18 +11,19 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const { actions } = this.props
+    const { actions,authActions,auth } = this.props
     actions.getIndexImage()
+    if(auth.token && !auth.user){
+      authActions.getUserInfo(auth.token)
+    }
   }
 
   render() {
-    const { styleMode,actions,children } = this.props
+    const { styleMode,actions,children,auth,authActions } = this.props
     return (
       <div className={styleMode}>
-        <Header styleMode={styleMode} changeStyleMode={actions.changeStyleMode} />
-        <div className="container-fluid main-box">
-            {children}
-        </div>
+        <Header styleMode={styleMode} auth={auth} logout={authActions.logout} changeStyleMode={actions.changeStyleMode} />
+        {children}
       </div>
     )
   }
@@ -29,19 +31,22 @@ class Home extends Component {
 
 Home.propTypes = {
   styleMode: PropTypes.string.isRequired,
+  auth: PropTypes.object.isRequired,
   children: PropTypes.node,
   actions: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
   return {
-    styleMode: state.styleMode
+    styleMode: state.styleMode,
+    auth: state.auth
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(TodoActions, dispatch)
+    actions: bindActionCreators(Actions, dispatch),
+    authActions: bindActionCreators(AuthActions, dispatch)
   }
 }
 
