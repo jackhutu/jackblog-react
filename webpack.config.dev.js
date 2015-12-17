@@ -25,11 +25,13 @@ module.exports = {
       include: __dirname
     }, 
 //    { test: /\.(css|scss)$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader') },
-
-    {
-      test: /\.(css|scss)$/,
-      loader: "style!css!sass?sourceMap&includePaths[]=" + path.resolve(__dirname, "./node_modules/compass-mixins/lib"),
-      include: __dirname
+    { 
+      test: /\.css$/, loader: 'style!css'
+    },{
+      test: /\.scss$/,
+      loader: "style!css!sass?sourceMap&includePaths[]=" + path.resolve(__dirname, "./node_modules/compass-mixins/lib")
+    },{ 
+      test: /\.styl$/, loader: 'style!css!stylus?sourceMap'
     },{
       test: /\.(jpe?g|png|gif)$/i,
       loaders: [

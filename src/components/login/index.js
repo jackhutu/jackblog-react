@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from '../../actions/auth'
 import {pushState} from 'redux-router'
+import SNSLogin from './snsLogin'
 
 class Login extends Component {
   constructor(props){
@@ -10,14 +11,12 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.changeCaptcha = this.changeCaptcha.bind(this)
   }
-  componentDidMount(){
-    //如果已经登录,跳转到首页.
-    const { pushState,auth } = this.props
-    //console.log(this.props.location.query.next);
-    //if(auth.token){
-      //pushState(null, '/')
-    //}
-  }
+  // componentDidMount(){
+  //   //如果已经登录,跳转到首页.
+  //   const { pushState,auth } = this.props
+  //   console.log(this.props.history);
+  //   console.log(window.location);
+  // }
 
   changeCaptcha(){
     const { actions } = this.props
@@ -29,13 +28,18 @@ class Login extends Component {
     const {email,password,captcha} = this.refs
     //登录的方法
     const { actions,history } = this.props
-    console.log(history);
-    //history.goBack()
     actions.localLogin({
       email:email.value,
       password:password.value,
       captcha:captcha.value
     })
+  }
+
+  componentWillReceiveProps(nextProps){
+    const { auth } = nextProps
+    if(auth.errMsg){
+      msg.error(auth.errMsg)
+    }
   }
 
   render() {
@@ -88,22 +92,9 @@ class Login extends Component {
 
             </form>
 
-            <div className="login-sns">
-                <p>您还可以通过以下方式直接登录</p>
-                <ul>
-                  <li>
-                    <a className="github" href="javascript:;"><i className="fa fa-github"></i></a>
-                  </li>
-                  <li>
-                    <a className="weibo" href="javascript:;"><i className="fa fa-weibo"></i></a>
-                  </li>
-                  <li>
-                    <a className="qq" href="javascript:;"><i className="fa fa-qq"></i></a>
-                  </li>
-                </ul>
-            </div>
+            <p className="text-center">您还可以通过以下方式直接登录</p>
+            <SNSLogin />
         </div>
-
       </div>
     )
   }

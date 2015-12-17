@@ -12,17 +12,16 @@ class Main extends Component {
     super(props)
     this.handleChange = this.handleChange.bind(this)
   }
-  // componentWillUpdate(nextProp,nextState){            
-  //   console.log('componentWillUpdate');
-  // }
   componentDidMount() {
-    const { actions } = this.props
-    actions.getTagList()
-    actions.getArticleList()
+    const { actions,tagList,articleList } = this.props
+    if(tagList.length < 1){
+      actions.getTagList()
+    }
+    if(articleList.items.length < 1){
+      actions.getArticleList()
+    }
   }
-  // componentDidUpdate (){
-  //   console.log('componentDidUpdate');
-  // }
+
   handleChange(e,option,isAdd=false){
     e.preventDefault()
     const { actions } = this.props

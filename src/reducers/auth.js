@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS,LOGIN_FAILURE,GET_CAPTCHAURL,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE} from '../actions/ActionTypes'
+import {LOGIN_SUCCESS,LOGIN_FAILURE,GET_CAPTCHAURL,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_SUCCESS,UPDATE_USER_FAILURE} from '../actions/ActionTypes'
 const API_ROOT = 'http://localhost:9000/api/'
 import cookie from 'react-cookie'
 
@@ -35,6 +35,10 @@ export function auth(state=initialState, action) {
 		}
 		case LOGOUT_USER:
 		return { ...initialState,token:null }
+		case UPDATE_USER_FAILURE:
+		return {...state,errMsg:action.errMsg}
+		case UPDATE_USER_SUCCESS:
+		return {...state,user:action.user,errMsg:null}
 		default: 
 		return state
 	}

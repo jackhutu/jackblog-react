@@ -3,9 +3,12 @@ import {Link} from 'react-router'
 import {formatDate} from '../../tools'
 
 export default class Reply extends Component{
+	constructor(props){
+		super(props)
+	}
 
 	render(){
-		const {replys} = this.props
+		const {replys,k,showReply} = this.props
 		return(
 			<div className="reply-list">
 			{replys.map((reply,i)=>
@@ -16,7 +19,7 @@ export default class Reply extends Component{
 			          {reply.content}
 			        </p>
 			        <div className="reply-footer text-right">
-			          <a className="reply" href="javascript:void(null)">回复</a>
+			          <a className="reply" href="#" onClick={e=>showReply(e,k,reply.user_info.nickname)} >回复</a>
 			          <span className="reply-time pull-left">{formatDate(reply.created)}</span>
 			        </div>
 			      </div>

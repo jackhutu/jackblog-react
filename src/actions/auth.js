@@ -1,4 +1,4 @@
-import {GET_CAPTCHAURL,LOGIN_SUCCESS,LOGIN_FAILURE,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE} from './ActionTypes'
+import {GET_CAPTCHAURL,LOGIN_SUCCESS,LOGIN_FAILURE,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_FAILURE,UPDATE_USER_SUCCESS} from './ActionTypes'
 const LOGIN_API = 'http://localhost:9000/auth/'
 const API_ROOT = 'http://localhost:9000/api/'
 import fetch from 'isomorphic-fetch'
@@ -95,6 +95,42 @@ export function logout() {
     dispatch(pushState(null, '/'))
   }
 }
+//修改用户资料
+function failureUpdateUser(err) {
+	return {
+		type: UPDATE_USER_FAILURE,
+		errMsg : err.error_msg || '更新用户资料失败'
+	}
+}
+function successUpdateUser(user) {
+	return {
+		type: UPDATE_USER_SUCCESS,
+		user:user
+	}
+}
+export function updateUser(userInfo) {
+	return (dispatch,getState)=>{
+		return fetch(API_ROOT + 'users/mdUser',{
+			method: 'put',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			  'Authorization': `Bearer ${cookie.load('token')}`
+			},
+			body: JSON.stringify(userInfo)
+		}).then(response => response.json().then(json => ({json,response})))
+		.then(({json,response}) => {
+			if(!response.ok){
+				return dispatch(failureUpdateUser(json.data))
+			}
+			return dispatch(successUpdateUser(json.data))
+		}).catch(err=>{
+			return dispatch(failureUpdateUser(err))
+		})
+	}
+}
+
 
 // axios.post(LOGIN_API + 'local',userInfo, {
 // 	//withCredentials: true

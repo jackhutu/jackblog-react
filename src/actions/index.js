@@ -1,8 +1,9 @@
-import {CHANGE_STYLE_MODE,GET_INDEX_IMG,TAG_LIST,ARTICLE_LIST,ARTICLE_DETAIL,COMMENT_LIST,PRENEXT_ARTICLE, CHANGE_OPTIONS,ADD_ARTICLE_LIST,REQUEST_ARTICLE_LIST,GET_CAPTCHAURL} from './ActionTypes'
+import {CHANGE_STYLE_MODE,GET_INDEX_IMG,TAG_LIST,ARTICLE_LIST,ARTICLE_DETAIL,COMMENT_LIST,PRENEXT_ARTICLE, CHANGE_OPTIONS,ADD_ARTICLE_LIST,REQUEST_ARTICLE_LIST,GET_CAPTCHAURL,TOGGLE_LIKE,FAILURE_ADD_COMMENT,SUCCESS_ADD_COMMENT,FAILURE_ADD_REPLY,SUCCESS_ADD_REPLY} from './ActionTypes'
 import fetch from 'isomorphic-fetch'
 const API_ROOT = 'http://localhost:9000/api/'
 import img from '../assets/images/shanghai.jpg'
 import querystring from 'querystring'
+import cookie from 'react-cookie'
 
 //改变样式风格.
 export function changeStyleMode(text) {
@@ -83,7 +84,7 @@ function requestArticleList() {
     type: REQUEST_ARTICLE_LIST
   }
 }
-export function getArticleList(isAdd = false) {
+export function getArticleList(isAdd = true) {
 	return (dispatch,getState) => {
 		dispatch(requestArticleList())
 		const options = getState().options
@@ -96,18 +97,33 @@ export function getArticleList(isAdd = false) {
 	}
 }
 //获取文章详情
-function receiveArticleDetail(json) {
+function receiveArticleDetail(article) {
 	return {
 		type: ARTICLE_DETAIL,
-		articleDetail: json.data
+		articleDetail: article
 	}
 }
 export function getArticleDetail(id) {
 	return (dispatch, getState) => {
+		const {auth} = getState()
 		return fetch(API_ROOT + 'blog/' + id + '/getFrontArticle')
-		  .then(response => response.json())
-		  .then(json => {
-		    return dispatch(receiveArticleDetail(json))
+		  .then(response => response.json().then(json=>({json,response})))
+		  .then(({json,response}) => {
+		  	let isLike = false
+		  	let article = json.data
+		  	if(auth.user){
+		  	  auth.user.likes.map(item=>{
+		  	    if(item.toString() === article._id){
+		  	      isLike = true
+		  	    }
+		  	  })
+		  	}
+		  	if(response.ok){
+		  		return dispatch(receiveArticleDetail({
+		  			...article,
+		  			isLike:isLike
+		  		}))
+		  	}
 		  })
 	}
 }
@@ -152,11 +168,101 @@ export function changeOptions(option) {
 	}
 }
 
+//切换Like
+function receiveToggleLike(json) {
+	return {
+		type: TOGGLE_LIKE,
+		like_count: json.count,
+		isLike: json.isLike
+	}
+}
 
+export function toggleLike(aid) {
+	return (dispatch,getState)=>{
+		return fetch(API_ROOT + 'blog/' + aid + '/toggleLike',{
+			method: 'put',
+			credentials: 'include',
+			headers: {
+			    'Authorization': `Bearer ${cookie.load('token')}`
+			}
+		}).then(response => response.json().then(json => ({json,response})))
+		.then(({json,response}) => {
+			//{success:true,'count':blog.like_count,'isLike':liked}
+			if(response.ok){
+				return dispatch(receiveToggleLike(json))
+			}
+		})
+	}
+}
+//添加评论
+function receiveAddComment(comment) {
+	return {
+		type: SUCCESS_ADD_COMMENT,
+		comment: comment
+	}
+}
+function failureAddComment(err) {
+	return {
+		type: FAILURE_ADD_COMMENT,
+		errMsg: err.error_msg || '添加评论失败'
+	}
+}
+export function addComment(comment) {
+	return (dispatch,getState)=>{
+		return fetch(API_ROOT + 'comment/addNewComment',{
+			method: 'post',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			  'Authorization': `Bearer ${cookie.load('token')}`
+			},
+			body: JSON.stringify(comment)
+		}).then(response => response.json().then(json => ({json,response})))
+		.then(({json,response}) => {
+			if(!response.ok){
+				return dispatch(failureAddComment(json))
+			}
+			return dispatch(receiveAddComment(json.data))
+		}).catch(e=>{
+			return dispatch(failureAddComment(e))
+		})
+	}
+}
 
-
-//获取是否喜欢过
-
-// export function getIsLike(arguments) {
-	
-// }
+//添加回复
+function receiveAddReply(cid,replys) {
+	return {
+		type: SUCCESS_ADD_REPLY,
+		cid:cid,
+		replys: replys
+	}
+}
+function failureAddReply(err) {
+	return {
+		type: FAILURE_ADD_REPLY,
+		errMsg: err.error_msg || '添加回复失败'
+	}
+}
+export function addReply(cid,reply) {
+	return (dispatch,getState)=>{
+		return fetch(API_ROOT + 'comment/' + cid + '/addNewReply',{
+			method: 'post',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			  'Authorization': `Bearer ${cookie.load('token')}`
+			},
+			body: JSON.stringify(reply)
+		}).then(response => response.json().then(json => ({json,response})))
+		.then(({json,response}) => {
+			if(!response.ok){
+				return dispatch(failureAddReply(json))
+			}
+			return dispatch(receiveAddReply(cid,json.data))
+		}).catch(e=>{
+			return dispatch(failureAddReply(e))
+		})
+	}
+}

@@ -1,4 +1,4 @@
-import {ARTICLE_LIST,ARTICLE_DETAIL,PRENEXT_ARTICLE,ADD_ARTICLE_LIST,REQUEST_ARTICLE_LIST} from '../actions/ActionTypes'
+import {ARTICLE_LIST,ARTICLE_DETAIL,PRENEXT_ARTICLE,ADD_ARTICLE_LIST,REQUEST_ARTICLE_LIST,TOGGLE_LIKE} from '../actions/ActionTypes'
 
 export function articleList(state={
 	isFetching: false,
@@ -7,7 +7,7 @@ export function articleList(state={
 }, action) {
 	switch(action.type){
 		case REQUEST_ARTICLE_LIST:
-		return Object.assign({},state,{isFetching:true})
+		return {...state,isFetching:true}
 		case ARTICLE_LIST:
 		return Object.assign({},{
 			isFetching: false,
@@ -28,7 +28,9 @@ export function articleList(state={
 export function articleDetail(state={}, action) {
 	switch(action.type){
 		case ARTICLE_DETAIL:
-		return Object.assign({},action.articleDetail)
+		return {...action.articleDetail}
+		case TOGGLE_LIKE:
+		return {...state, isLike:action.isLike, like_count:action.like_count}
 		default:
 		return state
 	}
@@ -37,7 +39,7 @@ export function articleDetail(state={}, action) {
 export function prenextArticle(state={'next':{},'prev':{}}, action) {
 	switch(action.type){
 		case PRENEXT_ARTICLE:
-		return Object.assign({},action.prenextArticle)
+		return {...action.prenextArticle}
 		default:
 		return state
 	}

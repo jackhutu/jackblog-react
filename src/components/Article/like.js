@@ -3,12 +3,12 @@ import React,{Component,PropTypes} from 'react'
 export default class Like extends Component{
 
 	render(){
-		const {likeCount} = this.props
+		const {likeCount,isLike,toggleLike} = this.props
 		return(
 			<div className="article-share clearfix">
-			  <a href="javascript:;" className="like-btn">
+			  <a href="javascript:;" className={isLike?"like-btn note-liked":"like-btn"} onClick={toggleLike}>
 			      <span className="like-content">
-			        <i className="fa "></i>  喜欢
+			        <i className={isLike?'fa fa-heart':'fa fa-heart-o'}></i>  喜欢
 			      </span>
 			      <span className="like-count">{likeCount}</span>        
 			  </a>

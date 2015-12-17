@@ -8,13 +8,18 @@ import Like from './like'
 import Prenext from './prenext'
 import Comment from './comment'
 import Content from './content'
-import { pushState } from 'redux-router'
+import LoginModal from '../login/modal'
 
 class Article extends Component {
   constructor(props){
     super(props)
+    this.toggleLike = this.toggleLike.bind(this)
+    this.handleSubmitComment = this.handleSubmitComment.bind(this)
+    this.handleSubmitReply = this.handleSubmitReply.bind(this)
+    this.openLoginModal = this.openLoginModal.bind(this)
+    this.closeLoginModal = this.closeLoginModal.bind(this)
+    this.state = {showModal:false}
   }
-
   componentDidMount() {
     const { params: { id } } = this.props
     this.fetchArticleData(id)
@@ -39,16 +44,46 @@ class Article extends Component {
     }
   }
 
+  toggleLike(){
+    const {actions,params,auth} = this.props
+    if(auth.token){
+      actions.toggleLike(params.id)
+    }
+  }
+  handleSubmitComment(e,content){
+    e.preventDefault()
+    const {actions,params} = this.props
+    //提交新评论
+    actions.addComment({aid:params.id,content:content})
+  }
+  //提交回复
+  handleSubmitReply(e,cid,content){
+    e.preventDefault()
+    const {actions} = this.props
+    actions.addReply(cid,{content:content})
+  }
+
+  openLoginModal(){
+    this.setState({showModal:true})
+  }
+
+  closeLoginModal(){
+    this.setState({showModal:false})
+  }
+
   render() {
-    const { articleDetail,commentList,prenextArticle } = this.props
+    const { articleDetail,commentList,prenextArticle,auth } = this.props
     return (
       <div className="article-box">
 
         <Content articleDetail={articleDetail} />
-        <Like likeCount={articleDetail.like_count} />
+        <Like likeCount={articleDetail.like_count} isLike={articleDetail.isLike} toggleLike={this.toggleLike} />
         <Prenext prenextArticle={prenextArticle}  />
-        <Comment commentList={commentList} />
-
+        <Comment commentList={commentList} auth={auth} 
+                submitComment={this.handleSubmitComment} 
+                submitReply={this.handleSubmitReply}
+                openLoginModal={this.openLoginModal} />
+        <LoginModal isShowModal={this.state.showModal} closeModal={this.closeLoginModal} />
       </div>
     )
   }
@@ -56,23 +91,24 @@ class Article extends Component {
 
 Article.propTypes = {
   articleDetail: PropTypes.object.isRequired,
-  commentList: PropTypes.array.isRequired,
+  commentList: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
-  prenextArticle: PropTypes.object.isRequired
+  prenextArticle: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
   return {
     articleDetail: state.articleDetail,
     commentList: state.commentList,
-    prenextArticle: state.prenextArticle
+    prenextArticle: state.prenextArticle,
+    auth: state.auth
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Actions, dispatch),
-    pushState
+    actions: bindActionCreators(Actions, dispatch)
   }
 }
 

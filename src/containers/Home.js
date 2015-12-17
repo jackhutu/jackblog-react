@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import Header from '../components/header'
 import * as Actions from '../actions'
 import * as AuthActions from '../actions/auth'
+import Toaster from '../components/toaster'
+import ScrollTop from '../components/scrollTop'
 
 class Home extends Component {
   constructor(props){
@@ -17,13 +19,21 @@ class Home extends Component {
       authActions.getUserInfo(auth.token)
     }
   }
+  componentWillReceiveProps(nextProps){
+    const { styleMode } = this.props
+    if(styleMode !== nextProps.styleMode){
+      document.body.className = nextProps.styleMode
+    }
+  }
 
   render() {
     const { styleMode,actions,children,auth,authActions } = this.props
     return (
-      <div className={styleMode}>
+      <div>
         <Header styleMode={styleMode} auth={auth} logout={authActions.logout} changeStyleMode={actions.changeStyleMode} />
         {children}
+        <Toaster />
+        <ScrollTop />
       </div>
     )
   }
