@@ -1,8 +1,7 @@
 import {GET_CAPTCHAURL,LOGIN_SUCCESS,LOGIN_FAILURE,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_FAILURE,UPDATE_USER_SUCCESS} from './ActionTypes'
 const LOGIN_API = 'http://localhost:9000/auth/'
-const API_ROOT = 'http://localhost:9000/api/'
+const API_ROOT = 'http://localhost:9000/'
 import fetch from 'isomorphic-fetch'
-import axios from 'axios'
 import { pushState } from 'redux-router'
 import cookie from 'react-cookie'
 
@@ -130,14 +129,3 @@ export function updateUser(userInfo) {
 		})
 	}
 }
-
-
-// axios.post(LOGIN_API + 'local',userInfo, {
-// 	//withCredentials: true
-// })
-//   .then(function (response) {
-//     console.log(response);
-//   })
-//   .catch(function (response) {
-//     console.log(response);
-//   });

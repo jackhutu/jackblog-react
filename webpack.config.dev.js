@@ -4,7 +4,8 @@ var webpack = require('webpack')
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
-    'webpack-hot-middleware/client',
+    'webpack-dev-server/client?http://localhost:5000',
+    'webpack/hot/only-dev-server',
     './src/index'
   ],
   output: {
@@ -24,26 +25,29 @@ module.exports = {
       exclude: /node_modules/,
       include: __dirname
     }, 
-//    { test: /\.(css|scss)$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader') },
+//  { test: /\.(css|scss)$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader') },
+// ,{ test: /\.styl$/, loader: 'style!css!stylus?sourceMap'},   
     { 
       test: /\.css$/, loader: 'style!css'
     },{
       test: /\.scss$/,
       loader: "style!css!sass?sourceMap&includePaths[]=" + path.resolve(__dirname, "./node_modules/compass-mixins/lib")
-    },{ 
-      test: /\.styl$/, loader: 'style!css!stylus?sourceMap'
     },{
       test: /\.(jpe?g|png|gif)$/i,
       loaders: [
-        'url?limit=10000&name=images/[hash:8].[name].[ext]',
+        'url?limit=10000&name=assets/images/[hash:8].[name].[ext]',
         'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
       ]
     },{
       test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
+      loader: 'url?limit=10000&name=assets/fonts/[hash:8].[name].[ext]'
     }
 
     ]
+  },
+  resolve: {
+    root: path.resolve(__dirname, 'node_modules'),
+    extensions: ['','.js','.scss']
   }
 }
 

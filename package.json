@@ -1,5 +1,5 @@
 {
-  "name": "jackblog-redux",
+  "name": "jackblog-react-redux",
   "version": "1.0.0",
   "description": "Jack Hu's Blog for redux",
   "scripts": {
@@ -22,6 +22,7 @@
     "bootstrap": "^3.3.5",
     "bootstrap-sass": "^3.3.5",
     "classnames": "^2.1.2",
+    "express": "^4.13.3",
     "extract-text-webpack-plugin": "^0.9.1",
     "font-awesome": "^4.5.0",
     "history": "^1.13.1",
@@ -40,6 +41,7 @@
     "redux": "^3.0.0",
     "redux-router": "^1.0.0-beta5",
     "redux-thunk": "^1.0.0",
+    "serve-favicon": "^2.3.0",
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
@@ -51,8 +53,13 @@
     "babel-preset-stage-0": "^6.3.13",
     "compass-mixins": "^0.12.7",
     "css-loader": "^0.23.0",
+    "del": "^2.2.0",
     "expect": "^1.8.0",
     "express": "^4.13.3",
+    "gulp": "^3.9.0",
+    "gulp-env": "^0.4.0",
+    "gulp-sequence": "^0.4.4",
+    "gulp-util": "^3.0.7",
     "image-webpack-loader": "^1.6.2",
     "jsdom": "^5.6.1",
     "mocha": "^2.2.5",
@@ -72,6 +79,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.9.11",
     "webpack-dev-middleware": "^1.2.0",
+    "webpack-dev-server": "^1.14.0",
     "webpack-hot-middleware": "^2.2.0"
   }
 }

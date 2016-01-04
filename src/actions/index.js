@@ -1,6 +1,6 @@
 import {CHANGE_STYLE_MODE,GET_INDEX_IMG,TAG_LIST,ARTICLE_LIST,ARTICLE_DETAIL,COMMENT_LIST,PRENEXT_ARTICLE, CHANGE_OPTIONS,ADD_ARTICLE_LIST,REQUEST_ARTICLE_LIST,GET_CAPTCHAURL,TOGGLE_LIKE,FAILURE_ADD_COMMENT,SUCCESS_ADD_COMMENT,FAILURE_ADD_REPLY,SUCCESS_ADD_REPLY} from './ActionTypes'
 import fetch from 'isomorphic-fetch'
-const API_ROOT = 'http://localhost:9000/api/'
+const API_ROOT = 'http://localhost:9000/'
 import img from '../assets/images/shanghai.jpg'
 import querystring from 'querystring'
 import cookie from 'react-cookie'
@@ -27,7 +27,7 @@ function failureIndexImage() {
 
 function fetchIndexImage(){
   return dispatch => {
-    return fetch(API_ROOT + 'blog/getIndexImage')
+    return fetch(API_ROOT + 'article/getIndexImage')
       .then(response => response.json())
       .then(json => {
         return dispatch(receiveIndexImage(json))
@@ -88,7 +88,7 @@ export function getArticleList(isAdd = true) {
 	return (dispatch,getState) => {
 		dispatch(requestArticleList())
 		const options = getState().options
-		return fetch(API_ROOT + 'blog/getFrontBlogList?' + querystring.stringify(options))
+		return fetch(API_ROOT + 'article/getFrontArticleList?' + querystring.stringify(options))
 		  .then(response => response.json())
 		  .then(json => {
 		  	const isMore = !(json.data.length < options.itemsPerPage)
@@ -106,7 +106,7 @@ function receiveArticleDetail(article) {
 export function getArticleDetail(id) {
 	return (dispatch, getState) => {
 		const {auth} = getState()
-		return fetch(API_ROOT + 'blog/' + id + '/getFrontArticle')
+		return fetch(API_ROOT + 'article/' + id + '/getFrontArticle')
 		  .then(response => response.json().then(json=>({json,response})))
 		  .then(({json,response}) => {
 		  	let isLike = false
@@ -153,7 +153,7 @@ function receivePrenext(json) {
 
 export function getPrenext(id) {
   return (dispatch,getState) => {
-  	return fetch(API_ROOT + 'blog/' + id + '/getPrenext')
+  	return fetch(API_ROOT + 'article/' + id + '/getPrenext')
   	  .then(response => response.json())
   	  .then(json => {
   	    return dispatch(receivePrenext(json))
@@ -179,7 +179,7 @@ function receiveToggleLike(json) {
 
 export function toggleLike(aid) {
 	return (dispatch,getState)=>{
-		return fetch(API_ROOT + 'blog/' + aid + '/toggleLike',{
+		return fetch(API_ROOT + 'article/' + aid + '/toggleLike',{
 			method: 'put',
 			credentials: 'include',
 			headers: {

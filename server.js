@@ -1,22 +1,22 @@
-var webpack = require('webpack')
-var webpackDevMiddleware = require('webpack-dev-middleware')
-var webpackHotMiddleware = require('webpack-hot-middleware')
-var config = require('./webpack.config')
+var path = require('path');
+var express = require('express');
+var favicon = require('serve-favicon');
 
-var app = new (require('express'))()
-var port = 4000
+var app = new express();
+var port = 8300;
 
-var compiler = webpack(config)
-app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
-app.use(webpackHotMiddleware(compiler))
 
-app.get("/", function(req, res) {
-  res.sendFile(__dirname + '/index.html')
+app.use(express.static(path.join(__dirname, 'dist')));
+app.use(favicon(path.join(__dirname, 'dist', 'favicon.ico')));
+
+
+app.get("/*", function(req, res) {
+  return res.sendFile(__dirname + '/dist/index.html')
 })
 
-app.listen(port, function(error) {
-  if (error) {
-    console.error(error)
+app.listen(port, function(err) {
+  if (err) {
+    console.error(err)
   } else {
     console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port)
   }

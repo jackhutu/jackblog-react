@@ -23,7 +23,7 @@ function indexImg(state = "", action) {
 			return state
 	}
 }
-function options(state = {currentPage: 1, itemsPerPage: 8,sortName:'publish_time',tagId: ''}, action) {
+function options(state = {currentPage: 1, itemsPerPage: 10,sortName:'publish_time',tagId: ''}, action) {
 	switch(action.type){
 		case CHANGE_OPTIONS:
 		return Object.assign({},state,action.option)
