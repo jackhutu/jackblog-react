@@ -3,6 +3,7 @@ var webpack = require('webpack')
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
+  debug:true,
   entry: [
     'webpack-dev-server/client?http://localhost:5000',
     'webpack/hot/only-dev-server',
@@ -31,16 +32,16 @@ module.exports = {
       test: /\.css$/, loader: 'style!css'
     },{
       test: /\.scss$/,
-      loader: "style!css!sass?sourceMap&includePaths[]=" + path.resolve(__dirname, "./node_modules/compass-mixins/lib")
+      loader: "style!css?sourceMap!sass?sourceMap&includePaths[]=" + path.resolve(__dirname, "./node_modules/compass-mixins/lib")
     },{
       test: /\.(jpe?g|png|gif)$/i,
       loaders: [
-        'url?limit=10000&name=assets/images/[hash:8].[name].[ext]',
+        'url?limit=10000&name=images/[hash:8].[name].[ext]',
         'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
       ]
     },{
       test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'url?limit=10000&name=assets/fonts/[hash:8].[name].[ext]'
+      loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
     }
 
     ]

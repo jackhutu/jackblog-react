@@ -1,5 +1,5 @@
 import {LOGIN_SUCCESS,LOGIN_FAILURE,GET_CAPTCHAURL,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_SUCCESS,UPDATE_USER_FAILURE} from '../actions/ActionTypes'
-const API_ROOT = 'http://localhost:9000/api/'
+import {API_ROOT} from '../config'
 import cookie from 'react-cookie'
 
 const initialState = {

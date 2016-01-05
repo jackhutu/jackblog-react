@@ -4,9 +4,17 @@ import defaultAvatar from '../../assets/images/avatar.png'
 import {Dropdown} from 'react-bootstrap'
 
 export default class Header extends Component{
-
+	constructor(props){
+		super(props)
+		this.handleChangeMode = this.handleChangeMode.bind(this)
+	}
+	handleChangeMode(e){
+    e.preventDefault()
+		const {changeStyleMode} = this.props
+		changeStyleMode()
+	}
 	render(){
-		const {styleMode,changeStyleMode,auth,logout} = this.props
+		const {styleMode,auth,logout} = this.props
 		return (
 			<div className="navbar-box navbar-skin">
 			  <div className="navbar-menu">
@@ -16,7 +24,7 @@ export default class Header extends Component{
 			  </div>
 			  <div className="navbar-expanded">
 			      <div>
-			        <a className="navbar-item change-mode" href="#" onClick={changeStyleMode}>
+			        <a className="navbar-item change-mode" href="#" onClick={this.handleChangeMode}>
 			          {(styleMode === 'day-mode')?<i className="fa fa-sun-o"></i>:<i className="fa fa-moon-o"></i>}
 			        </a>
 			      </div>
@@ -65,7 +73,7 @@ export default class Header extends Component{
 			  		</div>
 			  	}
 			  	<div className="pull-right">
-			  	  <a className="navbar-item change-mode" href="#" onClick={changeStyleMode}>
+			  	  <a className="navbar-item change-mode" href="#" onClick={this.handleChangeMode}>
 			  	  	{(styleMode === 'day-mode')?<i className="fa fa-sun-o"></i>:<i className="fa fa-moon-o"></i>}
 			  	  </a>
 			  	</div>

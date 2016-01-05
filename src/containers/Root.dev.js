@@ -8,20 +8,7 @@ import Main from '../components/main'
 import Article from '../components/article'
 import Login from '../components/login'
 import Settings from '../components/settings'
-import cookie from 'react-cookie'
-import {isLogin} from '../tools/authService'
-
-function redirectToBack(nextState, replaceState) {
-	//已经登录则不进入
-  if (isLogin()) {
-    replaceState(null, '/')
-  }
-}
-function redirectToLogin(nextState,replaceState) {
-	if (!isLogin()) {
-    replaceState(null, '/login')
-  }
-}
+import {redirectToBack,redirectToLogin} from '../utils/authService'
 
 export default class Root extends Component{
 	render(){

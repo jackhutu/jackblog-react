@@ -1,6 +1,6 @@
 import {CHANGE_STYLE_MODE,GET_INDEX_IMG,TAG_LIST,ARTICLE_LIST,ARTICLE_DETAIL,COMMENT_LIST,PRENEXT_ARTICLE, CHANGE_OPTIONS,ADD_ARTICLE_LIST,REQUEST_ARTICLE_LIST,GET_CAPTCHAURL,TOGGLE_LIKE,FAILURE_ADD_COMMENT,SUCCESS_ADD_COMMENT,FAILURE_ADD_REPLY,SUCCESS_ADD_REPLY} from './ActionTypes'
 import fetch from 'isomorphic-fetch'
-const API_ROOT = 'http://localhost:9000/'
+import {API_ROOT} from '../config'
 import img from '../assets/images/shanghai.jpg'
 import querystring from 'querystring'
 import cookie from 'react-cookie'

@@ -1,6 +1,5 @@
 import {GET_CAPTCHAURL,LOGIN_SUCCESS,LOGIN_FAILURE,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_FAILURE,UPDATE_USER_SUCCESS} from './ActionTypes'
-const LOGIN_API = 'http://localhost:9000/auth/'
-const API_ROOT = 'http://localhost:9000/'
+import {API_ROOT} from '../config'
 import fetch from 'isomorphic-fetch'
 import { pushState } from 'redux-router'
 import cookie from 'react-cookie'
@@ -20,7 +19,7 @@ function loginFailure(err) {
 }
 export function localLogin(userInfo) {
 	return (dispatch,getState) =>{
-		return fetch(LOGIN_API + 'local',{
+		return fetch(API_ROOT + 'auth/local',{
 			method: 'post',
 			credentials: 'include',
 			headers: {

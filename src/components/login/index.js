@@ -11,12 +11,6 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.changeCaptcha = this.changeCaptcha.bind(this)
   }
-  // componentDidMount(){
-  //   //如果已经登录,跳转到首页.
-  //   const { pushState,auth } = this.props
-  //   console.log(this.props.history);
-  //   console.log(window.location);
-  // }
 
   changeCaptcha(){
     const { actions } = this.props
@@ -24,7 +18,7 @@ class Login extends Component {
   }
 
   handleSubmit (e) {
-    e.preventDefault();
+    e.preventDefault()
     const {email,password,captcha} = this.refs
     //登录的方法
     const { actions,history } = this.props

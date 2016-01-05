@@ -1,5 +1,5 @@
 import React,{Component,PropTypes} from 'react'
-import {customTime} from '../../tools'
+import {customTime} from '../../utils'
 import {Link} from 'react-router'
 
 //列表View
