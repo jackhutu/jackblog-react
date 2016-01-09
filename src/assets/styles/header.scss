@@ -109,6 +109,11 @@
 		}
 		.logo{
 			font-size: 18px;
+			color: white;
+		}
+		.mobile{
+			padding:5px;
+			font-size: 24px;
 		}
 	}
 	//展开样式
@@ -135,6 +140,19 @@
 	    		border-color: $navBdColor;
 	    	}
 	    }
+		}
+		a.expanded-version{
+			padding:10px;
+			img{
+			  width: 22px;
+			  height: 22px;
+			  @include opacity(0.8);
+			}
+			&:hover{
+				img{
+					@include opacity(1);
+				}
+			}
 		}
 	}
   .tooltip.nav-tooltip .tooltip-inner {

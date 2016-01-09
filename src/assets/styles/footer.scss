@@ -22,6 +22,7 @@ footer {
     	margin:0;
     	padding:0;
     	@include snsIconStyle(5px,$font-size-h2);
+      li{margin-right:10px;}
     }
   }
 }

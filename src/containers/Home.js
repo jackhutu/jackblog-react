@@ -27,10 +27,10 @@ class Home extends Component {
   }
 
   render() {
-    const { styleMode,actions,children,auth,authActions } = this.props
+    const { styleMode,actions,children,auth,authActions,location } = this.props
     return (
       <div>
-        <Header styleMode={styleMode} auth={auth} logout={authActions.logout} changeStyleMode={actions.changeStyleMode} />
+        <Header styleMode={styleMode} auth={auth} logout={authActions.logout} location={location} changeStyleMode={actions.changeStyleMode} />
         {children}
         <Toaster />
         <ScrollTop />

@@ -5,6 +5,7 @@ import * as Actions from '../../actions'
 import Tags from './tags'
 import Articles from './articles'
 import Sidebar from './sidebar'
+import Footer from './footer'
 import LoadMore from './LoadMore'
 
 class Main extends Component {
@@ -31,15 +32,18 @@ class Main extends Component {
   render() {
     const { actions,children,indexImg,tagList,articleList,options } = this.props
     return (
-      <div className="container-fluid main-box">
-        <div className="row">
-          <Sidebar indexImg={indexImg} />
-          <div className="col-sm-7 col-sm-offset-3 main-content">
-            <Tags tagList={tagList} options={options} isFetching={articleList.isFetching} changeSort={this.handleChange} />
-            <Articles articleList={articleList.items} />
-            {(articleList.items.length > 0)&&<LoadMore options={options} isMore={articleList.isMore} isFetching={articleList.isFetching} addData={this.handleChange} />}
+      <div>
+        <div className="container-fluid main-box">
+          <div className="row">
+            <Sidebar indexImg={indexImg} />
+            <div className="col-sm-7 col-sm-offset-3 main-content">
+              <Tags tagList={tagList} options={options} isFetching={articleList.isFetching} changeSort={this.handleChange} />
+              <Articles articleList={articleList.items} />
+              {(articleList.items.length > 0)&&<LoadMore options={options} isMore={articleList.isMore} isFetching={articleList.isFetching} addData={this.handleChange} />}
+            </div>
           </div>
         </div>
+        <Footer />
       </div>
     )
   }

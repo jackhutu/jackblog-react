@@ -8,6 +8,7 @@ import Main from '../components/main'
 import Article from '../components/article'
 import Login from '../components/login'
 import Settings from '../components/settings'
+import MobileApps from '../components/apps'
 import {redirectToBack,redirectToLogin} from '../utils/authService'
 
 export default class Root extends Component{
@@ -22,6 +23,7 @@ export default class Root extends Component{
 			    		<Article path="/article/:id" component={Article} />
 			    		<Login path="/login" component={Login} onEnter={redirectToBack} />
 			    		<Settings path="/settings" component={Settings} onEnter={redirectToLogin} />
+			    		<MobileApps path="/apps" component={MobileApps} />
 						</Route>
 			    </ReduxRouter>
 			    <DevTools />

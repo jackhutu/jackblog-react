@@ -14,16 +14,26 @@ export default class Header extends Component{
 		changeStyleMode()
 	}
 	render(){
-		const {styleMode,auth,logout} = this.props
+		const {styleMode,auth,logout,location} = this.props
 		return (
 			<div className="navbar-box navbar-skin">
 			  <div className="navbar-menu">
-			      <Link activeClassName="active" className="navbar-item logo" title="首页" to="/">
+			      <Link className={"navbar-item logo " + (location.pathname !== '/apps'&&'active')} title="首页" to="/">
 			        Hu
 			      </Link>
-			  </div>
+			      <Link activeClassName="active" className="navbar-item mobile hidden-xs" title="移动应用" to="/apps">
+			      	<i className="fa fa-mobile"></i>
+			      </Link>
+			  </div>   
+
 			  <div className="navbar-expanded">
 			      <div>
+				      <a className="navbar-item expanded-version" href="http://redux.jackhu.top" title="React">
+				        <img src='http://upload.jackhu.top/icons/react.png-32x32' /> 
+				      </a>
+				      <a className="navbar-item expanded-version" href="http://angular1.jackhu.top" title="Angular1.x">
+				      	<img src='http://upload.jackhu.top/icons/AngularJS.png-32x32' /> 
+				      </a>
 			        <a className="navbar-item change-mode" href="#" onClick={this.handleChangeMode}>
 			          {(styleMode === 'day-mode')?<i className="fa fa-sun-o"></i>:<i className="fa fa-moon-o"></i>}
 			        </a>

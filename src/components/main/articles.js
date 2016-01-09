@@ -23,7 +23,7 @@ export default class Articles extends Component{
 						<li className={(article.images.length > 0)?"article-item have-img":"article-item" } key={i}>
 							{(article.images.length > 0)&&
 								<Link to={'/article/' + article._id } className="wrap-img">
-								<img src={article.images[0].url + '?imageView2/2/w/100/h/100'} />
+								<img src={article.images[0].url + '-100x100'} />
 								</Link>}
 							<div>
 							  <p className="list-top">               

@@ -81,4 +81,45 @@
     		line-height: 20px;
     	}
     }
+    //apps
+    .mobile-apps{
+    	margin:40px auto;
+    	.version{
+    		text-align: center;
+    		font-size: 24px;
+    		line-height: 30px;
+    		margin-bottom: 20px;
+    		a{
+    			margin-left: 10px;
+    			color: $brand-success;
+    		}
+    	}
+    	.downloads{
+    		text-align: center;
+    		li{
+    			margin-bottom: 20px;
+    			line-height: 58px;
+    			vertical-align: middle;
+    			a{
+    				font-size: 20px;
+    				width: 180px;
+    				height: 58px;
+    				text-align: left;
+    				color: #fff;
+    				i{
+    					font-size: 36px;
+    					width: 40px;
+    					text-align: center;
+    				}
+    			}
+    		}
+    	}
+    	.qrcode{
+    		text-align: left;
+    		img{
+    			width: 135px;
+    			border: 1px solid #d9d9d9;
+    		}
+    	}
+    } 
 }
