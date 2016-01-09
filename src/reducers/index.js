@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux'
-import { routerStateReducer } from 'redux-router'
+//import { routerStateReducer } from 'redux-router'
+import { routeReducer } from 'redux-simple-router'
+
 import {CHANGE_STYLE_MODE,GET_INDEX_IMG,CHANGE_OPTIONS,GET_CAPTCHAURL} from '../actions/ActionTypes'
 import tagList from './tag'
 import {articleList, articleDetail,prenextArticle} from './article'
@@ -46,7 +48,8 @@ const rootReducer = combineReducers({
 	options,
 	captchaUrl,
 	auth,
-  router: routerStateReducer
+	routing: routeReducer
+  //router: routerStateReducer
 })
 
 export default rootReducer

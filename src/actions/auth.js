@@ -1,7 +1,7 @@
 import {GET_CAPTCHAURL,LOGIN_SUCCESS,LOGIN_FAILURE,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_FAILURE,UPDATE_USER_SUCCESS} from './ActionTypes'
 import {API_ROOT} from '../config'
 import fetch from 'isomorphic-fetch'
-import { pushState } from 'redux-router'
+import { pushPath } from 'redux-simple-router'
 import cookie from 'react-cookie'
 
 //登录
@@ -37,7 +37,7 @@ export function localLogin(userInfo) {
 		  	//获取用户信息
 		  	dispatch(getUserInfo(json.token))
 		  	dispatch(loginSuccess(json.token))
-		  	dispatch(pushState(null, '/'))
+		  	dispatch(pushPath('/'))
 		  }).catch( err =>{
 		  	//登录异常
 		  	return dispatch(loginFailure(err))
@@ -90,7 +90,7 @@ export function logout() {
   return dispatch => {
   	cookie.remove('token')
     dispatch({type: LOGOUT_USER})
-    dispatch(pushState(null, '/'))
+    dispatch(pushPath('/'))
   }
 }
 //修改用户资料

@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from '../../actions/auth'
-import {pushState} from 'redux-router'
 
 export default class MobileApps extends Component {
   constructor(props){

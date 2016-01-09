@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from '../../actions/auth'
-import {pushState} from 'redux-router'
 
 class Settings extends Component {
   constructor(props){
@@ -17,7 +16,14 @@ class Settings extends Component {
     const {actions} = this.props
     actions.updateUser({nickname:nickname.value})
   }
-
+  componentWillReceiveProps(nextProps){
+    const { auth } = nextProps
+    if(auth.errMsg){
+      msg.error(auth.errMsg)
+    }else if(auth.user !== this.props.auth.user){
+      msg.success('修改成功.')
+    }
+  }
   render() {
     const { actions,auth } = this.props
     return (
@@ -60,8 +66,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Actions, dispatch),
-    pushState: bindActionCreators(pushState, dispatch)
+    actions: bindActionCreators(Actions, dispatch)
   }
 }
 

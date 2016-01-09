@@ -1,7 +1,9 @@
 import 'babel-core/register'
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
+import { createHistory } from 'history'
+import { syncReduxAndRouter, routeReducer } from 'redux-simple-router'
+
 import configureStore from './store/configureStore'
 import Root from './containers/Root'
 
@@ -10,8 +12,10 @@ import './assets/styles/index.scss'
 
 
 const store = configureStore()
+const history = createHistory()
+syncReduxAndRouter(history, store)
 
 render(
-  <Root store={store} />,
+  <Root store={store} history={history} />,
   document.getElementById('root')
 )

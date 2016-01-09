@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from '../../actions/auth'
-import {pushState} from 'redux-router'
 import SNSLogin from './snsLogin'
 
 class Login extends Component {
@@ -33,6 +32,8 @@ class Login extends Component {
     const { auth } = nextProps
     if(auth.errMsg){
       msg.error(auth.errMsg)
+    }else if(!this.props.token && auth.token){
+      msg.success('登录成功.')
     }
   }
 
@@ -107,8 +108,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Actions, dispatch),
-    pushState: bindActionCreators(pushState, dispatch)
+    actions: bindActionCreators(Actions, dispatch)
   }
 }
 

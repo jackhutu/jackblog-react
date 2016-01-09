@@ -2,8 +2,8 @@ import { createStore,compose,applyMiddleware } from 'redux'
 import rootReducer from '../reducers'
 import thunkMiddleware from 'redux-thunk'
 
-import {reduxReactRouter} from 'redux-router'
-import createHistory from 'history/lib/createBrowserHistory'
+//import {reduxReactRouter} from 'redux-router'
+//import createHistory from 'history/lib/createBrowserHistory'
 //开发调试工具.
 import {persistState} from 'redux-devtools'
 import DevTools from '../containers/DevTools'
@@ -11,7 +11,7 @@ import DevTools from '../containers/DevTools'
 // window.devToolsExtension ? window.devToolsExtension() : f => f
 const finalCreateStore = compose(
   applyMiddleware(thunkMiddleware),
-  reduxReactRouter({ createHistory }),
+  //reduxReactRouter({ createHistory }),
   DevTools.instrument(),
   persistState(
     window.location.href.match(
