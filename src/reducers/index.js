@@ -1,55 +1,34 @@
 import { combineReducers } from 'redux'
-//import { routerStateReducer } from 'redux-router'
 import { routeReducer } from 'redux-simple-router'
-
-import {CHANGE_STYLE_MODE,GET_INDEX_IMG,CHANGE_OPTIONS,GET_CAPTCHAURL} from '../actions/ActionTypes'
+import {fromJS,Map,List} from 'immutable'
+import { createReducer } from 'redux-immutablejs'
+import {CHANGE_STYLE_MODE,GET_INDEX_IMG,GET_CAPTCHAURL} from '../actions/ActionTypes'
 import tagList from './tag'
 import {articleList, articleDetail,prenextArticle} from './article'
-import {commentList} from './comment'
-import {auth,captchaUrl} from './auth'
+import commentList from './comment'
+import auth from './auth'
+import options from './options'
+import {API_ROOT} from '../config'
 
-function styleMode(state = "day-mode", action) {
-	switch(action.type){
-		case CHANGE_STYLE_MODE:
-			return (state === 'day-mode')?'night-mode':'day-mode'
-		default: 
-			return state
-	}
-}
-
-function indexImg(state = "", action) {
-	switch(action.type){
-		case GET_INDEX_IMG:
-			return action.indexImg
-		default: 
-			return state
-	}
-}
-function options(state = {currentPage: 1, itemsPerPage: 10,sortName:'publish_time',tagId: ''}, action) {
-	switch(action.type){
-		case CHANGE_OPTIONS:
-		return Object.assign({},state,action.option)
-		default: 
-		return state
-	}
-}
-
-
-
+const globalVal =  createReducer(fromJS({
+	indexImg:'',styleMode:'day-mode',
+	captchaUrl: API_ROOT + 'users/getCaptcha?'
+}), {
+	[CHANGE_STYLE_MODE]: (state, action) => state.set('styleMode',(state.get('styleMode') === 'day-mode')?'night-mode':'day-mode'),
+  [GET_INDEX_IMG]: (state, action) => state.set('indexImg',action.indexImg),
+  [GET_CAPTCHAURL]: (state, action) => state.set('captchaUrl',action.captchaUrl)
+})
 
 const rootReducer = combineReducers({
-	indexImg,
-	styleMode,
+	globalVal,
 	tagList,
 	articleList,
 	articleDetail,
 	commentList,
 	prenextArticle,
 	options,
-	captchaUrl,
 	auth,
 	routing: routeReducer
-  //router: routerStateReducer
 })
 
 export default rootReducer

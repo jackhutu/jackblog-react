@@ -4,7 +4,7 @@ import tiny from '../../assets/images/tiny.gif'
 //列表View
 export default class Tags extends Component{
 	render(){
-		const {options,changeSort,isFetching} = this.props
+		const {options,changeSort,isFetching,tagList} = this.props
 		return (
 			<ul className="sort-tags list-unstyled clearfix">
 				<li>
@@ -14,7 +14,7 @@ export default class Tags extends Component{
 				  <a className={(options.sortName == 'visit_count')&&'active'} onClick={ e => changeSort(e,{'currentPage':1,'sortName':'visit_count','tagId':''})} href="#">热门</a>
 				</li>
 				{
-					this.props.tagList.map((tag,i)=>
+					tagList.map((tag,i)=>
 						<li key={i}>
 						<a className={(options.tagId == tag._id)&&'active'} onClick={ e => changeSort(e,{'currentPage':1,'sortName':'','tagId':tag._id})} href="#">{tag.name}</a>
 						</li>
@@ -29,9 +29,4 @@ export default class Tags extends Component{
 			</ul>
 		)
 	}
-}
-
-Tags.PropTypes = {
-	tagList:PropTypes.array.isRequired,
-	changeSort: PropTypes.func.isRequired
 }

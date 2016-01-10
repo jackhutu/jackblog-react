@@ -99,10 +99,10 @@ Article.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    articleDetail: state.articleDetail,
-    commentList: state.commentList,
-    prenextArticle: state.prenextArticle,
-    auth: state.auth
+    articleDetail: state.articleDetail.toJS(),
+    commentList: state.commentList.toJS(),
+    prenextArticle: state.prenextArticle.toJS(),
+    auth: state.auth.toJS()
   }
 }
 

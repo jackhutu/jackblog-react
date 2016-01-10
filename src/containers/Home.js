@@ -20,17 +20,17 @@ class Home extends Component {
     }
   }
   componentWillReceiveProps(nextProps){
-    const { styleMode } = this.props
-    if(styleMode !== nextProps.styleMode){
-      document.body.className = nextProps.styleMode
+    const { globalVal } = this.props
+    if(globalVal.styleMode !== nextProps.globalVal.styleMode){
+      document.body.className = nextProps.globalVal.styleMode
     }
   }
 
   render() {
-    const { styleMode,actions,children,auth,authActions,location } = this.props
+    const { globalVal,actions,children,auth,authActions,location } = this.props
     return (
       <div>
-        <Header styleMode={styleMode} auth={auth} logout={authActions.logout} location={location} changeStyleMode={actions.changeStyleMode} />
+        <Header styleMode={globalVal.styleMode} auth={auth} logout={authActions.logout} location={location} changeStyleMode={actions.changeStyleMode} />
         {children}
         <Toaster />
         <ScrollTop />
@@ -40,7 +40,7 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  styleMode: PropTypes.string.isRequired,
+  globalVal: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   children: PropTypes.node,
   actions: PropTypes.object.isRequired
@@ -48,8 +48,8 @@ Home.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    styleMode: state.styleMode,
-    auth: state.auth
+    globalVal: state.globalVal.toJS(),
+    auth: state.auth.toJS()
   }
 }
 

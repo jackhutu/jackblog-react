@@ -17,6 +17,7 @@
   "dependencies": {
     "express": "^4.13.3",
     "pm2": "^0.15.10",
+    "redux-immutable-combine-reducers": "^0.1.0",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
@@ -44,6 +45,7 @@
     "history": "^1.13.1",
     "html-webpack-plugin": "^1.7.0",
     "image-webpack-loader": "^1.6.2",
+    "immutable": "^3.7.6",
     "isomorphic-fetch": "^2.2.0",
     "jsdom": "^5.6.1",
     "mocha": "^2.2.5",
@@ -68,6 +70,7 @@
     "redux-devtools": "^3.0.0-beta-3",
     "redux-devtools-dock-monitor": "^1.0.0-beta-3",
     "redux-devtools-log-monitor": "^1.0.0-beta-3",
+    "redux-immutablejs": "0.0.8",
     "redux-router": "^1.0.0-beta5",
     "redux-simple-router": "^1.0.2",
     "redux-thunk": "^1.0.0",

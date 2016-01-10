@@ -87,7 +87,7 @@ function requestArticleList() {
 export function getArticleList(isAdd = true) {
 	return (dispatch,getState) => {
 		dispatch(requestArticleList())
-		const options = getState().options
+		const options = getState().options.toJS()
 		return fetch(API_ROOT + 'article/getFrontArticleList?' + querystring.stringify(options))
 		  .then(response => response.json())
 		  .then(json => {
@@ -105,7 +105,7 @@ function receiveArticleDetail(article) {
 }
 export function getArticleDetail(id) {
 	return (dispatch, getState) => {
-		const {auth} = getState()
+		const auth = getState().auth.toJS()
 		return fetch(API_ROOT + 'article/' + id + '/getFrontArticle')
 		  .then(response => response.json().then(json=>({json,response})))
 		  .then(({json,response}) => {

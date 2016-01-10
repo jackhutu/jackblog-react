@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Immutable from 'immutable'
 import * as Actions from '../../actions'
 import Tags from './tags'
 import Articles from './articles'
@@ -30,12 +31,12 @@ class Main extends Component {
     actions.getArticleList(isAdd)
   }
   render() {
-    const { actions,children,indexImg,tagList,articleList,options } = this.props
+    const { actions,globalVal,tagList,articleList,options } = this.props
     return (
       <div>
         <div className="container-fluid main-box">
           <div className="row">
-            <Sidebar indexImg={indexImg} />
+            <Sidebar indexImg={globalVal.indexImg} />
             <div className="col-sm-7 col-sm-offset-3 main-content">
               <Tags tagList={tagList} options={options} isFetching={articleList.isFetching} changeSort={this.handleChange} />
               <Articles articleList={articleList.items} />
@@ -50,20 +51,20 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-  indexImg: PropTypes.string.isRequired,
+  globalVal: PropTypes.object.isRequired,
+  //tagList: PropTypes.instanceOf(Immutable.List).isRequired,
   tagList: PropTypes.array.isRequired,
   articleList: PropTypes.object.isRequired,
   options: PropTypes.object.isRequired,
-  children: PropTypes.node,
   actions: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
   return {
-    indexImg: state.indexImg,
-    tagList: state.tagList,
-    articleList: state.articleList,
-    options: state.options
+    globalVal: state.globalVal.toJS(),
+    tagList: state.tagList.toJS(),
+    articleList: state.articleList.toJS(),
+    options: state.options.toJS()
   }
 }
 

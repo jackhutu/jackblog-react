@@ -20,7 +20,7 @@ class Settings extends Component {
     const { auth } = nextProps
     if(auth.errMsg){
       msg.error(auth.errMsg)
-    }else if(auth.user !== this.props.auth.user){
+    }else if(auth.user.nickname !== this.props.auth.user.nickname){
       msg.success('修改成功.')
     }
   }
@@ -55,12 +55,13 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 }
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth
+    auth: state.auth.toJS()
   }
 }
 

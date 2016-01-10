@@ -9,7 +9,8 @@ import Settings from './components/settings'
 import MobileApps from './components/apps'
 import {redirectToBack,redirectToLogin} from './utils/authService'
 
-export default (
+
+export default ()=> (
 	<Route path="/" component={Home}>
 		<IndexRoute component={Main}/>
 		<Article path="/article/:id" component={Article} />

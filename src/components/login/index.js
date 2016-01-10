@@ -11,7 +11,8 @@ class Login extends Component {
     this.changeCaptcha = this.changeCaptcha.bind(this)
   }
 
-  changeCaptcha(){
+  changeCaptcha(e){
+    e.preventDefault()
     const { actions } = this.props
     actions.getCaptchaUrl()
   }
@@ -19,7 +20,6 @@ class Login extends Component {
   handleSubmit (e) {
     e.preventDefault()
     const {email,password,captcha} = this.refs
-    //登录的方法
     const { actions,history } = this.props
     actions.localLogin({
       email:email.value,
@@ -96,13 +96,15 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  captchaUrl: PropTypes.string.isRequired,
+  auth: PropTypes.object.isRequired,
 }
 
 function mapStateToProps(state) {
   return {
-    captchaUrl : state.captchaUrl,
-    auth: state.auth
+    captchaUrl : state.globalVal.toJS().captchaUrl,
+    auth: state.auth.toJS()
   }
 }
 
