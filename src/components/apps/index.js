@@ -27,13 +27,13 @@ class MobileApps extends Component {
                 </p>
                 <ul className="col-sm-7 downloads">
                   <li>
-                    <a href={items.downloadUrl.android} className="btn btn-large btn-success">
+                    <a href={items.downloadUrl.android || 'javascript:;'} className="btn btn-large btn-success">
                       <i className="fa fa-android"></i> 
                       <span>Android版</span>
                     </a>
                   </li>
                   <li>
-                    <a href={items.downloadUrl.ios} className="btn btn-large btn-info">
+                    <a href={items.downloadUrl.ios || 'javascript:;'} className="btn btn-large btn-info">
                       <i className="fa fa-mobile"></i> 
                       <span>iPhone版</span>
                     </a>
