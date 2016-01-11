@@ -1,4 +1,4 @@
-import {GET_CAPTCHAURL,LOGIN_SUCCESS,LOGIN_FAILURE,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_FAILURE,UPDATE_USER_SUCCESS} from './ActionTypes'
+import {GET_CAPTCHAURL,LOGIN_SUCCESS,LOGIN_FAILURE,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_FAILURE,UPDATE_USER_SUCCESS,SUCCESS_GET_SNSLOGINS,FAILURE_GET_SNSLOGINS} from './ActionTypes'
 import {API_ROOT} from '../config'
 import fetch from 'isomorphic-fetch'
 import { pushPath } from 'redux-simple-router'
@@ -125,6 +125,34 @@ export function updateUser(userInfo) {
 			return dispatch(successUpdateUser(json.data))
 		}).catch(err=>{
 			return dispatch(failureUpdateUser(err))
+		})
+	}
+}
+
+
+//获取sns
+function receiveSnsLogins(logins) {
+	return {
+		type: SUCCESS_GET_SNSLOGINS,
+		logins:logins
+	}
+}
+function failureSnsLogins() {
+	return {
+		type: FAILURE_GET_SNSLOGINS,
+	}
+}
+export function getSnsLogins() {
+	return (dispatch,getState)=>{
+		return fetch(API_ROOT + 'users/snsLogins')
+		.then(response => response.json().then(json => ({json,response})))
+		.then(({json,response}) => {
+			if(!response.ok){
+				return dispatch(failureSnsLogins())
+			}
+			return dispatch(receiveSnsLogins(json.data))
+		}).catch(e=>{
+			return dispatch(failureSnsLogins())
 		})
 	}
 }

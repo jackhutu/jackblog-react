@@ -1,4 +1,4 @@
-import {CHANGE_STYLE_MODE,GET_INDEX_IMG,TAG_LIST,ARTICLE_LIST,ARTICLE_DETAIL,COMMENT_LIST,PRENEXT_ARTICLE, CHANGE_OPTIONS,ADD_ARTICLE_LIST,REQUEST_ARTICLE_LIST,GET_CAPTCHAURL,TOGGLE_LIKE,FAILURE_ADD_COMMENT,SUCCESS_ADD_COMMENT,FAILURE_ADD_REPLY,SUCCESS_ADD_REPLY} from './ActionTypes'
+import {CHANGE_STYLE_MODE,GET_INDEX_IMG,TAG_LIST,ARTICLE_LIST,ARTICLE_DETAIL,COMMENT_LIST,PRENEXT_ARTICLE, CHANGE_OPTIONS,ADD_ARTICLE_LIST,REQUEST_ARTICLE_LIST,GET_CAPTCHAURL,TOGGLE_LIKE,FAILURE_ADD_COMMENT,SUCCESS_ADD_COMMENT,FAILURE_ADD_REPLY,SUCCESS_ADD_REPLY,SUCCESS_GET_APPS,FAILURE_GET_APPS} from './ActionTypes'
 import fetch from 'isomorphic-fetch'
 import {API_ROOT} from '../config'
 import img from '../assets/images/shanghai.jpg'
@@ -266,3 +266,31 @@ export function addReply(cid,reply) {
 		})
 	}
 }
+
+//获取apps
+function receiveApps(apps) {
+	return {
+		type: SUCCESS_GET_APPS,
+		apps:apps
+	}
+}
+function failureGetApps() {
+	return {
+		type: FAILURE_GET_APPS,
+	}
+}
+export function getApps() {
+	return (dispatch,getState)=>{
+		return fetch(API_ROOT + 'mobile/getApps')
+		.then(response => response.json().then(json => ({json,response})))
+		.then(({json,response}) => {
+			if(!response.ok){
+				return dispatch(failureGetApps())
+			}
+			return dispatch(receiveApps(json.data))
+		}).catch(e=>{
+			return dispatch(failureGetApps())
+		})
+	}
+}
+

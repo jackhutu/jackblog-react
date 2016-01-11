@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from '../../actions'
+import * as authActions from '../../actions/auth'
 import {Link} from 'react-router'
 import {formatDate} from '../../utils'
 import Like from './like'
@@ -21,8 +22,9 @@ class Article extends Component {
     this.state = {showModal:false}
   }
   componentDidMount() {
-    const { params: { id } } = this.props
+    const { params: { id },authActions } = this.props
     this.fetchArticleData(id)
+    authActions.getSnsLogins()
   }
 
   componentDidUpdate (prevProps) {
@@ -72,7 +74,7 @@ class Article extends Component {
   }
 
   render() {
-    const { articleDetail,commentList,prenextArticle,auth } = this.props
+    const { articleDetail,commentList,prenextArticle,auth,sns } = this.props
     return (
       <div className="article-box">
 
@@ -83,7 +85,7 @@ class Article extends Component {
                 submitComment={this.handleSubmitComment} 
                 submitReply={this.handleSubmitReply}
                 openLoginModal={this.openLoginModal} />
-        <LoginModal isShowModal={this.state.showModal} closeModal={this.closeLoginModal} />
+        <LoginModal logins={sns.logins} isShowModal={this.state.showModal} closeModal={this.closeLoginModal} />
       </div>
     )
   }
@@ -94,7 +96,8 @@ Article.propTypes = {
   commentList: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   prenextArticle: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  sns: PropTypes.object.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -102,13 +105,15 @@ function mapStateToProps(state) {
     articleDetail: state.articleDetail.toJS(),
     commentList: state.commentList.toJS(),
     prenextArticle: state.prenextArticle.toJS(),
-    auth: state.auth.toJS()
+    auth: state.auth.toJS(),
+    sns: state.sns.toJS()
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Actions, dispatch)
+    actions: bindActionCreators(Actions, dispatch),
+    authActions: bindActionCreators(authActions,dispatch)
   }
 }
 

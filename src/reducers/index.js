@@ -8,6 +8,8 @@ import {articleList, articleDetail,prenextArticle} from './article'
 import commentList from './comment'
 import auth from './auth'
 import options from './options'
+import apps from './apps'
+import sns from './sns'
 import {API_ROOT} from '../config'
 
 const globalVal =  createReducer(fromJS({
@@ -21,6 +23,8 @@ const globalVal =  createReducer(fromJS({
 
 const rootReducer = combineReducers({
 	globalVal,
+	apps,
+	sns,
 	tagList,
 	articleList,
 	articleDetail,

@@ -1,11 +1,10 @@
 import React,{Component,PropTypes} from 'react'
 import {Modal} from 'react-bootstrap'
 import SNSLogin from './snsLogin'
-const LOGIN_API = 'http://localhost:9000/auth/'
 
 export default class loginModal extends Component{
 	render(){
-		const {isShowModal,closeModal} = this.props
+		const {isShowModal,closeModal,logins} = this.props
 		return (
 		  <div>
 		    <Modal show={isShowModal} backdrop={true} onHide={closeModal}>
@@ -14,7 +13,7 @@ export default class loginModal extends Component{
 		      </Modal.Header>
 		      <Modal.Body>
 		      	<div className="portlet-body">
-		      		<SNSLogin />
+		      		<SNSLogin logins={logins} />
 		      	</div>
 		      </Modal.Body>
 

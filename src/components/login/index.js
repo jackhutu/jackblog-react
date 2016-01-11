@@ -27,6 +27,10 @@ class Login extends Component {
       captcha:captcha.value
     })
   }
+  componentDidMount() {
+    const { actions } = this.props
+    actions.getSnsLogins()
+  }
 
   componentWillReceiveProps(nextProps){
     const { auth } = nextProps
@@ -38,7 +42,7 @@ class Login extends Component {
   }
 
   render() {
-    const { actions,captchaUrl } = this.props
+    const { actions,captchaUrl,sns } = this.props
     return (
       <div className="signin-box">
         <div className="signin-container">
@@ -88,7 +92,7 @@ class Login extends Component {
             </form>
 
             <p className="text-center">您还可以通过以下方式直接登录</p>
-            <SNSLogin />
+            <SNSLogin logins={sns.logins} />
         </div>
       </div>
     )
@@ -99,12 +103,14 @@ Login.propTypes = {
   actions: PropTypes.object.isRequired,
   captchaUrl: PropTypes.string.isRequired,
   auth: PropTypes.object.isRequired,
+  sns: PropTypes.object.isRequired,
 }
 
 function mapStateToProps(state) {
   return {
     captchaUrl : state.globalVal.toJS().captchaUrl,
-    auth: state.auth.toJS()
+    auth: state.auth.toJS(),
+    sns: state.sns.toJS(),
   }
 }
 
