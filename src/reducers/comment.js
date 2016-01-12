@@ -34,24 +34,3 @@ export default createReducer(initialState,{
 	[FAILURE_ADD_COMMENT]:(state,action)=> state.set('errMsg',action.errMsg),
 	[FAILURE_ADD_REPLY]: (state,action)=> state.set('errMsg',action.errMsg)
 })
-//export function commentList(initialState, action) {
-
-	// switch(action.type){
-	// 	case COMMENT_LIST:
-	// 	return {...state,errMsg:null,items:action.commentList}
-	// 	case SUCCESS_ADD_COMMENT:
-	// 	return {...state,errMsg:null,items:[...state.items,action.comment]}
-	// 	case SUCCESS_ADD_REPLY:
-	// 		state.items.map(item=>{
-	// 			if(item._id === action.cid){
-	// 				item.replys = action.replys
-	// 			}
-	// 		})
-	// 	return {...state, errMsg: null}
-	// 	case FAILURE_ADD_COMMENT:
-	// 	case FAILURE_ADD_REPLY:
-	// 	return {...state,errMsg:action.errMsg}
-	// 	default: 
-	// 	return state
-	// }
-//}

@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch'
 import {API_ROOT} from '../config'
 import img from '../assets/images/shanghai.jpg'
 import querystring from 'querystring'
-import cookie from 'react-cookie'
+import {saveCookie,getCookie} from '../utils/authService'
 
 //改变样式风格.
 export function changeStyleMode(text) {
@@ -183,7 +183,7 @@ export function toggleLike(aid) {
 			method: 'put',
 			credentials: 'include',
 			headers: {
-			    'Authorization': `Bearer ${cookie.load('token')}`
+			    'Authorization': `Bearer ${getCookie('token')}`
 			}
 		}).then(response => response.json().then(json => ({json,response})))
 		.then(({json,response}) => {
@@ -215,7 +215,7 @@ export function addComment(comment) {
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-			  'Authorization': `Bearer ${cookie.load('token')}`
+			  'Authorization': `Bearer ${getCookie('token')}`
 			},
 			body: JSON.stringify(comment)
 		}).then(response => response.json().then(json => ({json,response})))
@@ -252,7 +252,7 @@ export function addReply(cid,reply) {
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-			  'Authorization': `Bearer ${cookie.load('token')}`
+			  'Authorization': `Bearer ${getCookie('token')}`
 			},
 			body: JSON.stringify(reply)
 		}).then(response => response.json().then(json => ({json,response})))

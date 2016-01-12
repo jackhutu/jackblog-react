@@ -1,5 +1,6 @@
 import React,{Component,PropTypes} from 'react'
 import AlertContainer from 'react-alert'
+import {getCookie,removeCookie} from '../../utils/authService'
 
 export default class toaster extends Component{
 	constructor(props){
@@ -12,7 +13,13 @@ export default class toaster extends Component{
 	    transition: 'fade' //scale,fade
 	  };
 	}
-
+	componentDidMount() {
+	  let snsmsg = getCookie('snsmsg')
+	  if(snsmsg){
+	    snsmsg.msgtype === 'success'?msg.success(snsmsg.msg):msg.error(snsmsg.msg)
+	    removeCookie('snsmsg');
+	  }
+	}
 	render(){
 		return (
 		  <div>

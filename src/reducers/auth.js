@@ -1,10 +1,10 @@
 import {LOGIN_SUCCESS,LOGIN_FAILURE,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_SUCCESS,UPDATE_USER_FAILURE} from '../actions/ActionTypes'
-import cookie from 'react-cookie'
+import {saveCookie,getCookie,signOut} from '../utils/authService'
 import { createReducer } from 'redux-immutablejs'
 import {fromJS,Map,List} from 'immutable'
 
 const initialState = fromJS({
-	token: cookie.load('token') || null,
+	token: getCookie('token') || null,
 	user: null,
 	errMsg:null
 })
@@ -33,39 +33,3 @@ export default createReducer(initialState,{
 		})
 	}
 })
-
-// export function auth(state=initialState, action) {
-// 	switch(action.type){
-// 		case LOGIN_SUCCESS:
-// 		return {
-// 		  ...state,
-// 		  errMsg: null,
-// 		  token: action.token
-// 		}
-// 		case LOGIN_FAILURE:
-// 		return {
-// 		  ...state,
-// 		  errMsg: action.errMsg
-// 		}
-// 		case USERINFO_SUCCESS:
-// 		return {
-// 			...state,
-// 			errMsg:null,
-// 			user: action.user
-// 		}
-// 		case USERINFO_FAILURE:
-// 		return {
-// 			...state,
-// 			errMsg: null,
-// 			user: null
-// 		}
-// 		case LOGOUT_USER:
-// 		return { ...initialState,token:null }
-// 		case UPDATE_USER_FAILURE:
-// 		return {...state,errMsg:action.errMsg}
-// 		case UPDATE_USER_SUCCESS:
-// 		return {...state,user:action.user,errMsg:null}
-// 		default: 
-// 		return state
-// 	}
-// }

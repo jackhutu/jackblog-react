@@ -2,7 +2,7 @@ import {GET_CAPTCHAURL,LOGIN_SUCCESS,LOGIN_FAILURE,USERINFO_SUCCESS,LOGOUT_USER,
 import {API_ROOT} from '../config'
 import fetch from 'isomorphic-fetch'
 import { pushPath } from 'redux-simple-router'
-import cookie from 'react-cookie'
+import {saveCookie,getCookie,signOut} from '../utils/authService'
 
 //登录
 function loginSuccess(token) {
@@ -33,7 +33,7 @@ export function localLogin(userInfo) {
 		  		return dispatch(loginFailure(json))
 		  	}
 		  	//得到token,并存储
-		  	cookie.save('token', json.token)
+		  	saveCookie('token',json.token)
 		  	//获取用户信息
 		  	dispatch(getUserInfo(json.token))
 		  	dispatch(loginSuccess(json.token))
@@ -88,7 +88,7 @@ export function getUserInfo(token) {
 
 export function logout() {
   return dispatch => {
-  	cookie.remove('token')
+  	signOut()
     dispatch({type: LOGOUT_USER})
     dispatch(pushPath('/'))
   }
@@ -114,7 +114,7 @@ export function updateUser(userInfo) {
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-			  'Authorization': `Bearer ${cookie.load('token')}`
+			  'Authorization': `Bearer ${getCookie('token')}`
 			},
 			body: JSON.stringify(userInfo)
 		}).then(response => response.json().then(json => ({json,response})))

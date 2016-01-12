@@ -1,14 +1,23 @@
 import cookie from 'react-cookie'
-
-export function saveToken(token) {
-  cookie.save('token', token)
+let cookieConfig = {}
+if(process.env.NODE_ENV === 'production'){
+  cookieConfig = {domain:'.jackhu.top'}
 }
 
-export function getToken() {
-  return cookie.load('token')
+export function saveCookie(name,value) {
+  cookie.save(name, value, cookieConfig)
 }
-export function logout() {
-  cookie.remove('token');
+
+export function getCookie(name) {
+  return cookie.load(name)
+}
+
+export function removeCookie(name) {
+  cookie.remove(name, cookieConfig);
+}
+
+export function signOut() {
+  cookie.remove('token', cookieConfig);
 }
 
 export function isLogin() {

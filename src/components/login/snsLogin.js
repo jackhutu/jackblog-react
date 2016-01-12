@@ -1,5 +1,5 @@
 import React,{Component,PropTypes} from 'react'
-import cookie from 'react-cookie'
+import {saveCookie,getCookie,signOut} from '../../utils/authService'
 import {API_ROOT} from '../../config'
 
 export default class snsLogin extends Component{
@@ -10,7 +10,7 @@ export default class snsLogin extends Component{
 	snsLogin (e,provider) {
 		e.preventDefault()
 	  let search = API_ROOT + 'auth/' + provider + '?redirectUrl=' + window.location.origin
-	  const token = cookie.load('token')
+	  const token = getCookie('token')
 	  if (token) {
 	    search += '&access_token=' + token.replace(/(^\")|(\"$)/g, "")
 	  }
