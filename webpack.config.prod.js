@@ -31,7 +31,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       favicon:'./src/favicon.ico',
       title: "JackHu's blog",
-      template: path.join(__dirname,'src/template.html'),  //模板文件
+      template: path.join(__dirname,'src/index.html'),  //模板文件
       inject:'body',
       hash:false,    //为静态资源生成hash值
       minify:{    //压缩HTML文件
