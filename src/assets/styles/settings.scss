@@ -1,7 +1,7 @@
 .signin-box{
 	@extend .flex-vertical-box;
 	min-height: 450px;
-	margin-top: 50px;
+	//margin-top: 50px;
 	@media (max-height: 500px){
 		margin-top: 50px;
 	}

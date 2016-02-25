@@ -14,7 +14,7 @@ gulp.task('serve', cb =>{
   let webpackConfig = require('./webpack.config')
   let myConfig = Object.create(webpackConfig)
   new WebpackDevServer(webpack(myConfig), {
-      noInfo: true,
+      noInfo: false,
       hot: true,
       inline: true,
       historyApiFallback: true,

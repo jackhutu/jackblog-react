@@ -28,6 +28,9 @@ export default class Header extends Component{
 
 			  <div className="navbar-expanded">
 			      <div>
+				      <a className="navbar-item expanded-version" href="http://vue.jackhu.top" title="Vue">
+				      	<img src='http://upload.jackhu.top/icons/vue.png-32x32' /> 
+				      </a>
 				      <a className="navbar-item expanded-version" href="http://redux.jackhu.top" title="React">
 				        <img src='http://upload.jackhu.top/icons/react.png-32x32' /> 
 				      </a>
@@ -86,6 +89,21 @@ export default class Header extends Component{
 			  	  <a className="navbar-item change-mode" href="#" onClick={this.handleChangeMode}>
 			  	  	{(styleMode === 'day-mode')?<i className="fa fa-sun-o"></i>:<i className="fa fa-moon-o"></i>}
 			  	  </a>
+			  	</div>
+			  	<div className="pull-right">
+				  	<a className="navbar-item expanded-version" href="http://angular1.jackhu.top" title="Angular1.x">
+				  		<img src='http://upload.jackhu.top/icons/AngularJS.png-16x16' /> 
+				  	</a>
+			  	</div>
+			  	<div className="pull-right">
+				  	<a className="navbar-item expanded-version" href="http://redux.jackhu.top" title="React">
+				  	  <img src='http://upload.jackhu.top/icons/react.png-16x16' /> 
+				  	</a>
+			  	</div>
+			  	<div className="pull-right">
+				  	<a className="navbar-item expanded-version" href="http://vue.jackhu.top" title="Vue">
+				  		<img src='http://upload.jackhu.top/icons/vue.png-16x16' /> 
+				  	</a>
 			  	</div>
 			  </div>
 			</div>

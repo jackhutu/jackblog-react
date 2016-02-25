@@ -59,7 +59,7 @@ export default class Comment extends Component{
 			<div className="comment-container clearfix">
 			  <div className="comment-head clearfix">
 			    {commentList.items.length || 0}条评论
-			      <a href="#" className="goto-comment pull-right"><i className="fa fa-pencil"></i>添加新评论</a>
+			      <a href="javascript:;" className="goto-comment pull-right"><i className="fa fa-pencil"></i>添加新评论</a>
 			  </div>
 			  <div id="comment_list">
 			    {commentList.items.map((comment,i) =>
