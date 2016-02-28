@@ -8,7 +8,9 @@ import routes from './routes'
 import configureStore from './store/configureStore'
 import Root from './containers/Root'
 import 'font-awesome/css/font-awesome.css'
-import './assets/styles/index.scss'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'jackblog-sass/dist/index.css'
+import './assets/styles/index.css'
 
 const store = configureStore()
 const history = createHistory()

@@ -1,19 +1,18 @@
 var path = require('path')
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval-source-map',
   debug:true,
   entry: [
-    'webpack-dev-server/client?http://localhost:5000',
     'webpack/hot/only-dev-server',
     './src/index'
   ],
   output: {
     path: process.cwd(),
-    filename: 'bundle.js',
-    publicPath: '/'
+    filename: 'bundle.js'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -23,7 +22,8 @@ module.exports = {
       filename: 'index.html',
       template: 'src/index.html',
       inject: true
-    })
+    }),
+    new ExtractTextPlugin('[hash:8].style.css', { allChunks: true })
   ],
   module: {
     loaders: [{
@@ -32,14 +32,9 @@ module.exports = {
       exclude: /node_modules/,
       include: __dirname
     }, 
-//  { test: /\.(css|scss)$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader') },
-// ,{ test: /\.styl$/, loader: 'style!css!stylus?sourceMap'},   
-    { 
-      test: /\.css$/, loader: 'style!css'
-    },{
-      test: /\.scss$/,
-      loader: "style!css?sourceMap!sass?sourceMap&includePaths[]=" + path.resolve(__dirname, "./node_modules/compass-mixins/lib")
-    },{
+    { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap' ) },
+    //{ test: /\.scss$/,loader: "style!css?sourceMap!sass?sourceMap&includePaths[]=" + path.resolve(__dirname, "./node_modules/compass-mixins/lib")},
+    {
       test: /\.(jpe?g|png|gif)$/i,
       loaders: [
         'url?limit=10000&name=images/[hash:8].[name].[ext]',

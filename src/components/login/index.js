@@ -43,9 +43,10 @@ class Login extends Component {
 
   render() {
     const { actions,captchaUrl,sns } = this.props
+    const style = { marginTop: 20 + '%' }
     return (
       <div className="signin-box">
-        <div className="signin-container">
+        <div className="signin-container" style={style}>
             <h4 className="title">登 录</h4>
             <form className="signin-form form-horizontal" name="signinForm" onSubmit={this.handleSubmit} noValidate>
                 <div className="form-group">
