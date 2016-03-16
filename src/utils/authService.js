@@ -1,7 +1,8 @@
 import cookie from 'react-cookie'
+import { CookieDomain } from '../config'
 let cookieConfig = {}
-if(process.env.NODE_ENV === 'production'){
-  cookieConfig = {domain:'.jackhu.top'}
+if(CookieDomain !== ''){
+  cookieConfig = { domain: CookieDomain }
 }
 
 export function saveCookie(name,value) {

@@ -50,6 +50,8 @@ class Article extends Component {
     const {actions,params,auth} = this.props
     if(auth.token){
       actions.toggleLike(params.id)
+    }else{
+      this.openLoginModal()
     }
   }
   handleSubmitComment(e,content){

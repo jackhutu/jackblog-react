@@ -3,16 +3,13 @@ import ReactDOM from 'react-dom'
 import {MenuItem} from 'react-bootstrap'
 
 export default class CustomMenu extends Component {
-
   constructor(...args) {
     super(...args);
     this.state = { value: '' };
     this.onChange = e => this.setState({ value: e.target.value });
   }
-
   render() {
     let { className, ...props } = this.props;
-
     return (
       <div
         className={"dropdown-menu"}

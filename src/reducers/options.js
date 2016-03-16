@@ -1,7 +1,6 @@
-import {TAG_LIST,CHANGE_OPTIONS} from '../actions/ActionTypes'
+import { CHANGE_OPTIONS } from '../actions/ActionTypes'
 import { createReducer } from 'redux-immutablejs'
-import {fromJS,Map,List} from 'immutable'
-
+import { fromJS } from 'immutable'
 
 const initialState = fromJS({currentPage: 1, itemsPerPage: 10,sortName:'publish_time',tagId: ''})
 

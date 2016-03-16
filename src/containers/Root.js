@@ -10,7 +10,6 @@ import Settings from '../components/settings'
 import MobileApps from '../components/apps'
 import {redirectToBack,redirectToLogin} from '../utils/authService'
 
-
 function isDevTools() {
 	if(process.env.NODE_ENV !== 'production'){
 		return <DevTools />

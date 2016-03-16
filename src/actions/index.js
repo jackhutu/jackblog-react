@@ -1,26 +1,26 @@
-import {CHANGE_STYLE_MODE,GET_INDEX_IMG,TAG_LIST,ARTICLE_LIST,ARTICLE_DETAIL,COMMENT_LIST,PRENEXT_ARTICLE, CHANGE_OPTIONS,ADD_ARTICLE_LIST,REQUEST_ARTICLE_LIST,GET_CAPTCHAURL,TOGGLE_LIKE,FAILURE_ADD_COMMENT,SUCCESS_ADD_COMMENT,FAILURE_ADD_REPLY,SUCCESS_ADD_REPLY,SUCCESS_GET_APPS,FAILURE_GET_APPS} from './ActionTypes'
+import * as types from './ActionTypes'
 import fetch from 'isomorphic-fetch'
 import {API_ROOT} from '../config'
 import img from '../assets/images/shanghai.jpg'
 import querystring from 'querystring'
 import {saveCookie,getCookie} from '../utils/authService'
+import { showMsg } from './auth'
 
 //改变样式风格.
 export function changeStyleMode(text) {
-  return { type: CHANGE_STYLE_MODE }
+  return { type: types.CHANGE_STYLE_MODE }
 }
-//首页图片.
-//success
+//首页图片success
 function receiveIndexImage(json) {
 	return {
-	  type: GET_INDEX_IMG,
+	  type: types.GET_INDEX_IMG,
 	  indexImg: json.img
 	}
 }
 //Failure
 function failureIndexImage() {
 	return {
-	  type: GET_INDEX_IMG,
+	  type: types.GET_INDEX_IMG,
 	  indexImg: img
 	}
 }
@@ -47,7 +47,7 @@ export function getIndexImage() {
 //获取标签列表.
 function receiveTagList(json) {
 	return {
-	  type: TAG_LIST,
+	  type: types.TAG_LIST,
 	  tagList: json.data
 	}
 }
@@ -65,7 +65,7 @@ export function getTagList() {
 //初始文章列表
 function receiveArticleList(json,isMore) {
 	return {
-	  type: ARTICLE_LIST,
+	  type: types.ARTICLE_LIST,
 	  articleList: json.data,
 	  isMore:isMore
 	}
@@ -73,7 +73,7 @@ function receiveArticleList(json,isMore) {
 //加载更多文章
 function addArticleList(json,isMore) {
 	return {
-	  type: ADD_ARTICLE_LIST,
+	  type: types.ADD_ARTICLE_LIST,
 	  articleList: json.data,
 	  isMore:isMore
 	}
@@ -81,7 +81,7 @@ function addArticleList(json,isMore) {
 //发送请求
 function requestArticleList() {
   return {
-    type: REQUEST_ARTICLE_LIST
+    type: types.REQUEST_ARTICLE_LIST
   }
 }
 export function getArticleList(isAdd = true) {
@@ -99,7 +99,7 @@ export function getArticleList(isAdd = true) {
 //获取文章详情
 function receiveArticleDetail(article) {
 	return {
-		type: ARTICLE_DETAIL,
+		type: types.ARTICLE_DETAIL,
 		articleDetail: article
 	}
 }
@@ -130,7 +130,7 @@ export function getArticleDetail(id) {
 //获取评论
 function receiveCommentList(json) {
 	return {
-		type: COMMENT_LIST,
+		type: types.COMMENT_LIST,
 		commentList: json.data
 	}
 }
@@ -146,7 +146,7 @@ export function getCommentList(id) {
 //获取上下一篇文章
 function receivePrenext(json) {
 	return {
-		type: PRENEXT_ARTICLE,
+		type: types.PRENEXT_ARTICLE,
 		prenextArticle: json.data
 	}
 }
@@ -163,7 +163,7 @@ export function getPrenext(id) {
 //更改options
 export function changeOptions(option) {
 	return {
-		type: CHANGE_OPTIONS,
+		type: types.CHANGE_OPTIONS,
 		option: option
 	}
 }
@@ -171,7 +171,7 @@ export function changeOptions(option) {
 //切换Like
 function receiveToggleLike(json) {
 	return {
-		type: TOGGLE_LIKE,
+		type: types.TOGGLE_LIKE,
 		like_count: json.count,
 		isLike: json.isLike
 	}
@@ -197,16 +197,11 @@ export function toggleLike(aid) {
 //添加评论
 function receiveAddComment(comment) {
 	return {
-		type: SUCCESS_ADD_COMMENT,
+		type: types.SUCCESS_ADD_COMMENT,
 		comment: comment
 	}
 }
-function failureAddComment(err) {
-	return {
-		type: FAILURE_ADD_COMMENT,
-		errMsg: err.error_msg || '添加评论失败'
-	}
-}
+
 export function addComment(comment) {
 	return (dispatch,getState)=>{
 		return fetch(API_ROOT + 'comment/addNewComment',{
@@ -221,11 +216,12 @@ export function addComment(comment) {
 		}).then(response => response.json().then(json => ({json,response})))
 		.then(({json,response}) => {
 			if(!response.ok){
-				return dispatch(failureAddComment(json))
+				return dispatch(showMsg(json.error_msg || '添加评论失败'))
 			}
+			dispatch(showMsg('添加评论成功','success'))
 			return dispatch(receiveAddComment(json.data))
 		}).catch(e=>{
-			return dispatch(failureAddComment(e))
+			return dispatch(showMsg(e.error_msg || '添加评论失败'))
 		})
 	}
 }
@@ -233,17 +229,12 @@ export function addComment(comment) {
 //添加回复
 function receiveAddReply(cid,replys) {
 	return {
-		type: SUCCESS_ADD_REPLY,
+		type: types.SUCCESS_ADD_REPLY,
 		cid:cid,
 		replys: replys
 	}
 }
-function failureAddReply(err) {
-	return {
-		type: FAILURE_ADD_REPLY,
-		errMsg: err.error_msg || '添加回复失败'
-	}
-}
+
 export function addReply(cid,reply) {
 	return (dispatch,getState)=>{
 		return fetch(API_ROOT + 'comment/' + cid + '/addNewReply',{
@@ -258,11 +249,12 @@ export function addReply(cid,reply) {
 		}).then(response => response.json().then(json => ({json,response})))
 		.then(({json,response}) => {
 			if(!response.ok){
-				return dispatch(failureAddReply(json))
+				return dispatch(showMsg(json.error_msg || '添加回复失败'))
 			}
+			dispatch(showMsg('添加回复成功','success'))
 			return dispatch(receiveAddReply(cid,json.data))
 		}).catch(e=>{
-			return dispatch(failureAddReply(e))
+			return dispatch(showMsg(e.error_msg || '添加回复失败'))
 		})
 	}
 }
@@ -270,13 +262,13 @@ export function addReply(cid,reply) {
 //获取apps
 function receiveApps(apps) {
 	return {
-		type: SUCCESS_GET_APPS,
+		type: types.SUCCESS_GET_APPS,
 		apps:apps
 	}
 }
 function failureGetApps() {
 	return {
-		type: FAILURE_GET_APPS,
+		type: types.FAILURE_GET_APPS,
 	}
 }
 export function getApps() {

@@ -1,16 +1,18 @@
 import { combineReducers } from 'redux'
-import { routeReducer } from 'redux-simple-router'
-import {fromJS,Map,List} from 'immutable'
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import { fromJS,Map,List } from 'immutable'
 import { createReducer } from 'redux-immutablejs'
+import {reducer as formReducer} from 'redux-form'
+import {API_ROOT} from '../config'
 import {CHANGE_STYLE_MODE,GET_INDEX_IMG,GET_CAPTCHAURL} from '../actions/ActionTypes'
-import tagList from './tag'
 import {articleList, articleDetail,prenextArticle} from './article'
+import tagList from './tag'
 import commentList from './comment'
 import auth from './auth'
 import options from './options'
 import apps from './apps'
 import sns from './sns'
-import {API_ROOT} from '../config'
+import showmsg from './showmsg'
 
 const globalVal =  createReducer(fromJS({
 	indexImg:'',styleMode:'day-mode',
@@ -32,7 +34,9 @@ const rootReducer = combineReducers({
 	prenextArticle,
 	options,
 	auth,
-	routing: routeReducer
+	showmsg,
+	routing: routerReducer,
+	form: formReducer
 })
 
 export default rootReducer

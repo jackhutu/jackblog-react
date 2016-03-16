@@ -1,29 +1,42 @@
 import React,{Component,PropTypes} from 'react'
-import AlertContainer from 'react-alert'
-import {getCookie,removeCookie} from '../../utils/authService'
+import Alert from 'react-s-alert'
+import { getCookie,removeCookie } from '../../utils/authService'
 
 export default class toaster extends Component{
 	constructor(props){
 	  super(props);
-	  this.alertOptions = {
-	    offset: 14,
-	    position: 'top right',
-	    theme: 'dark',  //dark,light
-	    time: 2000,
-	    transition: 'fade' //scale,fade
-	  };
+	}
+
+	componentWillReceiveProps(nextProps){
+	  const { msg } = nextProps
+	  const { hideMsg } = this.props
+	  if(msg.content !== '' && msg.type){
+	  	switch(msg.type){
+	  		case 'error':
+	  			Alert.error(msg.content)
+	  		case 'success':
+	  			Alert.info(msg.content)
+	  		case 'info':
+	  			Alert.info(msg.content)
+	  		case 'warning':
+	  			Alert.warning(msg.content)
+	  		default:
+	  			Alert.error(msg.content)
+	  	}
+	  	hideMsg()
+	  }
 	}
 	componentDidMount() {
 	  let snsmsg = getCookie('snsmsg')
 	  if(snsmsg){
-	    snsmsg.msgtype === 'success'?msg.success(snsmsg.msg):msg.error(snsmsg.msg)
-	    removeCookie('snsmsg');
+	    snsmsg.msgtype === 'success'?Alert.success(snsmsg.msg):Alert.error(snsmsg.msg)
+	    removeCookie('snsmsg')
 	  }
 	}
 	render(){
 		return (
 		  <div>
-		  	<AlertContainer ref={(a) => global.msg = a} {...this.alertOptions} />
+		  	<Alert stack={{limit: 1}} position='top-right' timeout={3000} />
 		  </div>
 		)
 	}

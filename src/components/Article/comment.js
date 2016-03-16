@@ -36,13 +36,6 @@ export default class Comment extends Component{
 			openLoginModal()
 		}
 	}
-
-	componentWillReceiveProps(nextProps){
-	  const { commentList } = nextProps
-	  if(commentList.errMsg){
-	    msg.error(commentList.errMsg)
-	  }
-	}
 	
 	handleSubmitReply(e,i,cid){
 		e.preventDefault()

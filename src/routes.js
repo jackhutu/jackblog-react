@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, IndexRoute, Redirect } from 'react-router'
-
 import Home from './containers/Home'
 import Main from './components/main'
 import Article from './components/article'

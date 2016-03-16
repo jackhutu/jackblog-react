@@ -1,7 +1,6 @@
 import React,{Component,PropTypes} from 'react'
 
 export default class Content extends Component{
-
 	render(){
 		const {articleDetail} = this.props
 		return(
@@ -15,6 +14,5 @@ export default class Content extends Component{
 			  <div className="markdown-content" dangerouslySetInnerHTML={{__html: articleDetail.content}} />
 			</div>
 		)
-
 	}
 }

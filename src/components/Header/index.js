@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
-import {Link} from 'react-router'
+import { Link } from 'react-router'
+import { Dropdown } from 'react-bootstrap'
 import defaultAvatar from '../../assets/images/avatar.png'
-import {Dropdown} from 'react-bootstrap'
 
 export default class Header extends Component{
 	constructor(props){
@@ -28,6 +28,9 @@ export default class Header extends Component{
 
 			  <div className="navbar-expanded">
 			      <div>
+				      <a className="navbar-item expanded-version" href="http://angular2.jackhu.top" title="Angular2.x">
+				        <img src='http://upload.jackhu.top/icons/angular2.png-32x32' /> 
+				      </a>
 				      <a className="navbar-item expanded-version" href="http://vue.jackhu.top" title="Vue">
 				      	<img src='http://upload.jackhu.top/icons/vue.png-32x32' /> 
 				      </a>
@@ -59,7 +62,6 @@ export default class Header extends Component{
 			      	</div>
 			      }
 			  </div>
-
 			  <div className="navbar-shrink">
 			  	{(auth.token && auth.user)?
 	  		    <Dropdown id="dropdown-custom-menu" className="pull-right">
@@ -104,6 +106,11 @@ export default class Header extends Component{
 				  	<a className="navbar-item expanded-version" href="http://vue.jackhu.top" title="Vue">
 				  		<img src='http://upload.jackhu.top/icons/vue.png-16x16' /> 
 				  	</a>
+			  	</div>
+			  	<div className="pull-right">
+			  	  <a className="navbar-item expanded-version" href="http://angular2.jackhu.top" title="Agnular2.x">
+			  	    <img src='http://upload.jackhu.top/icons/angular2.png-16x16' /> 
+			  	  </a>
 			  	</div>
 			  </div>
 			</div>

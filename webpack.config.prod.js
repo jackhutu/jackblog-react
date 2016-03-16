@@ -6,7 +6,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     vendor: ['react','redux','react-redux','react-router'],
-    bundle: './src/index'
+    bundle: path.join(__dirname,'src/index.js')
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -30,9 +30,9 @@ module.exports = {
     }),
     new ExtractTextPlugin('[hash:8].style.css', { allChunks: true }),
     new HtmlWebpackPlugin({
-      favicon:'./src/favicon.ico',
-      title: "JackHu's blog",
-      template: path.join(__dirname,'src/index.html'),  //模板文件
+      favicon:path.join(__dirname,'src/favicon.ico'),
+      title: "Jackblog react redux版",
+      template: path.join(__dirname,'src/index.html'),
       inject:'body',
       hash:false,    //为静态资源生成hash值
       minify:{    //压缩HTML文件
@@ -65,7 +65,7 @@ module.exports = {
   },
   resolve: {
     root: path.resolve(__dirname, 'node_modules'),
-    extensions: ['','.js','.scss']
+    extensions: ['','.js','.jsx','.scss','.css']
   }
 }
 

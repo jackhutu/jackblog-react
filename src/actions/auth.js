@@ -1,22 +1,30 @@
-import {GET_CAPTCHAURL,LOGIN_SUCCESS,LOGIN_FAILURE,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_FAILURE,UPDATE_USER_SUCCESS,SUCCESS_GET_SNSLOGINS,FAILURE_GET_SNSLOGINS} from './ActionTypes'
+import * as types from './ActionTypes'
 import {API_ROOT} from '../config'
 import fetch from 'isomorphic-fetch'
-import { pushPath } from 'redux-simple-router'
+import { push } from 'react-router-redux'
 import {saveCookie,getCookie,signOut} from '../utils/authService'
+
+export function showMsg (content,type='error'){
+	return {
+		type: types.SHOW_MSG,
+		message: { content:content,type:type }
+	}
+}
+
+export function hideMsg () {
+	return {
+		type: types.HIDE_MSG
+	}
+}
 
 //登录
 function loginSuccess(token) {
 	return {
-		type: LOGIN_SUCCESS,
+		type: types.LOGIN_SUCCESS,
 		token: token
 	}
 }
-function loginFailure(err) {
-	return {
-		type: LOGIN_FAILURE,
-		errMsg : err.error_msg || '登录失败'
-	}
-}
+
 export function localLogin(userInfo) {
 	return (dispatch,getState) =>{
 		return fetch(API_ROOT + 'auth/local',{
@@ -30,17 +38,20 @@ export function localLogin(userInfo) {
 		}).then(response => response.json().then(json => ({ json, response })))
 		  .then(({json,response}) => {
 		  	if(!response.ok){
-		  		return dispatch(loginFailure(json))
+		  		dispatch(getCaptchaUrl())
+		  		return dispatch(showMsg(json.error_msg || '登录失败'))
 		  	}
 		  	//得到token,并存储
 		  	saveCookie('token',json.token)
 		  	//获取用户信息
 		  	dispatch(getUserInfo(json.token))
 		  	dispatch(loginSuccess(json.token))
-		  	dispatch(pushPath('/'))
+		  	dispatch(showMsg('登录成功,欢迎光临!','success'))
+		  	dispatch(push('/'))
 		  }).catch( err =>{
 		  	//登录异常
-		  	return dispatch(loginFailure(err))
+		  	dispatch(getCaptchaUrl())
+		  	return dispatch(showMsg(err.error_msg || '登录失败'))
 		  })
 	}
 
@@ -49,7 +60,7 @@ export function localLogin(userInfo) {
 //获取验证码
 export function getCaptchaUrl() {
 	return {
-		type: GET_CAPTCHAURL,
+		type: types.GET_CAPTCHAURL,
 		captchaUrl: API_ROOT + 'users/getCaptcha?' + Math.random()
 	}
 }
@@ -57,13 +68,13 @@ export function getCaptchaUrl() {
 //获取用户信息
 function receiveUserInfo(user) {
 	return {
-		type: USERINFO_SUCCESS,
+		type: types.USERINFO_SUCCESS,
 		user: user
 	}
 }
 function failureUserInfo() {
 	return {
-		type: USERINFO_FAILURE
+		type: types.USERINFO_FAILURE
 	}
 }
 export function getUserInfo(token) {
@@ -89,20 +100,14 @@ export function getUserInfo(token) {
 export function logout() {
   return dispatch => {
   	signOut()
-    dispatch({type: LOGOUT_USER})
-    dispatch(pushPath('/'))
+    dispatch({type: types.LOGOUT_USER})
+    dispatch(push('/'))
   }
 }
 //修改用户资料
-function failureUpdateUser(err) {
-	return {
-		type: UPDATE_USER_FAILURE,
-		errMsg : err.error_msg || '更新用户资料失败'
-	}
-}
 function successUpdateUser(user) {
 	return {
-		type: UPDATE_USER_SUCCESS,
+		type: types.UPDATE_USER_SUCCESS,
 		user:user
 	}
 }
@@ -120,11 +125,12 @@ export function updateUser(userInfo) {
 		}).then(response => response.json().then(json => ({json,response})))
 		.then(({json,response}) => {
 			if(!response.ok){
-				return dispatch(failureUpdateUser(json.data))
+				return dispatch(showMsg(json.error_msg || '更新用户资料失败'))
 			}
+			dispatch(showMsg('更新用户资料成功','success'))
 			return dispatch(successUpdateUser(json.data))
 		}).catch(err=>{
-			return dispatch(failureUpdateUser(err))
+			return dispatch(showMsg(err.error_msg || '更新用户资料失败'))
 		})
 	}
 }
@@ -133,13 +139,13 @@ export function updateUser(userInfo) {
 //获取sns
 function receiveSnsLogins(logins) {
 	return {
-		type: SUCCESS_GET_SNSLOGINS,
+		type: types.SUCCESS_GET_SNSLOGINS,
 		logins:logins
 	}
 }
 function failureSnsLogins() {
 	return {
-		type: FAILURE_GET_SNSLOGINS,
+		type: types.FAILURE_GET_SNSLOGINS,
 	}
 }
 export function getSnsLogins() {

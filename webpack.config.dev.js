@@ -7,21 +7,26 @@ module.exports = {
   devtool: 'eval-source-map',
   debug:true,
   entry: [
-    'webpack/hot/only-dev-server',
-    './src/index'
+    path.join(__dirname,'src/index.js')
   ],
   output: {
-    path: process.cwd(),
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/'
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env':{
+        'NODE_ENV': JSON.stringify('development')
+      }
+    }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'src/index.html',
+      favicon:path.join(__dirname,'src/favicon.ico'),
+      title: "Jackblog react redux版",
+      template: path.join(__dirname,'src/index.html'),
       inject: true
     }),
     new ExtractTextPlugin('[hash:8].style.css', { allChunks: true })
@@ -50,7 +55,7 @@ module.exports = {
   },
   resolve: {
     root: path.resolve(__dirname, 'node_modules'),
-    extensions: ['','.js','.scss']
+    extensions: ['','.js','.jsx','.scss','.css']
   }
 }
 

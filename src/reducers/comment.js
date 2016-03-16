@@ -1,4 +1,4 @@
-import {COMMENT_LIST,FAILURE_ADD_COMMENT,SUCCESS_ADD_COMMENT,FAILURE_ADD_REPLY,SUCCESS_ADD_REPLY} from '../actions/ActionTypes'
+import {COMMENT_LIST,SUCCESS_ADD_COMMENT,SUCCESS_ADD_REPLY} from '../actions/ActionTypes'
 import { createReducer } from 'redux-immutablejs'
 import {fromJS,Map,List} from 'immutable'
 
@@ -30,7 +30,5 @@ export default createReducer(initialState,{
 				return item
 			})
 		})
-	},
-	[FAILURE_ADD_COMMENT]:(state,action)=> state.set('errMsg',action.errMsg),
-	[FAILURE_ADD_REPLY]: (state,action)=> state.set('errMsg',action.errMsg)
+	}
 })
