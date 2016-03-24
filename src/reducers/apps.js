@@ -1,8 +1,8 @@
-import {SUCCESS_GET_APPS,FAILURE_GET_APPS} from '../actions/ActionTypes'
+import { GET_APPS_SUCCESS,GET_APPS_FAILURE } from '../actions/types'
 import { createReducer } from 'redux-immutablejs'
 import {Map,List} from 'immutable'
 
 export default createReducer(List(), {
-  [FAILURE_GET_APPS]: (state, action) => state,
-  [SUCCESS_GET_APPS]: (state,action) => state.merge(action.apps)
+  [GET_APPS_FAILURE]: (state, action) => state,
+  [GET_APPS_SUCCESS]: (state,{json}) => state.merge(json.data)
 })

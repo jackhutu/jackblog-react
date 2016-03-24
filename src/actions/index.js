@@ -1,101 +1,16 @@
-import * as types from './ActionTypes'
-import fetch from 'isomorphic-fetch'
+import * as types from './types'
+import api from '../api'
 import {API_ROOT} from '../config'
-import img from '../assets/images/shanghai.jpg'
 import querystring from 'querystring'
 import {saveCookie,getCookie} from '../utils/authService'
 import { showMsg } from './auth'
 
-//改变样式风格.
-export function changeStyleMode(text) {
-  return { type: types.CHANGE_STYLE_MODE }
-}
-//首页图片success
-function receiveIndexImage(json) {
-	return {
-	  type: types.GET_INDEX_IMG,
-	  indexImg: json.img
-	}
-}
-//Failure
-function failureIndexImage() {
-	return {
-	  type: types.GET_INDEX_IMG,
-	  indexImg: img
-	}
-}
+export * from './article'
+export * from './other'
 
-function fetchIndexImage(){
-  return dispatch => {
-    return fetch(API_ROOT + 'article/getIndexImage')
-      .then(response => response.json())
-      .then(json => {
-        return dispatch(receiveIndexImage(json))
-      })
-      .catch(error => {
-      	return dispatch(failureIndexImage())
-      })
-  }
-}
 
-export function getIndexImage() {
-	return (dispatch, getState) => {
-		return dispatch(fetchIndexImage())
-	}
-}
 
-//获取标签列表.
-function receiveTagList(json) {
-	return {
-	  type: types.TAG_LIST,
-	  tagList: json.data
-	}
-}
-export function getTagList() {
-	return (dispatch, getState) => {
-		return fetch(API_ROOT + 'tags/getFrontTagList')
-		  .then(response => response.json())
-		  .then(json => {
-		    return dispatch(receiveTagList(json))
-		  })
-	}
-}
 
-/*获取文章列表*/
-//初始文章列表
-function receiveArticleList(json,isMore) {
-	return {
-	  type: types.ARTICLE_LIST,
-	  articleList: json.data,
-	  isMore:isMore
-	}
-}
-//加载更多文章
-function addArticleList(json,isMore) {
-	return {
-	  type: types.ADD_ARTICLE_LIST,
-	  articleList: json.data,
-	  isMore:isMore
-	}
-}
-//发送请求
-function requestArticleList() {
-  return {
-    type: types.REQUEST_ARTICLE_LIST
-  }
-}
-export function getArticleList(isAdd = true) {
-	return (dispatch,getState) => {
-		dispatch(requestArticleList())
-		const options = getState().options.toJS()
-		return fetch(API_ROOT + 'article/getFrontArticleList?' + querystring.stringify(options))
-		  .then(response => response.json())
-		  .then(json => {
-		  	const isMore = !(json.data.length < options.itemsPerPage)
-		    return isAdd?dispatch(addArticleList(json,isMore)):dispatch(receiveArticleList(json,isMore))
-		  })
-	}
-}
 //获取文章详情
 function receiveArticleDetail(article) {
 	return {
@@ -260,29 +175,35 @@ export function addReply(cid,reply) {
 }
 
 //获取apps
-function receiveApps(apps) {
+export const getApps = () =>{
 	return {
-		type: types.SUCCESS_GET_APPS,
-		apps:apps
+		type: types.GET_APPS,
+		promise: api.getApps()
 	}
 }
-function failureGetApps() {
-	return {
-		type: types.FAILURE_GET_APPS,
-	}
-}
-export function getApps() {
-	return (dispatch,getState)=>{
-		return fetch(API_ROOT + 'mobile/getApps')
-		.then(response => response.json().then(json => ({json,response})))
-		.then(({json,response}) => {
-			if(!response.ok){
-				return dispatch(failureGetApps())
-			}
-			return dispatch(receiveApps(json.data))
-		}).catch(e=>{
-			return dispatch(failureGetApps())
-		})
-	}
-}
+// function receiveApps(apps) {
+// 	return {
+// 		type: types.SUCCESS_GET_APPS,
+// 		apps:apps
+// 	}
+// }
+// function failureGetApps() {
+// 	return {
+// 		type: types.FAILURE_GET_APPS,
+// 	}
+// }
+// export function getApps() {
+// 	return (dispatch,getState)=>{
+// 		return api.getApps()
+// 		.then(response => ({json: response.data, status: response.statusText}))
+// 		.then(({json,status}) => {
+// 			if(status !== 'OK'){
+// 				return dispatch(failureGetApps())
+// 			}
+// 			return dispatch(receiveApps(json.data))
+// 		}).catch(e=>{
+// 			return dispatch(failureGetApps())
+// 		})
+// 	}
+// }
 

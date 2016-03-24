@@ -3,13 +3,14 @@ import thunkMiddleware from 'redux-thunk'
 import { routerMiddleware, push } from 'react-router-redux'
 import { Router, Route, browserHistory } from 'react-router'
 import {persistState} from 'redux-devtools'
+import promiseMiddleware from '../api/promiseMiddleware'
 import DevTools from '../containers/DevTools'
 import rootReducer from '../reducers'
 //使用chrome 扩展来做调试工具.
 // window.devToolsExtension ? window.devToolsExtension() : f => f
 
 let finalCreateStore
-const middleware = applyMiddleware(routerMiddleware(browserHistory),thunkMiddleware)
+const middleware = applyMiddleware(routerMiddleware(browserHistory),thunkMiddleware,promiseMiddleware)
 if(process.env.NODE_ENV === 'production'){
   finalCreateStore = compose(middleware)
 }else{

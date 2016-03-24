@@ -1,4 +1,11 @@
-import {ARTICLE_LIST,ARTICLE_DETAIL,PRENEXT_ARTICLE,ADD_ARTICLE_LIST,REQUEST_ARTICLE_LIST,TOGGLE_LIKE} from '../actions/ActionTypes'
+import {
+	ARTICLE_LIST_REQUEST,
+	ARTICLE_LIST_SUCCESS,
+	ARTICLE_LIST_FAILURE,
+	ARTICLE_DETAIL,
+	PRENEXT_ARTICLE,
+	TOGGLE_LIKE
+} from '../actions/types'
 import { createReducer } from 'redux-immutablejs'
 import {fromJS,Map,List} from 'immutable'
 
@@ -9,12 +16,12 @@ const initialState = fromJS({
 })
 
 export const articleList = createReducer(initialState,{
-	[REQUEST_ARTICLE_LIST]: (state,action)=>state.set('isFetching',true),
-	[ARTICLE_LIST]: (state,action)=>{
+	[ARTICLE_LIST_REQUEST]: (state,action)=>state.set('isFetching',true),
+	[ARTICLE_LIST_SUCCESS]: (state,action)=>{
 		return state.merge({
 			isFetching:false,
 			isMore: action.isMore,
-			items: action.articleList
+			items: action.isAdd?state.get('items').concat(action.articleList):action.articleList
 		})
 	},
 	[ADD_ARTICLE_LIST]: (state,action)=>{

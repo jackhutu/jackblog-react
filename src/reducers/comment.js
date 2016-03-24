@@ -1,4 +1,4 @@
-import {COMMENT_LIST,SUCCESS_ADD_COMMENT,SUCCESS_ADD_REPLY} from '../actions/ActionTypes'
+import {COMMENT_LIST,SUCCESS_ADD_COMMENT,SUCCESS_ADD_REPLY} from '../actions/types'
 import { createReducer } from 'redux-immutablejs'
 import {fromJS,Map,List} from 'immutable'
 

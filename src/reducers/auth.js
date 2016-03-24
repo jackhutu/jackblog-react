@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_SUCCESS} from '../actions/ActionTypes'
+import {LOGIN_SUCCESS,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_SUCCESS} from '../actions/types'
 import {saveCookie,getCookie,signOut} from '../utils/authService'
 import { createReducer } from 'redux-immutablejs'
 import {fromJS,Map,List} from 'immutable'

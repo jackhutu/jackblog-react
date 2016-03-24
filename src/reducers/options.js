@@ -1,4 +1,4 @@
-import { CHANGE_OPTIONS } from '../actions/ActionTypes'
+import { CHANGE_OPTIONS } from '../actions/types'
 import { createReducer } from 'redux-immutablejs'
 import { fromJS } from 'immutable'
 

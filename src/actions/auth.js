@@ -1,4 +1,4 @@
-import * as types from './ActionTypes'
+import * as types from './types'
 import {API_ROOT} from '../config'
 import fetch from 'isomorphic-fetch'
 import { push } from 'react-router-redux'
