@@ -1,21 +1,20 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Header from '../components/header'
+import Header from '../components/Header'
 import * as Actions from '../actions'
-import * as AuthActions from '../actions/auth'
 import Toaster from '../components/Toaster'
-import ScrollTop from '../components/scrollTop'
+import ScrollTop from '../components/ScrollTop'
 
-class Home extends Component {
+class App extends Component {
   constructor(props){
     super(props)
   }
   componentDidMount() {
-    const { actions,authActions,auth } = this.props
+    const { actions,auth } = this.props
     actions.getIndexImage()
     if(auth.token && !auth.user){
-      authActions.getUserInfo(auth.token)
+      actions.getUserInfo(auth.token)
     }
   }
   componentWillReceiveProps(nextProps){
@@ -25,19 +24,19 @@ class Home extends Component {
     }
   }
   render() {
-    const { globalVal,actions,children,auth,authActions,location,showmsg } = this.props
+    const { globalVal,actions,children,auth,location,showmsg } = this.props
     return (
       <div>
-        <Header styleMode={globalVal.styleMode} auth={auth} logout={authActions.logout} location={location} changeStyleMode={actions.changeStyleMode} />
+        <Header styleMode={globalVal.styleMode} auth={auth} logout={actions.logout} location={location} changeStyleMode={actions.changeStyleMode} />
         {children}
-        <Toaster msg={showmsg} hideMsg={authActions.hideMsg} />
+        <Toaster msg={showmsg} hideMsg={actions.hideMsg} />
         <ScrollTop />
       </div>
     )
   }
 }
 
-Home.propTypes = {
+App.propTypes = {
   globalVal: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   showmsg: PropTypes.object.isRequired,
@@ -55,12 +54,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Actions, dispatch),
-    authActions: bindActionCreators(AuthActions, dispatch)
+    actions: bindActionCreators(Actions, dispatch)
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home)
+)(App)

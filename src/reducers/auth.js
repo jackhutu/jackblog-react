@@ -1,4 +1,10 @@
-import {LOGIN_SUCCESS,USERINFO_SUCCESS,LOGOUT_USER,USERINFO_FAILURE,UPDATE_USER_SUCCESS} from '../actions/types'
+import {
+	LOGIN_SUCCESS,
+	GET_USERINFO_SUCCESS,
+	LOGOUT_USER,
+	USERINFO_FAILURE,
+	UPDATE_USER_SUCCESS
+} from '../actions/types'
 import {saveCookie,getCookie,signOut} from '../utils/authService'
 import { createReducer } from 'redux-immutablejs'
 import {fromJS,Map,List} from 'immutable'
@@ -14,9 +20,9 @@ export default createReducer(initialState,{
 			token: action.token
 		})
 	},
-	[USERINFO_SUCCESS]: (state,action)=>{
+	[GET_USERINFO_SUCCESS]: (state,{json})=>{
 		return state.merge({
-			user: action.user
+			user: json
 		})
 	},
 	[USERINFO_FAILURE]: (state,action)=> state.set('user',null),

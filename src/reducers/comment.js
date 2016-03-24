@@ -1,26 +1,31 @@
-import {COMMENT_LIST,SUCCESS_ADD_COMMENT,SUCCESS_ADD_REPLY} from '../actions/types'
+import { 
+	COMMENT_LIST_SUCCESS,
+	COMMENT_LIST_FAILURE,
+	ADD_COMMENT_SUCCESS,
+	ADD_REPLY_SUCCESS
+} from '../actions/types'
 import { createReducer } from 'redux-immutablejs'
 import {fromJS,Map,List} from 'immutable'
 
 const initialState = fromJS({
 	isFetching: false,
-	errMsg: null,
 	items: []
 })
 export default createReducer(initialState,{
-	[COMMENT_LIST]: (state,action)=>{
+	[COMMENT_LIST_SUCCESS]: (state,{json})=>{
 		return state.merge({
 			errMsg:null,
-			items: fromJS(action.commentList)
+			items: fromJS(json.data)
 		})
 	},
-	[SUCCESS_ADD_COMMENT]:(state,action)=>{
+	[COMMENT_LIST_FAILURE]: (state,action)=> state,
+	[ADD_COMMENT_SUCCESS]:(state,action)=>{
 		return state.mergeDeep({
 			errMsg:null,
 			items: state.get('items').push(action.comment)
 		})
 	},
-	[SUCCESS_ADD_REPLY]: (state,action)=>{
+	[ADD_REPLY_SUCCESS]: (state,action)=>{
 		return state.mergeDeep({
 			errMsg: null,
 			items: state.get('items').map(item=>{

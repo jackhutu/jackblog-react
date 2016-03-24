@@ -1,18 +1,18 @@
 import {UserResource,AuthResource,ArticleResource,TagResource,MobileResource,CommentResource} from './resources'
 
 export default {
-  // localLogin: function (data) {
-  //   return AuthResource.save({id:'local'},data)
-  // },
-  // getSnsLogins: function () {
-  //   return UserResource.get({id:'snsLogins'})
-  // },
-  // getMe: function () {
-  //   return UserResource.get({id:'me'})
-  // },
-  // mdUser: function (data) {
-  //   return UserResource.update({id:'mdUser'},data)
-  // },
+  localLogin: function (data) {
+    return AuthResource('post', 'local', data)
+  },
+  getSnsLogins: function () {
+    return UserResource('get', 'snsLogins')
+  },
+  getMe: function (data) {
+    return UserResource('get', 'me', data)
+  },
+  mdUser: function (data) {
+    return UserResource('put', 'mdUser', data)
+  },
   getTagList:function () {
     return TagResource('get','getFrontTagList')
   },
@@ -26,32 +26,29 @@ export default {
   getArticleList:function (options) {
     return ArticleResource('get', 'getFrontArticleList', null, {params:options})
   },
-  // getFrontArticleCount:function () {
-  //   return ArticleResource.get({id: 'getFrontArticleCount'})
-  // },
-  // getFrontArticle:function (id) {
-  //   return ArticleResource.get({id: id, controller: 'getFrontArticle'})
-  // },
-  // toggleLike:function (id) {
-  //   return ArticleResource.update({id:id,controller:'toggleLike'},{})
-  // },
-  // getPrenext:function (id,options) {
-  //   return ArticleResource.get({id:id,controller: 'getPrenext', ...options})
-  // },
+  getArticleDetaile:function (id) {
+    return ArticleResource('get', id, 'getFrontArticle')
+  },
+  toggleLike:function (id) {
+    return ArticleResource('put',id,'toggleLike')
+  },
+  getPrenext:function (id,options) {
+    return ArticleResource('get',id,'getPrenext', {params:options})
+  },
   //comment
-  // getFrontCommentList:function (id) {
-  //   return CommentResource.get({id:id,controller: 'getFrontCommentList'})
-  // },
-  // addNewComment:function (data) {
-  //   return CommentResource.save({id:'addNewComment'},data)
-  // },
-  // addNewReply: function (id,data) {
-  //   return CommentResource.save({id:id, controller:'addNewReply'},data)
-  // },
-  // delComment:function (id) {
-  //   return CommentResource.remove({id:id})
-  // },
-  // delReply: function (id,data) {
-  //   return CommentResource.update({id:id, controller:'delReply'},data)
-  // }
+  getCommentList:function (id) {
+    return CommentResource('get',id,'getFrontCommentList')
+  },
+  addNewComment:function (data) {
+    return CommentResource('post', 'addNewComment', null, data)
+  },
+  addNewReply: function (id,data) {
+    return CommentResource('post', id, 'addNewReply', data)
+  },
+  delComment:function (id) {
+    return CommentResource('delete', id)
+  },
+  delReply: function (id,data) {
+    return CommentResource('delete', id, 'delReply', data)
+  }
 }

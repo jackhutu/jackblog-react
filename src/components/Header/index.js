@@ -18,7 +18,7 @@ export default class Header extends Component{
 		return (
 			<div className="navbar-box navbar-skin">
 			  <div className="navbar-menu">
-			      <Link className={"navbar-item logo " + (location.pathname !== '/apps'&&'active')} title="首页" to="/">
+			      <Link className={"navbar-item logo " + (location.pathname !== 'apps'&&'active')} title="首页" to="/">
 			        Hu
 			      </Link>
 			      <Link activeClassName="active" className="navbar-item mobile hidden-xs" title="移动应用" to="/apps">

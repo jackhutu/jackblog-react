@@ -9,7 +9,7 @@ import Sidebar from './sidebar'
 import Footer from './footer'
 import LoadMore from './LoadMore'
 
-class Main extends Component {
+class Home extends Component {
   constructor(props){
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -50,7 +50,7 @@ class Main extends Component {
   }
 }
 
-Main.propTypes = {
+Home.propTypes = {
   globalVal: PropTypes.object.isRequired,
   //tagList: PropTypes.instanceOf(Immutable.List).isRequired,
   tagList: PropTypes.array.isRequired,
@@ -77,4 +77,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Main)
+)(Home)

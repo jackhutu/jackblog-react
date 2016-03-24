@@ -2,14 +2,13 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from '../../actions'
-import * as authActions from '../../actions/auth'
 import {Link} from 'react-router'
 import {formatDate} from '../../utils'
 import Like from './like'
 import Prenext from './prenext'
 import Comment from './comment'
 import Content from './content'
-import LoginModal from '../login/modal'
+import LoginModal from '../Login/modal'
 
 class Article extends Component {
   constructor(props){
@@ -22,9 +21,9 @@ class Article extends Component {
     this.state = {showModal:false}
   }
   componentDidMount() {
-    const { params: { id },authActions } = this.props
+    const { params: { id },actions } = this.props
     this.fetchArticleData(id)
-    authActions.getSnsLogins()
+    actions.getSnsLogins()
   }
 
   componentDidUpdate (prevProps) {
@@ -114,8 +113,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Actions, dispatch),
-    authActions: bindActionCreators(authActions,dispatch)
+    actions: bindActionCreators(Actions, dispatch)
   }
 }
 

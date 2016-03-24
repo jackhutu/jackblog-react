@@ -17,11 +17,7 @@ if(process.env.NODE_ENV === 'production'){
   finalCreateStore = compose(
     middleware,
     DevTools.instrument(),
-    persistState(
-      window.location.href.match(
-        /[?&]debug_session=([^&]+)\b/
-      )
-    )
+    persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
   )
 }
 

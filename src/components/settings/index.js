@@ -2,16 +2,18 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
-import * as Actions from '../../actions/auth'
+import * as Actions from '../../actions'
 
 const validate = values => {
-  const errors = {};
+  const errors = {}
   if (!values.nickname) {
-    errors.nickname = 'Required';
+    errors.nickname = 'Required'
+  } else if (values.nickname.length <= 2 || values.nickname.length >15) {
+    errors.nickname = '请输入2-15字符,中英文,数字和下划线'
   } else if (!/^[(\u4e00-\u9fa5)0-9a-zA-Z\_\s@]+$/.test(values.nickname)) {
-    errors.nickname = '无效电子邮件地址';
+    errors.nickname = '呢称不合法'
   }
-  return errors;
+  return errors
 };
 
 @reduxForm({

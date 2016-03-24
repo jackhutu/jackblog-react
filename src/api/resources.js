@@ -47,8 +47,3 @@ export const CommentResource = (method, id, controller, data, api='comment') => 
 export const MobileResource = (method, id, data, api='mobile') => {
   return axios[method](api + (id ? ('/' + id) : ''), data);
 }
-// export const AuthResource = Vue.resource(API_ROOT + 'auth{/id}')
-// export const ArticleResource = Vue.resource(API_ROOT + 'article{/id}{/controller}')
-// export const TagResource = Vue.resource(API_ROOT + 'tags{/id}')
-// export const CommentResource = Vue.resource(API_ROOT + 'comment{/id}{/controller}')
-// export const MobileResource = Vue.resource(API_ROOT + 'mobile{/id}')

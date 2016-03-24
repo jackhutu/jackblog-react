@@ -15,7 +15,7 @@ export default class toaster extends Component{
 	  		case 'error':
 	  			Alert.error(msg.content)
 	  		case 'success':
-	  			Alert.info(msg.content)
+	  			Alert.success(msg.content)
 	  		case 'info':
 	  			Alert.info(msg.content)
 	  		case 'warning':

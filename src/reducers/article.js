@@ -2,9 +2,12 @@ import {
 	ARTICLE_LIST_REQUEST,
 	ARTICLE_LIST_SUCCESS,
 	ARTICLE_LIST_FAILURE,
-	ARTICLE_DETAIL,
-	PRENEXT_ARTICLE,
-	TOGGLE_LIKE
+	ARTICLE_DETAIL_SUCCESS,
+	ARTICLE_DETAIL_FAILURE,
+	PRENEXT_ARTICLE_SUCCESS,
+	PRENEXT_ARTICLE_FAILURE,
+	TOGGLE_LIKE_SUCCESS,
+	TOGGLE_LIKE_FAILURE
 } from '../actions/types'
 import { createReducer } from 'redux-immutablejs'
 import {fromJS,Map,List} from 'immutable'
@@ -20,32 +23,28 @@ export const articleList = createReducer(initialState,{
 	[ARTICLE_LIST_SUCCESS]: (state,action)=>{
 		return state.merge({
 			isFetching:false,
-			isMore: action.isMore,
-			items: action.isAdd?state.get('items').concat(action.articleList):action.articleList
+			isMore: !(action.json.data.length < action.itemsPerPage),
+			items: action.isAdd?state.get('items').concat(action.json.data):action.json.data
 		})
 	},
-	[ADD_ARTICLE_LIST]: (state,action)=>{
-		return state.merge({
-		  isFetching: false,
-		  isMore: action.isMore,
-		  items: state.get('items').concat(action.articleList)
-		})
-	}
-
+	[ARTICLE_LIST_FAILURE]: (state,action)=>state.set('isFetching',false)
 })
 
 export const articleDetail = createReducer(fromJS({}),{
-	[ARTICLE_DETAIL]:(state,action)=>state.merge(action.articleDetail),
-	[TOGGLE_LIKE]:(state,action)=>{
+	[ARTICLE_DETAIL_SUCCESS]:(state,action)=>state.merge(action.articleDetail),
+	[ARTICLE_DETAIL_FAILURE]:(state,action)=>state,
+	[TOGGLE_LIKE_SUCCESS]:(state,action)=>{
 		return state.merge({
 			isLike:action.isLike, 
 			like_count:action.like_count
 		})
-	}
+	},
+	[TOGGLE_LIKE_FAILURE]:(state,action)=>state
 })
 
 export const prenextArticle = createReducer(fromJS({
 	'next':{},'prev':{}
 }),{
-	[PRENEXT_ARTICLE]:(state,action)=>state.merge(action.prenextArticle)
+	[PRENEXT_ARTICLE_SUCCESS]:(state,{json})=>state.merge(json.data),
+	[PRENEXT_ARTICLE_FAILURE]:(state,{json})=>state
 })

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
-import * as Actions from '../../actions/auth'
+import * as Actions from '../../actions'
 import SNSLogin from './snsLogin'
 
 const validate = values => {
