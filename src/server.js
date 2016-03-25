@@ -11,7 +11,9 @@ function fetchAllData(dispatch, components, params) {
     	.reduce((prev,current)=>{
     		return current.fetchData(params).concat(prev)
     	},[])
-    	.map(x=>dispatch(x))
+    	.map(x=>{
+    		return dispatch(x)
+    	})
   return Promise.all(needs)
 }
 
@@ -25,37 +27,26 @@ export default function render(req, res) {
 	  } else if (redirectLocation) {
 	    res.redirect(302, redirectLocation.pathname + redirectLocation.search);
 	  } else if (renderProps) {
-
 	    const InitialView = (
 	      <Provider store={store}>
 	          <RouterContext {...renderProps} />
 	      </Provider>
 	    )
-
 	    fetchAllData(store.dispatch, renderProps.components, renderProps.params)
 	    .then(html=>{
 	    	const componentHTML = renderToString(InitialView)
 	    	const initialState = store.getState()
-	    	  console.dir(initialState.articleList.toJS())
+	    	console.dir(initialState.tagList.toJS())
+	    	res.render('index', {
+	    	    __html__: html,
+	    	    __state__: JSON.stringify(initialState)
+	    	})
+	    }).catch(err => {
+	      res.render('index', {
+	          __html__: "",
+	          __state__: {}
+	      })
 	    })
-	    .catch(err => {
-	      //res.end(renderFullPage("",{}));
-	    });
-	    //This method waits for all render component promises to resolve before returning to browser
-	    // fetchInitialData(store.dispatch, renderProps.components, renderProps.params)
-	    // .then(html => {
-	    //   const componentHTML = renderToString(InitialView)
-	    //   const initialState = store.getState()
-	    //   //console.dir(initialState.tagList.toJS())
-	    //   // res.status(200).end(renderFullPage(componentHTML, initialState, {
-	    //   //   title: headconfig.title,
-	    //   //   meta: headconfig.meta,
-	    //   //   link: headconfig.link
-	    //   // }));
-	    // })
-	    // .catch(err => {
-	    //   //res.end(renderFullPage("",{}));
-	    // });
 	  } else {
 	    res.status(404).send('Not Found');
 	  }

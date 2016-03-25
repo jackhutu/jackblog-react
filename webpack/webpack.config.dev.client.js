@@ -9,13 +9,15 @@ module.exports = {
   name: 'browser',
   context: path.join(__dirname, "..", "src"),
   debug:true,
-  entry: [
-    './index.js',
-    hotMiddlewareScript
-  ],
+  entry: {
+    'client':[
+      './index.js',
+      hotMiddlewareScript
+    ]
+  },
   output: {
     path: path.join(__dirname, '../dist'),
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     publicPath: '/'
   },
   plugins: [
@@ -29,12 +31,20 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    // new HtmlWebpackPlugin({
-    //   favicon:path.join(__dirname,'src/favicon.ico'),
-    //   title: "Jackblog react redux版",
-    //   template: path.join(__dirname,'src/index.html'),
-    //   inject: true
-    // }),
+    new HtmlWebpackPlugin({
+      favicon:path.join(__dirname,'../src/favicon.ico'),
+      title: "Jackblog react redux版",
+      template: path.join(__dirname,'../src/index.html'),
+      filename: 'index.ejs',
+      inject:'body',
+      htmlContent:'<%- __html__ %>',
+      initialData:'window.__INITIAL_STATE__ = <%- __state__ %>',
+      hash:false,    //为静态资源生成hash值
+      minify:{    //压缩HTML文件
+        removeComments:false,    //移除HTML中的注释
+        collapseWhitespace:false    //删除空白符与换行符
+      }
+    }),
     new ExtractTextPlugin('[hash:8].style.css', { allChunks: true })
   ],
   module: {

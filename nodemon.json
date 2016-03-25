@@ -3,8 +3,7 @@
     "watch": [
       "src/server.js",
       "src/routes.js",
-      "server",
+      "server.js",
       "webpack"
-    ],
-    "exec": "npm run build:server-dev && node server/index.js"
+    ]
 }
