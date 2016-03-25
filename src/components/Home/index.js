@@ -14,14 +14,20 @@ class Home extends Component {
     super(props)
     this.handleChange = this.handleChange.bind(this)
   }
-  componentDidMount() {
-    const { actions,tagList,articleList } = this.props
-    if(tagList.length < 1){
-      actions.getTagList()
-    }
-    if(articleList.items.length < 1){
-      actions.getArticleList()
-    }
+  // componentDidMount() {
+  //   const { actions,tagList,articleList } = this.props
+  //   if(tagList.length < 1){
+  //     actions.getTagList()
+  //   }
+  //   if(articleList.items.length < 1){
+  //     actions.getArticleList()
+  //   }
+  // }
+  static need = [
+    Actions.getTagList
+  ]
+  static fetchData(params){
+    return [Actions.getTagList(),Actions.getArticleList()]
   }
 
   handleChange(e,option,isAdd=false){

@@ -1,3 +1,4 @@
+require('es6-promise').polyfill()
 import axios from 'axios'
 import { API_ROOT } from '../config'
 import { saveCookie,getCookie,signOut } from '../utils/authService'

@@ -11,15 +11,16 @@ import rootReducer from '../reducers'
 
 let finalCreateStore
 const middleware = applyMiddleware(routerMiddleware(browserHistory),thunkMiddleware,promiseMiddleware)
-if(process.env.NODE_ENV === 'production'){
-  finalCreateStore = compose(middleware)
-}else{
-  finalCreateStore = compose(
-    middleware,
-    DevTools.instrument(),
-    persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-  )
-}
+finalCreateStore = compose(middleware)
+// if(process.env.NODE_ENV === 'production'){
+//   finalCreateStore = compose(middleware)
+// }else{
+//   finalCreateStore = compose(
+//     middleware,
+//     DevTools.instrument(),
+//     persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
+//   )
+// }
 
 export default function configureStore(initialState) {
   const store = finalCreateStore(createStore)(rootReducer, initialState)

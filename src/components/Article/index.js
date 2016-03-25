@@ -25,7 +25,6 @@ class Article extends Component {
     this.fetchArticleData(id)
     actions.getSnsLogins()
   }
-
   componentDidUpdate (prevProps) {
     let oldId = prevProps.params.id
     let newId = this.props.params.id

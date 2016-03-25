@@ -2,20 +2,26 @@ var path = require('path')
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 module.exports = {
   devtool: 'eval-source-map',
+  name: 'browser',
+  context: path.join(__dirname, "..", "src"),
   debug:true,
   entry: [
-    path.join(__dirname,'src/index.js')
+    './index.js',
+    hotMiddlewareScript
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, '../dist'),
     filename: 'bundle.js',
     publicPath: '/'
   },
   plugins: [
     new webpack.DefinePlugin({
+      __DEVCLIENT__: true,
+      __DEVSERVER__: false,
       'process.env':{
         'NODE_ENV': JSON.stringify('development')
       }
@@ -23,23 +29,27 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new HtmlWebpackPlugin({
-      favicon:path.join(__dirname,'src/favicon.ico'),
-      title: "Jackblog react redux版",
-      template: path.join(__dirname,'src/index.html'),
-      inject: true
-    }),
+    // new HtmlWebpackPlugin({
+    //   favicon:path.join(__dirname,'src/favicon.ico'),
+    //   title: "Jackblog react redux版",
+    //   template: path.join(__dirname,'src/index.html'),
+    //   inject: true
+    // }),
     new ExtractTextPlugin('[hash:8].style.css', { allChunks: true })
   ],
   module: {
     loaders: [{
-      test: /\.js$/,
-      loaders: [ 'babel' ],
-      exclude: /node_modules/,
-      include: __dirname
+     test: /\.js$|\.jsx$/,
+     loader: 'babel',
+      query: {
+        "presets": ["es2015", "react", "stage-0"],
+        "plugins":["transform-decorators-legacy"]
+      },
+      include: path.join(__dirname, '..', 'src'),
+      exclude: path.join(__dirname, '/node_modules/')
     }, 
     { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap' ) },
-    //{ test: /\.scss$/,loader: "style!css?sourceMap!sass?sourceMap&includePaths[]=" + path.resolve(__dirname, "./node_modules/compass-mixins/lib")},
+    { test: /\.json$/, loader: "json-loader" },
     {
       test: /\.(jpe?g|png|gif)$/i,
       loaders: [
@@ -49,12 +59,9 @@ module.exports = {
     },{
       test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
-    }
-
-    ]
+    }]
   },
   resolve: {
-    root: path.resolve(__dirname, 'node_modules'),
     extensions: ['','.js','.jsx','.scss','.css']
   }
 }
