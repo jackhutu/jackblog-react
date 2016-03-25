@@ -24,7 +24,8 @@ class Home extends Component {
   //   }
   // }
   static need = [
-    Actions.getTagList
+    Actions.getTagList,
+    Actions.getArticleList
   ]
   static fetchData(params){
     return [Actions.getTagList(),Actions.getArticleList()]

@@ -6,17 +6,48 @@ import routes from 'routes.js'
 import configureStore from './store/configureStore'
 
 function fetchAllData(dispatch, components, params) {
-  const needs = components
-    	.filter(x=>x.fetchData)
-    	.reduce((prev,current)=>{
-    		return current.fetchData(params).concat(prev)
-    	},[])
-    	.map(x=>{
-    		return dispatch(x)
-    	})
-  return Promise.all(needs)
+  const needs = components.reduce( (prev, current) => {
+    return (current.need || [])
+      .concat((current.WrappedComponent ? current.WrappedComponent.need : []) || [])
+      .concat(prev);
+    }, []);
+    const promises = needs.map(need => {
+    	return dispatch(need(params))
+    });
+    return Promise.all(promises);
+  // const needs = components
+  //   	.filter(x=>x.fetchData)
+  //   	.reduce((prev,current)=>{
+  //   		return current.fetchData(params).concat(prev)
+  //   	},[])
+  //   	.map(x=>{
+  //   		return dispatch(x)
+  //   	})
+  // return Promise.all(needs)
 }
 
+function renderFullPage(renderedContent, initialState) {
+  return `
+  <!doctype html>
+  <html>
+    <head>
+      <base href="/">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <title>Jack Hu's blog for React</title>
+      <meta name="description" content="This is Jack Hu's blog. use react redux.">
+      <meta name="keyword" content="Jackblog react redux react-router react-redux-router react-bootstrap react-alert">
+    </head>
+    <body class="day-mode">
+    <div class="top-box" id="root">${renderedContent}</div>
+    <script>
+      window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
+    </script>
+    <script type="text/javascript" charset="utf-8" src="/bundle.js"></script>
+    </body>
+  </html>
+  `
+}
 export default function render(req, res) {
 	const history = createMemoryHistory()
 	const store = configureStore({}, history)
@@ -36,16 +67,17 @@ export default function render(req, res) {
 	    .then(html=>{
 	    	const componentHTML = renderToString(InitialView)
 	    	const initialState = store.getState()
-	    	console.dir(initialState.tagList.toJS())
-	    	res.render('index', {
-	    	    __html__: html,
-	    	    __state__: JSON.stringify(initialState)
-	    	})
+	    	res.status(200).end(renderFullPage(componentHTML, initialState))
+	    	// res.render('index', {
+	    	//     __html__: html,
+	    	//     __state__: JSON.stringify(initialState)
+	    	// })
 	    }).catch(err => {
-	      res.render('index', {
-	          __html__: "",
-	          __state__: {}
-	      })
+	    	res.end(renderFullPage("",{}))
+	      // res.render('index', {
+	      //     __html__: "",
+	      //     __state__: {}
+	      // })
 	    })
 	  } else {
 	    res.status(404).send('Not Found');

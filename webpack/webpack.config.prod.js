@@ -6,7 +6,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     vendor: ['react','redux','react-redux','react-router'],
-    bundle: path.join(__dirname,'src/index.js')
+    bundle: path.join(__dirname,'src/client.js')
   },
   output: {
     path: path.join(__dirname, 'dist'),

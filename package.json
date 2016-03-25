@@ -5,9 +5,8 @@
   "repository": "https://github.com/jackhutu/jackblog-react-redux",
   "license": "MIT",
   "scripts": {
-    "dev": "concurrently --kill-others \"npm run build:server-dev\" \"npm run start-dev\"",
-    "start-dev": "better-npm-run start-dev",
-    "watch-client": "better-npm-run watch-client",
+    "dev": "better-npm-run start-dev",
+    "start-dev": "concurrently --kill-others \"npm run build:server-dev\" \"npm run start-dev\"",
     "build:server-dev": "better-npm-run build-dev-server",
     "start:gulp": "gulp serve",
     "build:gulp": "gulp build",
@@ -18,11 +17,12 @@
     "build-dev-server": {
       "command": "webpack --colors --config ./webpack/webpack.config.dev.server.js",
       "env": {
-        "NODE_ENV": "development"
+        "NODE_ENV": "development",
+        "PORT": 5000
       }
     },
     "start-dev": {
-      "command": "nodemon server.js",
+      "command": "nodemon",
       "env": {
         "NODE_ENV": "development",
         "PORT": 5000
@@ -93,6 +93,7 @@
     "redux-devtools-log-monitor": "^1.0.5",
     "redux-form": "^4.2.2",
     "redux-immutablejs": "0.0.8",
+    "redux-logger": "^2.6.1",
     "redux-router": "^1.0.0-beta7",
     "redux-thunk": "^2.0.1",
     "style-loader": "^0.13.0",

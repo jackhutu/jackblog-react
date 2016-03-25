@@ -11,7 +11,8 @@ import 'jackblog-sass/dist/index.css'
 import 'react-s-alert/dist/s-alert-default.css'
 import './assets/styles/index.css'
 
-const store = configureStore()
+const initialState = window.__INITIAL_STATE__
+const store = configureStore(initialState,browserHistory)
 const history = syncHistoryWithStore(browserHistory, store)
 
 render(

@@ -4,7 +4,7 @@ import {Provider} from 'react-redux'
 import { Router,Route,IndexRoute} from 'react-router'
 
 function isDevTools() {
-	if(process.env.NODE_ENV !== 'production'){
+	if(process.env.NODE_ENV !== 'production' && __DEVCLIENT__){
 		return <DevTools />
 	}
 	return null
