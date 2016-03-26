@@ -53,7 +53,7 @@ export function localLogin(userInfo) {
 }
 
 //获取用户信息
-export const getUserInfo = (token)=>{
+export const getUserInfo = (token = getCookie('token'))=>{
 	return {
 		type: types.GET_USERINFO,
 		promise: api.getMe({

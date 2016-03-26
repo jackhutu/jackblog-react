@@ -4,26 +4,40 @@ import { RouterContext, match, createMemoryHistory } from 'react-router'
 import { Provider } from 'react-redux'
 import routes from 'routes.js'
 import configureStore from './store/configureStore'
+import fs from 'fs'
 
-function fetchAllData(dispatch, components, params) {
-  const needs = components.reduce( (prev, current) => {
-    return (current.need || [])
-      .concat((current.WrappedComponent ? current.WrappedComponent.need : []) || [])
-      .concat(prev);
-    }, []);
-    const promises = needs.map(need => {
-    	return dispatch(need(params))
-    });
-    return Promise.all(promises);
-  // const needs = components
-  //   	.filter(x=>x.fetchData)
-  //   	.reduce((prev,current)=>{
-  //   		return current.fetchData(params).concat(prev)
-  //   	},[])
-  //   	.map(x=>{
-  //   		return dispatch(x)
-  //   	})
-  // return Promise.all(needs)
+async function fetchAllData(dispatch, components, params) {
+  // const needs = components.reduce( (prev, current) => {
+  //   return (current.need || [])
+  //     .concat((current.WrappedComponent ? current.WrappedComponent.need : []) || [])
+  //     .concat(prev);
+  //   }, []);
+  //   const promises = needs.map(need => {
+  //   	return dispatch(need(params))
+  //   });
+  //   return Promise.all(promises);
+  //   
+  //  
+  const needs = components
+      .filter(x=>x.fetchData)
+      .reduce((prev,current)=>{
+        return current.fetchData().concat(prev)
+      },[])
+    	.map(x=>{
+        if(typeof(x) === 'function'){
+          //console.log(x.toString());
+          // const aa = await dispatch(x)
+          // console.log(aa);
+          return dispatch(x)
+        }else{
+          return dispatch(x)
+        }
+      //   console.log(typeof(x));
+    		// return dispatch(x)
+    	})
+     // console.log(needs);
+  let results = await Promise.all(needs);
+  return results
 }
 
 function renderFullPage(renderedContent, initialState) {
@@ -63,10 +77,42 @@ export default function render(req, res) {
 	          <RouterContext {...renderProps} />
 	      </Provider>
 	    )
-	    fetchAllData(store.dispatch, renderProps.components, renderProps.params)
+
+      // const needs = renderProps.components.reduce( (prev, current) => {
+      //   return (current.fetchData || [])
+      //     //.concat((current.WrappedComponent ? current.WrappedComponent.need : []) || [])
+      //     .concat(prev);
+      //   }, []);
+      //   
+      // const needs = renderProps.components
+      //     .filter(x=>x.fetchData)
+      //     .reduce((prev,current)=>{
+      //       return current.fetchData().concat(prev)
+      //     },[])
+      //     .map(x=>{
+      //       console.log(x);
+      //       return x.fetchData
+      //     })
+      // console.dir(needs);
+      // try{
+      //   const allData = await fetchAllData(store.dispatch, renderProps.components, renderProps.params)
+      //   const componentHTML = renderToString(InitialView)
+      //   const initialState = store.getState()
+      //   console.log(initialState.articleList.toJS())
+      //   res.status(200).end(renderFullPage(componentHTML, initialState))
+      // }catch(e){
+      //   console.log(e);
+      //   res.end(renderFullPage("",{}))
+      // }
+      fetchAllData(store.dispatch, renderProps.components, renderProps.params)
 	    .then(html=>{
 	    	const componentHTML = renderToString(InitialView)
 	    	const initialState = store.getState()
+        console.log(initialState.articleList.toJS());
+
+        // fs.readdirSync('./').map(file=>{
+        //   console.log(file);
+        // })
 	    	res.status(200).end(renderFullPage(componentHTML, initialState))
 	    	// res.render('index', {
 	    	//     __html__: html,

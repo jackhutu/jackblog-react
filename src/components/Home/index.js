@@ -28,7 +28,7 @@ class Home extends Component {
     Actions.getArticleList
   ]
   static fetchData(params){
-    return [Actions.getTagList(),Actions.getArticleList()]
+    return [Actions.getArticleList(),Actions.getTagList()]
   }
 
   handleChange(e,option,isAdd=false){
