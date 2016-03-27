@@ -21,10 +21,19 @@ class Article extends Component {
     this.state = {showModal:false}
   }
   componentDidMount() {
-    const { params: { id },actions } = this.props
-    this.fetchArticleData(id)
-    actions.getSnsLogins()
+    const { params: { id },actions,commentList,articleDetail,prenextArticle } = this.props
+    //if(!articleDetail._id || (window.__INITIAL_STATE__.articleDetail && window.__INITIAL_STATE__.articleDetail._id !== id)){
+      this.fetchArticleData(id)
+      actions.getSnsLogins()
+    //}
   }
+
+  static fetchData({id}){
+    return [
+      Actions.getSnsLogins()
+    ]
+  }
+
   componentDidUpdate (prevProps) {
     let oldId = prevProps.params.id
     let newId = this.props.params.id

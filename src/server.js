@@ -2,9 +2,11 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { RouterContext, match, createMemoryHistory } from 'react-router'
 import { Provider } from 'react-redux'
-import routes from 'routes.js'
-import configureStore from './store/configureStore'
-import fs from 'fs'
+import routes from 'routes'
+import configureStore from 'store/configureStore'
+import reactCookie from 'react-cookie'
+import { fromJS,Map,List } from 'immutable'
+import * as Actions from 'actions'
 
 async function fetchAllData(dispatch, components, params) {
   // const needs = components.reduce( (prev, current) => {
@@ -16,34 +18,20 @@ async function fetchAllData(dispatch, components, params) {
   //   	return dispatch(need(params))
   //   });
   //   return Promise.all(promises);
-  //   
-  //  
   const needs = components
       .filter(x=>x.fetchData)
       .reduce((prev,current)=>{
-        return current.fetchData().concat(prev)
+        return current.fetchData(params).concat(prev)
       },[])
     	.map(x=>{
-        if(typeof(x) === 'function'){
-          //console.log(x.toString());
-          // const aa = await dispatch(x)
-          // console.log(aa);
-          return dispatch(x)
-        }else{
-          return dispatch(x)
-        }
-      //   console.log(typeof(x));
-    		// return dispatch(x)
+        return dispatch(x)
     	})
-     // console.log(needs);
   let results = await Promise.all(needs);
   return results
 }
 
 function renderFullPage(renderedContent, initialState) {
-  return `
-  <!doctype html>
-  <html>
+  return `<!doctype html><html>
     <head>
       <base href="/">
       <meta charset="utf-8">
@@ -51,6 +39,7 @@ function renderFullPage(renderedContent, initialState) {
       <title>Jack Hu's blog for React</title>
       <meta name="description" content="This is Jack Hu's blog. use react redux.">
       <meta name="keyword" content="Jackblog react redux react-router react-redux-router react-bootstrap react-alert">
+      <link rel="stylesheet" href="/style.css"/>
     </head>
     <body class="day-mode">
     <div class="top-box" id="root">${renderedContent}</div>
@@ -58,73 +47,37 @@ function renderFullPage(renderedContent, initialState) {
       window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
     </script>
     <script type="text/javascript" charset="utf-8" src="/bundle.js"></script>
-    </body>
-  </html>
+    </body></html>
   `
 }
 export default function render(req, res) {
+  reactCookie.plugToRequest(req, res)
 	const history = createMemoryHistory()
-	const store = configureStore({}, history)
 
+
+
+	const store = configureStore({auth:fromJS({
+    token: reactCookie.load('token') || null,
+    user: null
+  })}, history)
 	match({ routes:routes(), location: req.url }, (error, redirectLocation, renderProps) => {
 	  if (error) {
 	    res.status(500).send(error.message);
 	  } else if (redirectLocation) {
 	    res.redirect(302, redirectLocation.pathname + redirectLocation.search);
 	  } else if (renderProps) {
-	    const InitialView = (
-	      <Provider store={store}>
-	          <RouterContext {...renderProps} />
-	      </Provider>
-	    )
-
-      // const needs = renderProps.components.reduce( (prev, current) => {
-      //   return (current.fetchData || [])
-      //     //.concat((current.WrappedComponent ? current.WrappedComponent.need : []) || [])
-      //     .concat(prev);
-      //   }, []);
-      //   
-      // const needs = renderProps.components
-      //     .filter(x=>x.fetchData)
-      //     .reduce((prev,current)=>{
-      //       return current.fetchData().concat(prev)
-      //     },[])
-      //     .map(x=>{
-      //       console.log(x);
-      //       return x.fetchData
-      //     })
-      // console.dir(needs);
-      // try{
-      //   const allData = await fetchAllData(store.dispatch, renderProps.components, renderProps.params)
-      //   const componentHTML = renderToString(InitialView)
-      //   const initialState = store.getState()
-      //   console.log(initialState.articleList.toJS())
-      //   res.status(200).end(renderFullPage(componentHTML, initialState))
-      // }catch(e){
-      //   console.log(e);
-      //   res.end(renderFullPage("",{}))
-      // }
-      fetchAllData(store.dispatch, renderProps.components, renderProps.params)
-	    .then(html=>{
-	    	const componentHTML = renderToString(InitialView)
-	    	const initialState = store.getState()
-        console.log(initialState.articleList.toJS());
-
-        // fs.readdirSync('./').map(file=>{
-        //   console.log(file);
-        // })
-	    	res.status(200).end(renderFullPage(componentHTML, initialState))
-	    	// res.render('index', {
-	    	//     __html__: html,
-	    	//     __state__: JSON.stringify(initialState)
-	    	// })
-	    }).catch(err => {
-	    	res.end(renderFullPage("",{}))
-	      // res.render('index', {
-	      //     __html__: "",
-	      //     __state__: {}
-	      // })
-	    })
+      return fetchAllData(store.dispatch, renderProps.components, renderProps.params)
+  	    .then(html=>{
+          const InitialView = (
+            <Provider store={store}>
+              <RouterContext {...renderProps} />
+            </Provider>)
+  	    	const componentHTML = renderToString(InitialView)
+  	    	const initialState = store.getState()
+  	    	return res.status(200).end(renderFullPage(componentHTML, initialState))
+  	    }).catch(err => {
+  	    	return res.end(renderFullPage("",{}))
+  	    })
 	  } else {
 	    res.status(404).send('Not Found');
 	  }
