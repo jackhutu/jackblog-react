@@ -14,7 +14,7 @@ const validate = values => {
     errors.nickname = '呢称不合法'
   }
   return errors
-};
+}
 
 @reduxForm({
   form: 'settings',
@@ -28,7 +28,7 @@ class Settings extends Component {
   }
   
   handelSubmit(e){
-    e.preventDefault();
+    e.preventDefault()
     const {values} = this.props
     //更新user nickname
     const {actions} = this.props

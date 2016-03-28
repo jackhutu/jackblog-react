@@ -1,15 +1,15 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var webpack = require('webpack')
 
 module.exports = {
     name: "server-side rendering",
-    context: path.join(__dirname, "..", "src"),
-    entry: {
-      server: ['babel-polyfill','./server']
-    },
+    context: path.join(__dirname, "../"),
     target: "node",
+    entry: {
+      server: ['babel-polyfill','./src/server.js']
+    },
     output: {
-      path: path.join(__dirname, '..', 'dist'),
+      path: './dist',
       filename: "server.js",
       publicPath: "/",
       libraryTarget: "commonjs2"
@@ -34,7 +34,7 @@ module.exports = {
             "plugins":["transform-decorators-legacy","syntax-async-functions"]
           },
           include: path.join(__dirname, '..', 'src'),
-          exclude: path.join(__dirname, '/node_modules/')
+          exclude: /node_modules/
         },
         { test: /\.json$/, loader: "json-loader" },
         {
@@ -43,11 +43,7 @@ module.exports = {
             'url?limit=10000&name=images/[hash:8].[name].[ext]',
             'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
           ]
-        },{
-          test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
-        },
-        { test: /\.html$/, loader: 'html-loader' }
+        }
       ]
     },
     resolve: {
@@ -56,4 +52,4 @@ module.exports = {
         "src", "node_modules"
       ]
     }
-};
+}

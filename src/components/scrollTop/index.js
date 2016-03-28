@@ -2,7 +2,7 @@ import React,{Component,PropTypes} from 'react'
 
 export default class scrollTop extends Component{
 	constructor(props){
-	  super(props);
+	  super(props)
 	  this.state = { isShowTop: false}
 	  this.gotop = this.gotop.bind(this)
 	  this.handleScroll = this.handleScroll.bind(this)
@@ -20,9 +20,9 @@ export default class scrollTop extends Component{
 	}
 	handleScroll(){
 		if (window.scrollY > 200) {
-		    this.setState({ isShowTop: true });
+		    this.setState({ isShowTop: true })
 		} else {
-		    this.setState({ isShowTop: false });
+		    this.setState({ isShowTop: false })
 		}
 	}
 	render(){

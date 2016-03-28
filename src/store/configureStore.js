@@ -3,66 +3,41 @@ import thunkMiddleware from 'redux-thunk'
 import { routerMiddleware, push } from 'react-router-redux'
 import { Router, Route, browserHistory } from 'react-router'
 import {persistState} from 'redux-devtools'
-import promiseMiddleware from '../api/promiseMiddleware'
-import DevTools from '../containers/DevTools'
-import rootReducer from '../reducers'
 import createLogger from 'redux-logger'
-
-//使用chrome 扩展来做调试工具.
-// window.devToolsExtension ? window.devToolsExtension() : f => f
+import {Iterable} from 'immutable'
+import promiseMiddleware from '../api/promiseMiddleware'
+import DevTools from '../components/DevTools'
+import rootReducer from '../reducers'
 
 export default function configureStore(initialState, history) {
+  const stateTransformer = (state) => {
+    if (Iterable.isIterable(state)) return state.toJS()
+    else return state
+  }
+  let middleware = [ thunkMiddleware, promiseMiddleware, routerMiddleware(history) ]
   let finalCreateStore
-  const middleware = applyMiddleware(routerMiddleware(history),thunkMiddleware,promiseMiddleware)
-
-  if(process.env.NODE_ENV === 'production' || __DEVSERVER__){
-    finalCreateStore = compose(middleware)
-  }else{
+  if (__DEVCLIENT__) {
+    middleware.push(
+      createLogger({
+        stateTransformer
+      })
+    )
     finalCreateStore = compose(
-      middleware,
-      DevTools.instrument(),
+      applyMiddleware(...middleware),
+      window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument(),
       persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
     )
+  } else {
+    finalCreateStore = compose(applyMiddleware(...middleware))
   }
-  // if (__DEVCLIENT__) {
-  //   middleware.push(reactRouterReduxMiddleware, createLogger());
-  // } else {
-  //   middleware.push(reactRouterReduxMiddleware);
-  // }
 
-  // const finalCreateStore = applyMiddleware(...middleware)(createStore);
-
-  // const store = finalCreateStore(rootReducer, initialState);
   const store = finalCreateStore(createStore)(rootReducer, initialState)
+
   if (module.hot) {
     module.hot.accept('../reducers', () => {
       const nextReducer = require('../reducers')
       store.replaceReducer(nextReducer)
     })
   }
-  return store;
+  return store
 }
-
-// let finalCreateStore
-// const middleware = applyMiddleware(routerMiddleware(browserHistory),thunkMiddleware,promiseMiddleware)
-// finalCreateStore = compose(middleware)
-// if(process.env.NODE_ENV === 'production'){
-//   finalCreateStore = compose(middleware)
-// }else{
-//   finalCreateStore = compose(
-//     middleware,
-//     DevTools.instrument(),
-//     persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-//   )
-// }
-
-// export default function configureStore(initialState) {
-//   const store = finalCreateStore(createStore)(rootReducer, initialState)
-//   if (module.hot) {
-//     module.hot.accept('../reducers', () => {
-//       const nextReducer = require('../reducers')
-//       store.replaceReducer(nextReducer)
-//     })
-//   }
-//   return store
-// }

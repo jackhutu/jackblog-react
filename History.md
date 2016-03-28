@@ -1,3 +1,13 @@
+2.0.0 / 2016-03-28
+==================
+
+* 使用服务端渲染
+* 弃用gulp
+* 使用better-npm-run, npm-run-all, rimraf配合npm命令
+* 使用axios代替isomorphic-fetch
+* 增加promise redux中件间
+
+
 1.4.0 / 2016-03-16
 ==================
 

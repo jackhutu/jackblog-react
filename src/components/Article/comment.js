@@ -117,4 +117,4 @@ export default class Comment extends Component{
 	}
 }
 
-reactMixin(Comment.prototype, LinkedStateMixin);
+reactMixin(Comment.prototype, LinkedStateMixin)

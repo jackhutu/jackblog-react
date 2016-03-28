@@ -17,7 +17,6 @@ class Home extends Component {
   componentDidMount() {
     const { actions,tagList,articleList } = this.props
     if(tagList.length < 1){
-      console.log('hello');
       actions.getTagList()
     }
     if(articleList.items.length < 1){

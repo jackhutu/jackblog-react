@@ -8,10 +8,14 @@ class MobileApps extends Component {
     super(props)
   }
   componentDidMount(){
-    const {actions} = this.props
-    actions.getApps()
+    const { actions,apps } = this.props
+    if(apps.length < 1){
+      actions.getApps()
+    }
   }
-
+  static fetchData(params){
+    return [Actions.getApps()]
+  }
   render() {
     const {apps} = this.props
     return (
@@ -44,8 +48,6 @@ class MobileApps extends Component {
               </div>
             </div>
           )}
-
-
         </div>
       </div>
     )

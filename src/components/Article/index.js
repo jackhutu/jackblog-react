@@ -22,24 +22,31 @@ class Article extends Component {
   }
   componentDidMount() {
     const { params: { id },actions,commentList,articleDetail,prenextArticle } = this.props
-    //if(!articleDetail._id || (window.__INITIAL_STATE__.articleDetail && window.__INITIAL_STATE__.articleDetail._id !== id)){
+    if(!articleDetail._id || articleDetail._id !== id){
       this.fetchArticleData(id)
       actions.getSnsLogins()
-    //}
+    }
   }
 
   static fetchData({id}){
     return [
+      Actions.getArticleDetail(id),
+      Actions.getCommentList(id),
+      Actions.getPrenext(id),
       Actions.getSnsLogins()
     ]
   }
-
-  componentDidUpdate (prevProps) {
-    let oldId = prevProps.params.id
-    let newId = this.props.params.id
-    if (newId !== oldId)
-      this.fetchArticleData(newId)
+  componentWillReceiveProps(nextProps){
+    if (nextProps.params.id !== this.props.params.id){
+      this.fetchArticleData(nextProps.params.id)
+    }
   }
+  // componentDidUpdate (prevProps) {
+  //   let oldId = prevProps.params.id
+  //   let newId = this.props.params.id
+  //   if (newId !== oldId)
+  //     this.fetchArticleData(newId)
+  // }
 
   fetchArticleData(id){
     const { actions} = this.props

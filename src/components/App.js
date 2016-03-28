@@ -10,15 +10,9 @@ class App extends Component {
   constructor(props){
     super(props)
   }
-  // componentDidMount() {
-  //   const { actions,auth } = this.props
-  //   actions.getIndexImage()
-  //   if(auth.token && !auth.user){
-  //     actions.getUserInfo(auth.token)
-  //   }
-  // }
+
   static fetchData(params){
-    return [Actions.getIndexImage(),Actions.getUserInfo()]
+    return [Actions.getUserInfo(),Actions.getIndexImage()]
   }
 
   componentWillReceiveProps(nextProps){

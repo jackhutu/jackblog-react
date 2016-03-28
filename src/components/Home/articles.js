@@ -6,12 +6,12 @@ import {Link} from 'react-router'
 export default class Articles extends Component{
   constructor(props) {
   	super(props)
-    this.noContent = false;
+    this.noContent = false
   }
 	componentDidUpdate(prevProps) {
 		const {articleList} = prevProps
 		if(articleList.length > 0){
-			this.noContent = true;
+			this.noContent = true
 		}
 	}
 	render(){

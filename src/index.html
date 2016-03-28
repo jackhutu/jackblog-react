@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="description" content="This is Jack Hu's blog. use react redux.">
+    <meta name="keyword" content="Jackblog react redux react-router react-redux-router react-bootstrap react-alert">
+  </head>
+  <body class="day-mode">
+  <!--[if lt IE 9]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+    <div class="top-box" id="root"><%= htmlWebpackPlugin.options.htmlContent %></div>
+    <script type="text/javascript"><%= htmlWebpackPlugin.options.initialData %></script>
+  </body>
+</html>

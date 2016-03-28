@@ -1,7 +1,6 @@
 import React,{Component,PropTypes} from 'react'
 
 export default class Like extends Component{
-
 	render(){
 		const {likeCount,isLike,toggleLike} = this.props
 		return(
@@ -14,6 +13,5 @@ export default class Like extends Component{
 			  </a>
 			</div>
 		)
-
 	}
 }

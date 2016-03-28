@@ -6,24 +6,24 @@ import * as Actions from '../../actions'
 import SNSLogin from './snsLogin'
 
 const validate = values => {
-  const errors = {};
+  const errors = {}
   if (!values.email) {
-    errors.email = 'Required';
+    errors.email = 'Required'
   } else if (!/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(values.email)) {
-    errors.email = '无效电子邮件地址';
+    errors.email = '无效电子邮件地址'
   }
 
   if (!values.password) {
-    errors.password = 'Required';
+    errors.password = 'Required'
   } else if (values.password.length > 30) {
-    errors.password = '密码长度不超过30';
+    errors.password = '密码长度不超过30'
   }
   if (!values.captcha) {
-    errors.captcha = 'Required';
+    errors.captcha = 'Required'
   } else if (values.captcha.length !== 6) {
-    errors.captcha = '验证码是6位';
+    errors.captcha = '验证码是6位'
   }
-  return errors;
+  return errors
 }
 
 @reduxForm({
@@ -51,10 +51,14 @@ class Login extends Component {
     actions.localLogin(values)
   }
   componentDidMount() {
-    const { actions } = this.props
-    actions.getSnsLogins()
+    const { actions,sns } = this.props
+    if(sns.logins.length < 1){
+      actions.getSnsLogins()
+    }
   }
-
+  static fetchData(params){
+    return [Actions.getSnsLogins()]
+  }
   validatorCalss(field){
     let initClass = 'form-control'
     if(field.invalid){

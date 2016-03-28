@@ -14,14 +14,14 @@ export default function promiseMiddleware() {
         if(status !== 'OK'){
           const error = json
           next({ ...rest, error, type: FAILURE })
-          return false;
+          return false
         }
         next({ ...rest, json, type: SUCCESS })
-        return true;
+        return true
       })
       .catch(error => {
         next({ ...rest, error, type: FAILURE })
-        return false;
+        return false
       })
    }
 }

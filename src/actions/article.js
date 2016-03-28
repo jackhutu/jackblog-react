@@ -42,7 +42,7 @@ export function toggleLike(aid) {
 export const getArticleList = (isAdd = true) =>{
 	return (dispatch,getState) => {
 		const options = getState().options.toJS()
-		dispatch({
+		return dispatch({
 			type: types.ARTICLE_LIST,
 			itemsPerPage: options.itemsPerPage,
 			promise: api.getArticleList(options),
@@ -83,7 +83,7 @@ export const getArticleDetail = (id) =>{
 export const getPrenext = (id)=>{
 	return (dispatch,getState) => {
 		const options = getState().options.toJS()
-		dispatch({
+		return dispatch({
 			type: types.PRENEXT_ARTICLE,
 			promise: api.getPrenext(id,options)
 		})

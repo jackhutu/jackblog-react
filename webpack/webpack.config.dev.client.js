@@ -1,16 +1,15 @@
 var path = require('path')
 var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 module.exports = {
   devtool: 'eval-source-map',
   name: 'browser',
-  context: path.join(__dirname, "../src"),
+  context: path.join(__dirname, "..","src"),
   debug:true,
   entry: [
-    './client',
+    './client.js',
     hotMiddlewareScript
   ],
   output: {
@@ -40,7 +39,7 @@ module.exports = {
         "plugins":["transform-decorators-legacy"]
       },
       include: path.join(__dirname, '../src'),
-      exclude: path.join(__dirname, '/node_modules/')
+      exclude: /node_modules/
     }, 
     { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap' ) },
     { test: /\.json$/, loader: "json-loader" },

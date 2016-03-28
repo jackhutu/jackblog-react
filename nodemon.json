@@ -5,6 +5,5 @@
       "src/routes.js",
       "server.js",
       "webpack"
-    ],
-    "exec": "npm run build:server-dev && node server.js"
+    ]
 }

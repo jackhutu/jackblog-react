@@ -45,6 +45,8 @@ export const articleDetail = createReducer(fromJS({}),{
 export const prenextArticle = createReducer(fromJS({
 	'next':{},'prev':{}
 }),{
-	[PRENEXT_ARTICLE_SUCCESS]:(state,{json})=>state.merge(json.data),
+	[PRENEXT_ARTICLE_SUCCESS]:(state,{json})=>{
+		return state.merge(json.data)
+	},
 	[PRENEXT_ARTICLE_FAILURE]:(state,{json})=>state
 })

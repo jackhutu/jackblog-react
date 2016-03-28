@@ -4,7 +4,7 @@ import { getCookie,removeCookie } from '../../utils/authService'
 
 export default class toaster extends Component{
 	constructor(props){
-	  super(props);
+	  super(props)
 	}
 
 	componentWillReceiveProps(nextProps){
