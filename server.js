@@ -4,8 +4,9 @@ var serverRender = require('./dist/server.js')
 var favicon = require('serve-favicon')
 
 var app = express()
-var port = process.env.PORT || 5000
 var isDev = process.env.NODE_ENV === 'development'
+var defaultPort = isDev? 5000 : 8300
+var port = process.env.PORT || defaultPort
 
 app.use(express.static(path.join(__dirname, 'dist')))
 
