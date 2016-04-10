@@ -18,6 +18,21 @@ $ cd jackblog-react-redux
 $ npm install
 $ npm run dev
 ```
+在浏览中打开http://localhost:5000
+
+
+### 调试
+- redux-logger 默认开启, 关闭方法
+
+```
+webpack-> webpack.config.dev.client.js -> __DEVLOGGER__ : false
+```
+
+- redux-devtools 默认使用chrome扩展, [Redux DevTools Chrome Extension](https://github.com/zalmoxisus/redux-devtools-extension) , 网页方式默认关闭, 开启方法:
+
+```
+webpack-> webpack.config.dev.client.js -> __DEVTOOLS__ : true
+```
 
 ### 目录结构
 

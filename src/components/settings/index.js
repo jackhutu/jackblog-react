@@ -16,15 +16,38 @@ const validate = values => {
   return errors
 }
 
+const mapStateToProps = state =>{
+  return {
+    auth: state.auth.toJS(),
+    initialValues: state.auth.toJS().user
+  }
+}
+
+const mapDispatchToProps = dispatch =>{
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
+}
+
+@connect(mapStateToProps,mapDispatchToProps)
 @reduxForm({
   form: 'settings',
   fields: ['nickname'],
   validate
 })
-class Settings extends Component {
+export default class Settings extends Component {
   constructor(props){
     super(props)
     this.handelSubmit = this.handelSubmit.bind(this)
+  }
+  
+  static propTypes = {
+    actions: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
+    values: PropTypes.object,
+    fields: PropTypes.object,
+    dirty: PropTypes.bool,
+    invalid: PropTypes.bool
   }
   
   handelSubmit(e){
@@ -45,7 +68,7 @@ class Settings extends Component {
     return initClass
   }
   render() {
-    const { actions,auth,fields: { nickname },dirty,invalid,valid } = this.props
+    const { fields: { nickname },dirty,invalid } = this.props
     return (
       <div className="settings-box">
         <div className="settings-container">
@@ -71,23 +94,3 @@ class Settings extends Component {
     )
   }
 }
-
-Settings.propTypes = {
-  actions: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
-}
-
-function mapStateToProps(state) {
-  return {
-    auth: state.auth.toJS(),
-    initialValues: state.auth.toJS().user
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Actions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(Settings)

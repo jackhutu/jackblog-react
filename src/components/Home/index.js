@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Immutable from 'immutable'
 import * as Actions from '../../actions'
 import Tags from './tags'
 import Articles from './articles'
@@ -9,11 +8,41 @@ import Sidebar from './sidebar'
 import Footer from './footer'
 import LoadMore from './LoadMore'
 
-class Home extends Component {
+const mapStateToProps = state =>{
+  return {
+    globalVal: state.globalVal.toJS(),
+    tagList: state.tagList.toJS(),
+    articleList: state.articleList.toJS(),
+    options: state.options.toJS()
+  }
+}
+
+const mapDispatchToProps = dispatch =>{
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
+}
+
+@connect(mapStateToProps,mapDispatchToProps)
+export default class Home extends Component {
   constructor(props){
     super(props)
     this.handleChange = this.handleChange.bind(this)
   }
+
+  static propTypes = {
+    globalVal: PropTypes.object.isRequired,
+    //tagList: PropTypes.instanceOf(Immutable.List).isRequired,
+    tagList: PropTypes.array.isRequired,
+    articleList: PropTypes.object.isRequired,
+    options: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired
+  }
+
+  static fetchData(params){
+    return [Actions.getArticleList(),Actions.getTagList()]
+  }
+
   componentDidMount() {
     const { actions,tagList,articleList } = this.props
     if(tagList.length < 1){
@@ -23,10 +52,6 @@ class Home extends Component {
       actions.getArticleList()
     }
   }
-  
-  static fetchData(params){
-    return [Actions.getArticleList(),Actions.getTagList()]
-  }
 
   handleChange(e,option,isAdd=false){
     e.preventDefault()
@@ -34,8 +59,9 @@ class Home extends Component {
     actions.changeOptions(option)
     actions.getArticleList(isAdd)
   }
+
   render() {
-    const { actions,globalVal,tagList,articleList,options } = this.props
+    const { globalVal,tagList,articleList,options } = this.props
     return (
       <div>
         <div className="container-fluid main-box">
@@ -53,32 +79,3 @@ class Home extends Component {
     )
   }
 }
-
-Home.propTypes = {
-  globalVal: PropTypes.object.isRequired,
-  //tagList: PropTypes.instanceOf(Immutable.List).isRequired,
-  tagList: PropTypes.array.isRequired,
-  articleList: PropTypes.object.isRequired,
-  options: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
-}
-
-function mapStateToProps(state) {
-  return {
-    globalVal: state.globalVal.toJS(),
-    tagList: state.tagList.toJS(),
-    articleList: state.articleList.toJS(),
-    options: state.options.toJS()
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Actions, dispatch)
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home)

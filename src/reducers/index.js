@@ -12,19 +12,19 @@ import showmsg from './showmsg'
 import globalVal from './globalVal'
 
 const rootReducer = combineReducers({
-	globalVal,
-	apps,
-	sns,
-	tagList,
-	articleList,
-	articleDetail,
-	commentList,
-	prenextArticle,
-	options,
-	auth,
-	showmsg,
-	routing: routerReducer,
-	form: formReducer
+  globalVal,
+  apps,
+  sns,
+  tagList,
+  articleList,
+  articleDetail,
+  commentList,
+  prenextArticle,
+  options,
+  auth,
+  showmsg,
+  routing: routerReducer,
+  form: formReducer
 })
 
 export default rootReducer

@@ -21,6 +21,8 @@ module.exports = [
       new webpack.DefinePlugin({
         __DEVCLIENT__: false,
         __DEVSERVER__: false,
+        __DEVTOOLS__: false,
+        __DEVLOGGER__: false,
         'process.env':{
           'NODE_ENV': JSON.stringify('production')
         }
@@ -51,6 +53,9 @@ module.exports = [
       }),
     ],
     module: {
+      preLoaders: [
+        { test: /\.js$|\.jsx$/, loader: "eslint-loader", exclude: /node_modules/ }
+      ],
       loaders: [{
         test: /\.js$/,
         loader: 'babel',
@@ -73,6 +78,9 @@ module.exports = [
         test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
       }]
+    },
+    eslint: {
+      configFile: path.join(__dirname, '../.eslintrc.json')
     },
     resolve: {
       extensions: ['', '.js', '.jsx', '.css'],
@@ -111,6 +119,9 @@ module.exports = [
       new webpack.IgnorePlugin(/vertx/),
     ],
     module: {
+      preLoaders: [
+        { test: /\.js$|\.jsx$/, loader: "eslint-loader", exclude: /node_modules/ }
+      ],
       loaders: [
         {
           test: /\.js$|\.jsx$/,
@@ -131,6 +142,9 @@ module.exports = [
           ]
         }
       ]
+    },
+    eslint: {
+      configFile: path.join(__dirname, '../.eslintrc.json')
     },
     resolve: {
       extensions: ['', '.js', '.jsx', '.css'],

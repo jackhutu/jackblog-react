@@ -1,34 +1,34 @@
 require('es6-promise').polyfill()
 import axios from 'axios'
 import { API_ROOT } from '../config'
-import { saveCookie,getCookie,signOut } from '../utils/authService'
+import { getCookie,signOut } from '../utils/authService'
 
 axios.defaults.baseURL = API_ROOT
 axios.defaults.withCredentials = true
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
-    config.headers = config.headers || {}
-    if (getCookie('token')) {
-      config.headers.Authorization = 'Bearer ' + getCookie('token').replace(/(^\")|(\"$)/g, "")
-    }
-    return config
-  }, function (error) {
-    // Do something with request error
-    return Promise.reject(error)
-  })
+  config.headers = config.headers || {}
+  if (getCookie('token')) {
+    config.headers.Authorization = 'Bearer ' + getCookie('token').replace(/(^\")|(\"$)/g, '')
+  }
+  return config
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error)
+})
 
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {
-    if (response.status === 401) {
-      signOut()
-      window.location.pathname = '/login'
-    }
-    return response
-  }, function (error) {
-    // Do something with response error
-    return Promise.reject(error)
-  })
+  if (response.status === 401) {
+    signOut()
+    window.location.pathname = '/login'
+  }
+  return response
+}, function (error) {
+  // Do something with response error
+  return Promise.reject(error)
+})
 
 export const UserResource = (method, id, data, api='users') => {
   return axios[method](api + (id ? ('/' + id) : ''), data)

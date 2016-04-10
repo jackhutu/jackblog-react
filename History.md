@@ -1,3 +1,16 @@
+2.1.0 / 2016-04-09
+==================
+
+* 更新react, react-dom 到 v15.0.1
+* 更新redux-form 到 v5.0.1
+* 使用eslint 代码检查
+* 弃用 react-addons-linked-state-mixin, 改成onChange/setState
+* 修复logger中间件immutable数据转换
+* 修复alert message背景色
+* 修复navbar 小屏幕样式
+* 修复navbar dropdown菜单
+
+
 2.0.0 / 2016-03-28
 ==================
 

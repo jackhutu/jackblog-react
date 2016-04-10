@@ -1,10 +1,10 @@
 export function customTime(item) {
-	let nowTime = new Date().getTime()
-	let minuteTime = 60*1000
-	let hourTime = 60*minuteTime
-	let dayTime = 24*hourTime
-	let monthTime = dayTime * 30
-	let yearTime = monthTime * 12
+  let nowTime = new Date().getTime()
+  let minuteTime = 60*1000
+  let hourTime = 60*minuteTime
+  let dayTime = 24*hourTime
+  let monthTime = dayTime * 30
+  let yearTime = monthTime * 12
 
   let publishTime = new Date(item).getTime()
   let historyTime = parseInt(nowTime) - parseInt(publishTime)

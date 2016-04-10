@@ -5,6 +5,20 @@ import { reduxForm } from 'redux-form'
 import * as Actions from '../../actions'
 import SNSLogin from './snsLogin'
 
+const mapStateToProps = state =>{
+  return {
+    globalVal : state.globalVal.toJS(),
+    auth: state.auth.toJS(),
+    sns: state.sns.toJS()
+  }
+}
+
+const mapDispatchToProps = dispatch =>{
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
+}
+
 const validate = values => {
   const errors = {}
   if (!values.email) {
@@ -26,16 +40,32 @@ const validate = values => {
   return errors
 }
 
+@connect(mapStateToProps,mapDispatchToProps)
 @reduxForm({
   form: 'signin',
   fields: ['email', 'password', 'captcha'],
   validate
 })
-class Login extends Component {
+export default class Login extends Component {
   constructor(props){
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.changeCaptcha = this.changeCaptcha.bind(this)
+  }
+
+  static propTypes = {
+    actions: PropTypes.object.isRequired,
+    globalVal: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
+    sns: PropTypes.object.isRequired,
+    values: PropTypes.object,
+    fields: PropTypes.object,
+    dirty: PropTypes.bool,
+    invalid: PropTypes.bool
+  }
+
+  static fetchData(params){
+    return [Actions.getSnsLogins()]
   }
 
   changeCaptcha(e){
@@ -56,9 +86,7 @@ class Login extends Component {
       actions.getSnsLogins()
     }
   }
-  static fetchData(params){
-    return [Actions.getSnsLogins()]
-  }
+
   validatorCalss(field){
     let initClass = 'form-control'
     if(field.invalid){
@@ -71,10 +99,7 @@ class Login extends Component {
   }
 
   render() {
-    const { actions,sns,
-      globalVal: {captchaUrl},
-      fields: { email, password, captcha },
-      dirty,invalid,valid } = this.props
+    const { sns, globalVal: {captchaUrl}, fields: { email, password, captcha }, dirty,invalid } = this.props
     const style = { marginTop: 20 + '%' }
     return (
       <div className="signin-box">
@@ -110,7 +135,7 @@ class Login extends Component {
                           {...captcha} />
                   </div>
                   <div className="col-xs-6 captcha-img">
-                    <a href="#" onClick={this.changeCaptcha}>
+                    <a href="javascript:;" onClick={this.changeCaptcha}>
                       <img src={captchaUrl} />
                     </a>
                   </div>
@@ -129,26 +154,3 @@ class Login extends Component {
     )
   }
 }
-
-Login.propTypes = {
-  actions: PropTypes.object.isRequired,
-  globalVal: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
-  sns: PropTypes.object.isRequired,
-}
-
-function mapStateToProps(state) {
-  return {
-    globalVal : state.globalVal.toJS(),
-    auth: state.auth.toJS(),
-    sns: state.sns.toJS(),
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Actions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(Login)

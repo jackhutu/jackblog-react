@@ -3,9 +3,9 @@ import { createReducer } from 'redux-immutablejs'
 import { fromJS } from 'immutable'
 
 const initialState = fromJS({
-	type: '',
-	content: '',
-	title: ''
+  type: '',
+  content: '',
+  title: ''
 })
 
 export default createReducer(initialState, {

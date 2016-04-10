@@ -2,15 +2,30 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from '../../actions'
-import {Link} from 'react-router'
-import {formatDate} from '../../utils'
 import Like from './like'
 import Prenext from './prenext'
 import Comment from './comment'
 import Content from './content'
 import LoginModal from '../Login/modal'
 
-class Article extends Component {
+const mapStateToProps = state =>{
+  return {
+    articleDetail: state.articleDetail.toJS(),
+    commentList: state.commentList.toJS(),
+    prenextArticle: state.prenextArticle.toJS(),
+    auth: state.auth.toJS(),
+    sns: state.sns.toJS()
+  }
+}
+
+const mapDispatchToProps = dispatch =>{
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
+}
+
+@connect(mapStateToProps,mapDispatchToProps)
+export default class Article extends Component {
   constructor(props){
     super(props)
     this.toggleLike = this.toggleLike.bind(this)
@@ -20,12 +35,15 @@ class Article extends Component {
     this.closeLoginModal = this.closeLoginModal.bind(this)
     this.state = {showModal:false}
   }
-  componentDidMount() {
-    const { params: { id },actions,commentList,articleDetail,prenextArticle } = this.props
-    if(!articleDetail._id || articleDetail._id !== id){
-      this.fetchArticleData(id)
-      actions.getSnsLogins()
-    }
+
+  static propTypes = {
+    articleDetail: PropTypes.object.isRequired,
+    commentList: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
+    prenextArticle: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
+    sns: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired
   }
 
   static fetchData({id}){
@@ -36,17 +54,20 @@ class Article extends Component {
       Actions.getSnsLogins()
     ]
   }
+
+  componentDidMount() {
+    const { params: { id },actions,articleDetail } = this.props
+    if(!articleDetail._id || articleDetail._id !== id){
+      this.fetchArticleData(id)
+      actions.getSnsLogins()
+    }
+  }
+
   componentWillReceiveProps(nextProps){
     if (nextProps.params.id !== this.props.params.id){
       this.fetchArticleData(nextProps.params.id)
     }
   }
-  // componentDidUpdate (prevProps) {
-  //   let oldId = prevProps.params.id
-  //   let newId = this.props.params.id
-  //   if (newId !== oldId)
-  //     this.fetchArticleData(newId)
-  // }
 
   fetchArticleData(id){
     const { actions} = this.props
@@ -93,7 +114,6 @@ class Article extends Component {
     const { articleDetail,commentList,prenextArticle,auth,sns } = this.props
     return (
       <div className="article-box">
-
         <Content articleDetail={articleDetail} />
         <Like likeCount={articleDetail.like_count} isLike={articleDetail.isLike} toggleLike={this.toggleLike} />
         <Prenext prenextArticle={prenextArticle}  />
@@ -106,33 +126,3 @@ class Article extends Component {
     )
   }
 }
-
-Article.propTypes = {
-  articleDetail: PropTypes.object.isRequired,
-  commentList: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired,
-  prenextArticle: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
-  sns: PropTypes.object.isRequired,
-}
-
-function mapStateToProps(state) {
-  return {
-    articleDetail: state.articleDetail.toJS(),
-    commentList: state.commentList.toJS(),
-    prenextArticle: state.prenextArticle.toJS(),
-    auth: state.auth.toJS(),
-    sns: state.sns.toJS()
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Actions, dispatch)
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Article)

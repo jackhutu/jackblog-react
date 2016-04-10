@@ -1,9 +1,9 @@
 {
-    "verbose": false,
-    "watch": [
-      "src/server.js",
-      "src/routes.js",
-      "server.js",
-      "webpack"
-    ]
+  "verbose": false,
+  "watch": [
+    "src/server.js",
+    "src/routes.js",
+    "server.js",
+    "webpack"
+  ]
 }

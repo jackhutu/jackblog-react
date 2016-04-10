@@ -21,6 +21,8 @@ module.exports = {
     new webpack.DefinePlugin({
       __DEVCLIENT__: true,
       __DEVSERVER__: false,
+      __DEVTOOLS__: false,
+      __DEVLOGGER__: true,
       'process.env':{
         'NODE_ENV': JSON.stringify('development')
       }
@@ -31,6 +33,9 @@ module.exports = {
     new ExtractTextPlugin('style.css', { allChunks: true })
   ],
   module: {
+    preLoaders: [
+      { test: /\.js$|\.jsx$/, loader: "eslint-loader", exclude: /node_modules/ }
+    ],
     loaders: [{
      test: /\.js$|\.jsx$/,
      loader: 'babel',
@@ -53,6 +58,9 @@ module.exports = {
       test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
     }]
+  },
+  eslint: {
+    configFile: path.join(__dirname, '../.eslintrc.json')
   },
   resolve: {
     extensions: ['','.js','.jsx','.scss','.css']

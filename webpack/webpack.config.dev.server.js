@@ -25,6 +25,9 @@ module.exports = {
       new webpack.IgnorePlugin(/vertx/)
     ],
     module: {
+      preLoaders: [
+        { test: /\.js$|\.jsx$/, loader: "eslint-loader", exclude: /node_modules/ }
+      ],
       loaders: [
         {
           test: /\.js$|\.jsx$/,
@@ -45,6 +48,9 @@ module.exports = {
           ]
         }
       ]
+    },
+    eslint: {
+      configFile: path.join(__dirname, '../.eslintrc.json')
     },
     resolve: {
       extensions: ['', '.js', '.jsx', '.css'],

@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server'
 import { RouterContext, match, createMemoryHistory } from 'react-router'
 import { Provider } from 'react-redux'
 import reactCookie from 'react-cookie'
-import { fromJS,Map,List } from 'immutable'
+import { fromJS } from 'immutable'
 import configureStore from './store/configureStore'
 import routes from './routes'
 
@@ -13,9 +13,9 @@ async function fetchAllData(dispatch, components, params) {
       .reduce((prev,current)=>{
         return current.fetchData(params).concat(prev)
       },[])
-    	.map(x=>{
+      .map(x=>{
         return dispatch(x)
-    	})
+      })
   return await Promise.all(needs)
 }
 
@@ -43,41 +43,41 @@ function renderFullPage(renderedContent, initialState) {
 }
 export default function render(req, res) {
   reactCookie.plugToRequest(req, res)
-	const history = createMemoryHistory()
+  const history = createMemoryHistory()
   const token = reactCookie.load('token') || null
-	const store = configureStore({auth:fromJS({
+  const store = configureStore({auth:fromJS({
     token: token,
     user: null
   })}, history)
 
-	match({ routes:routes(), location: req.url }, (error, redirectLocation, renderProps) => {
-	  if (error) {
-	    res.status(500).send(error.message)
-	  } else if (redirectLocation) {
-	    res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-	  } else if (renderProps) {
+  match({ routes:routes(), location: req.url }, (error, redirectLocation, renderProps) => {
+    if (error) {
+      res.status(500).send(error.message)
+    } else if (redirectLocation) {
+      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+    } else if (renderProps) {
       return fetchAllData(store.dispatch, renderProps.components, renderProps.params)
-  	    .then(html=>{
+        .then(html=>{
           const InitialView = (
             <Provider store={store}>
               <RouterContext {...renderProps} />
             </Provider>)
-  	    	const componentHTML = renderToString(InitialView)
-  	    	const initialState = store.getState()
+          const componentHTML = renderToString(InitialView)
+          const initialState = store.getState()
           if(__DEVSERVER__){
             return res.status(200).end(renderFullPage(componentHTML, initialState))
           }else{
             return res.render('index', {__html__: componentHTML,__state__: JSON.stringify(initialState)})
           }
-  	    }).catch(err => {
+        }).catch(err => {
           if(__DEVSERVER__){
-            return res.end(renderFullPage("",{}))
+            return res.end(renderFullPage('',{}))
           }else{
-            return res.render('index', {__html__: "",__state__: {}})
+            return res.render('index', {__html__: '',__state__: {}})
           }
-  	    })
-	  } else {
-	    res.status(404).send('Not Found')
-	  }
-	})
+        })
+    } else {
+      res.status(404).send('Not Found')
+    }
+  })
 }

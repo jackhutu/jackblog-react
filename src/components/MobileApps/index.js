@@ -3,19 +3,40 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from '../../actions'
 
-class MobileApps extends Component {
+const mapStateToProps = state =>{
+  return {
+    apps: state.apps.toJS()
+  }
+}
+
+const mapDispatchToProps = dispatch =>{
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
+}
+
+@connect(mapStateToProps,mapDispatchToProps)
+export default class MobileApps extends Component {
   constructor(props){
     super(props)
   }
+
+  static propTypes = {
+    actions: PropTypes.object.isRequired,
+    apps: PropTypes.array.isRequired
+  }
+  
+  static fetchData(params){
+    return [Actions.getApps()]
+  }
+
   componentDidMount(){
     const { actions,apps } = this.props
     if(apps.length < 1){
       actions.getApps()
     }
   }
-  static fetchData(params){
-    return [Actions.getApps()]
-  }
+
   render() {
     const {apps} = this.props
     return (
@@ -53,22 +74,3 @@ class MobileApps extends Component {
     )
   }
 }
-
-MobileApps.propTypes = {
-  actions: PropTypes.object.isRequired,
-  apps: PropTypes.array.isRequired,
-}
-
-function mapStateToProps(state) {
-  return {
-    apps: state.apps.toJS()
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Actions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(MobileApps)

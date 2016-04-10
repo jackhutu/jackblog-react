@@ -26,13 +26,13 @@ export function isLogin() {
 }
 
 export function redirectToBack(nextState, replaceState) {
-	//已经登录则不进入
+  //已经登录则不进入
   if (isLogin()) {
     replaceState(null, '/')
   }
 }
 export function redirectToLogin(nextState,replaceState) {
-	if (!isLogin()) {
+  if (!isLogin()) {
     replaceState(null, '/login')
   }
 }

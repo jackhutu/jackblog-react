@@ -6,7 +6,22 @@ import * as Actions from '../actions'
 import Toaster from '../components/Toaster'
 import ScrollTop from '../components/ScrollTop'
 
-class App extends Component {
+const mapStateToProps = state =>{
+  return {
+    globalVal: state.globalVal.toJS(),
+    auth: state.auth.toJS(),
+    showmsg: state.showmsg.toJS()
+  }
+}
+
+const mapDispatchToProps = dispatch =>{
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
+}
+
+@connect(mapStateToProps,mapDispatchToProps)
+export default class App extends Component {
   constructor(props){
     super(props)
   }
@@ -15,12 +30,22 @@ class App extends Component {
     return [Actions.getUserInfo(),Actions.getIndexImage()]
   }
 
+  static propTypes = {
+    globalVal: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
+    showmsg: PropTypes.object.isRequired,
+    children: PropTypes.node,
+    actions: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
+  }
+
   componentWillReceiveProps(nextProps){
     const { globalVal } = this.props
     if(globalVal.styleMode !== nextProps.globalVal.styleMode){
       document.body.className = nextProps.globalVal.styleMode
     }
   }
+  
   render() {
     const { globalVal,actions,children,auth,location,showmsg } = this.props
     return (
@@ -33,30 +58,3 @@ class App extends Component {
     )
   }
 }
-
-App.propTypes = {
-  globalVal: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
-  showmsg: PropTypes.object.isRequired,
-  children: PropTypes.node,
-  actions: PropTypes.object.isRequired
-}
-
-function mapStateToProps(state) {
-  return {
-    globalVal: state.globalVal.toJS(),
-    auth: state.auth.toJS(),
-    showmsg: state.showmsg.toJS(),
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Actions, dispatch)
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App)
