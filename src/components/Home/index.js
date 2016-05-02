@@ -6,7 +6,7 @@ import Tags from './tags'
 import Articles from './articles'
 import Sidebar from './sidebar'
 import Footer from './footer'
-import LoadMore from './LoadMore'
+import LoadMore from './loadMore'
 
 const mapStateToProps = state =>{
   return {
