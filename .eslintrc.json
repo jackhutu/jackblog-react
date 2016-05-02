@@ -48,6 +48,7 @@
     "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
     "no-mixed-spaces-and-tabs": [0],
     "react/no-danger": 0,
-    "react/display-name": 0
+    "react/display-name": 0,
+    "linebreak-styl":0
   }
 }
