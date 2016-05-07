@@ -8,13 +8,13 @@ module.exports = {
   name: 'browser',
   context: path.join(__dirname, "..","src"),
   debug:true,
-  entry: [
-    './client.js',
-    hotMiddlewareScript
-  ],
+  entry: {
+    vendor: ['react','redux','react-redux','react-router'],
+    bundle: ['./client.js',hotMiddlewareScript]
+  },
   output: {
     path: path.join(__dirname, '../dist'),
-    filename: 'bundle.js',
+    filename: '[name].js',
     publicPath: '/'
   },
   plugins: [

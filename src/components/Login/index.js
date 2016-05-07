@@ -100,10 +100,9 @@ export default class Login extends Component {
 
   render() {
     const { sns, globalVal: {captchaUrl}, fields: { email, password, captcha }, dirty,invalid } = this.props
-    const style = { marginTop: 20 + '%' }
     return (
       <div className="signin-box">
-        <div className="signin-container" style={style}>
+        <div className="signin-container">
             <h4 className="title">登 录</h4>
             <form className="signin-form form-horizontal" onSubmit={this.handleSubmit} noValidate>
                 <div className="form-group">

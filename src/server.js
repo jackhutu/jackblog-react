@@ -24,18 +24,24 @@ function renderFullPage(renderedContent, initialState) {
   <html>
     <head>
       <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width">
-      <title>Jack Hu's blog for React</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="renderer" content="webkit">
+      <title>Jackblog react redux版</title>
       <meta name="description" content="This is Jack Hu's blog. use react redux.">
       <meta name="keyword" content="Jackblog react redux react-router react-redux-router react-bootstrap react-alert">
       <link rel="stylesheet" href="/style.css"/>
     </head>
     <body class="day-mode">
-    <div class="top-box" id="root">${renderedContent}</div>
-    <script>
-      window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
-    </script>
-    <script type="text/javascript" charset="utf-8" src="/bundle.js"></script>
+      <!--[if lt IE 9]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+      <div class="top-box" id="root">${renderedContent}</div>
+      <script>
+        window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
+      </script>
+      <script type="text/javascript" charset="utf-8" src="/vendor.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/bundle.js"></script>
     </body>
   </html>
   `
@@ -64,13 +70,15 @@ export default function render(req, res) {
           const componentHTML = renderToString(InitialView)
           const initialState = store.getState()
           if(__DEVSERVER__){
-            return res.status(200).end(renderFullPage(componentHTML, initialState))
+            res.set('Content-Type', 'text/html')
+            return res.status(200).send(renderFullPage(componentHTML, initialState))
           }else{
             return res.render('index', {__html__: componentHTML,__state__: JSON.stringify(initialState)})
           }
         }).catch(err => {
           if(__DEVSERVER__){
-            return res.end(renderFullPage('',{}))
+            res.set('Content-Type', 'text/html')
+            return res.status(200).send(renderFullPage('',{}))
           }else{
             return res.render('index', {__html__: '',__state__: {}})
           }
