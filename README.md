@@ -18,7 +18,7 @@ $ cd jackblog-react-redux
 $ npm install
 $ npm run dev
 ```
-在浏览中打开http://localhost:5000
+在浏览中打开http://localhost:3000
 
 
 ### 调试
