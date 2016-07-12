@@ -8,8 +8,17 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
     <meta name="description" content="This is Jack Hu's blog. use react redux.">
     <meta name="keyword" content="Jackblog react redux react-router react-redux-router react-bootstrap react-alert">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?appkey";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
   </head>
-  <body class="day-mode">
+  <body class="<%= htmlWebpackPlugin.options.styleMode %>">
     <!--[if lt IE 9]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->

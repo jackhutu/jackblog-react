@@ -6,6 +6,7 @@ import reactCookie from 'react-cookie'
 import { fromJS } from 'immutable'
 import configureStore from './store/configureStore'
 import routes from './routes'
+import { API_ROOT } from './config'
 
 async function fetchAllData(dispatch, components, params) {
   const needs = components
@@ -19,7 +20,7 @@ async function fetchAllData(dispatch, components, params) {
   return await Promise.all(needs)
 }
 
-function renderFullPage(renderedContent, initialState) {
+function renderFullPage(renderedContent, initialState, styleMode) {
   return `<!doctype html>
   <html>
     <head>
@@ -32,7 +33,7 @@ function renderFullPage(renderedContent, initialState) {
       <meta name="keyword" content="Jackblog react redux react-router react-redux-router react-bootstrap react-alert">
       <link rel="stylesheet" href="/style.css"/>
     </head>
-    <body class="day-mode">
+    <body class="${styleMode}">
       <!--[if lt IE 9]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
@@ -50,10 +51,17 @@ export default function render(req, res) {
   reactCookie.plugToRequest(req, res)
   const history = createMemoryHistory()
   const token = reactCookie.load('token') || null
-  const store = configureStore({auth:fromJS({
-    token: token,
-    user: null
-  })}, history)
+  const styleMode = reactCookie.load('styleMode') || 'day-mode'
+  const store = configureStore({
+    auth:fromJS({
+      token: token,
+      user: null
+    }),
+    globalVal:fromJS({
+      styleMode: styleMode,
+      captchaUrl: API_ROOT + 'users/getCaptcha?'
+    })
+  }, history)
 
   match({ routes:routes(), location: req.url }, (error, redirectLocation, renderProps) => {
     if (error) {
@@ -71,9 +79,9 @@ export default function render(req, res) {
           const initialState = store.getState()
           if(__DEVSERVER__){
             res.set('Content-Type', 'text/html')
-            return res.status(200).send(renderFullPage(componentHTML, initialState))
+            return res.status(200).send(renderFullPage(componentHTML, initialState, styleMode))
           }else{
-            return res.render('index', {__html__: componentHTML,__state__: JSON.stringify(initialState)})
+            return res.render('index', {__html__: componentHTML,__state__: JSON.stringify(initialState), __styleMode__: styleMode})
           }
         }).catch(err => {
           if(__DEVSERVER__){

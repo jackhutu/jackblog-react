@@ -1,3 +1,11 @@
+### [查看Releases](https://github.com/jackhutu/jackblog-react-redux/releases)
+
+2.1.3 / 2016-07-12
+==================
+
+* 更新依赖及相关代码
+* 增加styleModel cookie存储
+
 2.1.2 / 2016-05-07
 ==================
 

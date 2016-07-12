@@ -45,6 +45,7 @@ module.exports = [
         inject:'body',
         htmlContent:'<%- __html__ %>',
         initialData:'window.__INITIAL_STATE__ = <%- __state__ %>',
+        styleMode:'<%- __styleMode__ %>',
         hash:false,    //为静态资源生成hash值
         minify:{    //压缩HTML文件
           removeComments:false,    //移除HTML中的注释

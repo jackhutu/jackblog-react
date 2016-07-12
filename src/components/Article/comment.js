@@ -10,6 +10,7 @@ export default class Comment extends Component{
       commentContent:''
     }
     this.showReply = this.showReply.bind(this)
+    this.gotoComment = this.gotoComment.bind(this)
     this.handleSubmitReply = this.handleSubmitReply.bind(this)
     this.handleCommentContentChange = this.handleCommentContentChange.bind(this)
   }
@@ -42,6 +43,18 @@ export default class Comment extends Component{
     }
   }
   
+  gotoComment(e){
+    e.preventDefault()
+    const {auth} = this.props
+    if(auth.token){
+      document.getElementById('comment_content').focus()
+    }else{
+      //弹出登录模块
+      const {openLoginModal} = this.props
+      openLoginModal()
+    }
+  }  
+
   handleSubmitReply(e,i,cid){
     e.preventDefault()
     const content = this.refs['replyContent'+i].value
@@ -61,7 +74,7 @@ export default class Comment extends Component{
       <div className="comment-container clearfix">
         <div className="comment-head clearfix">
           {commentList.items.length || 0}条评论
-            <a href="javascript:;" className="goto-comment pull-right"><i className="fa fa-pencil"></i>添加新评论</a>
+            <a href="javascript:;" onClick={e=>this.gotoComment(e)} className="goto-comment pull-right"><i className="fa fa-pencil"></i>添加新评论</a>
         </div>
         <div id="comment_list">
           {commentList.items.map((comment,i) =>

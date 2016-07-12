@@ -35,17 +35,13 @@ export default class Header extends Component{
 
         <div className="navbar-expanded">
             <div>
-              <a className="navbar-item expanded-version" href="http://angular2.jackhu.top" title="Angular2.x版">
-                <img src='http://upload.jackhu.top/icons/angular2.png-32x32' /> 
+              <a className="expanded-var angular2" href="http://angular2.jackhu.top" title="Angular2.x版">
               </a>
-              <a className="navbar-item expanded-version" href="http://vue.jackhu.top" title="Vue版">
-                <img src='http://upload.jackhu.top/icons/vue.png-32x32' /> 
+              <a className="expanded-var vue" href="http://vue.jackhu.top" title="Vue版">
               </a>
-              <a className="navbar-item expanded-version" href="http://react.jackhu.top" title="React版">
-                <img src='http://upload.jackhu.top/icons/react.png-32x32' /> 
+              <a className="expanded-var react" href="http://react.jackhu.top" title="React版">
               </a>
-              <a className="navbar-item expanded-version" href="http://angular1.jackhu.top" title="Angular1.x版">
-                <img src='http://upload.jackhu.top/icons/AngularJS.png-32x32' /> 
+              <a className="expanded-var angular1" href="http://angular1.jackhu.top" title="Angular1.x版">
               </a>
               <a className="navbar-item change-mode" href="javascript:;" onClick={this.handleChangeMode}>
                 {(styleMode === 'day-mode')?<i className="fa fa-sun-o"></i>:<i className="fa fa-moon-o"></i>}
@@ -94,31 +90,17 @@ export default class Header extends Component{
               </Link>
             </div>
           }
-          <div className="pull-right">
-            <a className="navbar-item change-mode" href="javascript:;" onClick={this.handleChangeMode}>
-              {(styleMode === 'day-mode')?<i className="fa fa-sun-o"></i>:<i className="fa fa-moon-o"></i>}
-            </a>
-          </div>
-          <div className="pull-right">
-            <a className="navbar-item expanded-version" href="http://angular1.jackhu.top" title="Angular1.x版">
-              <img src='http://upload.jackhu.top/icons/AngularJS.png-16x16' /> 
-            </a>
-          </div>
-          <div className="pull-right">
-            <a className="navbar-item expanded-version" href="http://react.jackhu.top" title="React版">
-              <img src='http://upload.jackhu.top/icons/react.png-16x16' /> 
-            </a>
-          </div>
-          <div className="pull-right">
-            <a className="navbar-item expanded-version" href="http://vue.jackhu.top" title="Vue版">
-              <img src='http://upload.jackhu.top/icons/vue.png-16x16' /> 
-            </a>
-          </div>
-          <div className="pull-right">
-            <a className="navbar-item expanded-version" href="http://angular2.jackhu.top" title="Agnular2.x版">
-              <img src='http://upload.jackhu.top/icons/angular2.png-16x16' /> 
-            </a>
-          </div>
+          <a className="pull-right navbar-item change-mode" href="javascript:;" onClick={this.handleChangeMode}>
+            {(styleMode === 'day-mode')?<i className="fa fa-sun-o"></i>:<i className="fa fa-moon-o"></i>}
+          </a>
+          <a className="pull-right expanded-var angular1" href="http://angular1.jackhu.top" title="Angular1.x版">
+          </a>
+          <a className="pull-right expanded-var react" href="http://react.jackhu.top" title="React版">
+          </a>
+          <a className="pull-right expanded-var vue" href="http://vue.jackhu.top" title="Vue版">
+          </a>
+          <a className="pull-right expanded-var angular2" href="http://angular2.jackhu.top" title="Agnular2.x版">
+          </a>
         </div>
       </div>
     )

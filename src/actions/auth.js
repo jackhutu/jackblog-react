@@ -41,6 +41,7 @@ export function localLogin(userInfo) {
       //获取用户信息
       dispatch(getUserInfo(json.token))
       dispatch(loginSuccess(json.token))
+      dispatch(getCaptchaUrl())
       dispatch(showMsg('登录成功,欢迎光临!','success'))
       dispatch(push('/'))
     }).catch(err=>{
@@ -68,7 +69,7 @@ export function logout() {
   return dispatch => {
     signOut()
     dispatch({type: types.LOGOUT_USER})
-    dispatch(push('/'))
+    window.location.pathname = '/'
   }
 }
 //修改用户资料

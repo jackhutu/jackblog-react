@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { reduxForm } from 'redux-form'
+import { Field,reduxForm } from 'redux-form'
 import * as Actions from '../../actions'
 import SNSLogin from './snsLogin'
 
@@ -40,16 +40,30 @@ const validate = values => {
   return errors
 }
 
+const validatorCalss = field => {
+  let initClass = 'form-control'
+  if(field.invalid){
+    initClass += ' ng-invalid'
+  }
+  if(field.dirty){
+    initClass += ' ng-dirty'
+  }
+  return initClass
+}
+
+const renderField = prs => (
+  <input className={validatorCalss(prs)} {...prs.input} />
+)
+
 @connect(mapStateToProps,mapDispatchToProps)
 @reduxForm({
   form: 'signin',
-  fields: ['email', 'password', 'captcha'],
   validate
 })
 export default class Login extends Component {
   constructor(props){
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.submitForm = this.submitForm.bind(this)
     this.changeCaptcha = this.changeCaptcha.bind(this)
   }
 
@@ -58,8 +72,7 @@ export default class Login extends Component {
     globalVal: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
     sns: PropTypes.object.isRequired,
-    values: PropTypes.object,
-    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
     dirty: PropTypes.bool,
     invalid: PropTypes.bool
   }
@@ -74,12 +87,11 @@ export default class Login extends Component {
     actions.getCaptchaUrl()
   }
 
-  handleSubmit (e) {
-    e.preventDefault()
-    const { values } = this.props
+  submitForm (values) {
     const { actions } = this.props
     actions.localLogin(values)
   }
+
   componentDidMount() {
     const { actions,sns } = this.props
     if(sns.logins.length < 1){
@@ -87,51 +99,31 @@ export default class Login extends Component {
     }
   }
 
-  validatorCalss(field){
-    let initClass = 'form-control'
-    if(field.invalid){
-      initClass += ' ng-invalid'
-    }
-    if(field.dirty){
-      initClass += ' ng-dirty'
-    }
-    return initClass
-  }
-
   render() {
-    const { sns, globalVal: {captchaUrl}, fields: { email, password, captcha }, dirty,invalid } = this.props
+    const { sns, globalVal: {captchaUrl}, dirty,invalid, handleSubmit} = this.props
+
     return (
       <div className="signin-box">
         <div className="signin-container">
             <h4 className="title">登 录</h4>
-            <form className="signin-form form-horizontal" onSubmit={this.handleSubmit} noValidate>
+            <form className="signin-form form-horizontal" onSubmit={handleSubmit(this.submitForm)} noValidate>
                 <div className="form-group">
                   <div className="input-group">
                     <div className="input-group-addon">
                       <i className="fa fa-envelope-o"></i>
                     </div>
-                    <input type="email" 
-                          className={ this.validatorCalss(email) } 
-                          placeholder="邮箱"
-                          {...email} />
+                    <Field name="email" component={renderField} type="email" placeholder="邮箱" />
                   </div>
                 </div>
                 <div className="form-group">
                   <div className="input-group">
                     <div className="input-group-addon"><i className="fa fa-unlock-alt"></i></div>
-                    <input type="password"
-                           className={ this.validatorCalss(password) }
-                           placeholder="密码" 
-                           {...password} />
+                    <Field name="password" component={renderField} type="password" placeholder="密码" />
                   </div>
                 </div>
                 <div className="form-group" >
                   <div className="col-xs-6 captcha-code">
-                    <input className={ this.validatorCalss(captcha) }  
-                          maxLength="6" 
-                          type="text" 
-                          placeholder="验证码"
-                          {...captcha} />
+                    <Field name="captcha" component={renderField} type="text" maxLength="6" placeholder="验证码" />
                   </div>
                   <div className="col-xs-6 captcha-img">
                     <a href="javascript:;" onClick={this.changeCaptcha}>
