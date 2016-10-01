@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="renderer" content="webkit">
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <meta name="description" content="This is Jack Hu's blog. use react redux.">
+    <meta name="description" content="This is Jack Hu's blog. use react.">
     <meta name="keyword" content="Jackblog react redux react-router react-redux-router react-bootstrap react-alert">
     <script>
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?appkey";
+      hm.src = "//hm.baidu.com/hm.js?<%= htmlWebpackPlugin.options.baiduappkey %>";
       var s = document.getElementsByTagName("script")[0]; 
       s.parentNode.insertBefore(hm, s);
     })();

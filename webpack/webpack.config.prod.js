@@ -39,13 +39,14 @@ module.exports = [
       new ExtractTextPlugin('[hash:8].style.css', { allChunks: true }),
       new HtmlWebpackPlugin({
         favicon:path.join(__dirname,'../src/favicon.ico'),
-        title: "Jackblog react redux版",
+        title: "Jackblog react 版",
         template: path.join(__dirname,'../src/index.html'),
         filename: 'index.ejs',
         inject:'body',
         htmlContent:'<%- __html__ %>',
         initialData:'window.__INITIAL_STATE__ = <%- __state__ %>',
         styleMode:'<%- __styleMode__ %>',
+        baiduappkey: process.env.BAIDU_TONGJI_APPKEY,
         hash:false,    //为静态资源生成hash值
         minify:{    //压缩HTML文件
           removeComments:false,    //移除HTML中的注释

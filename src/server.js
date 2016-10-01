@@ -28,7 +28,7 @@ function renderFullPage(renderedContent, initialState, styleMode) {
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="renderer" content="webkit">
-      <title>Jackblog react redux版</title>
+      <title>Jackblog react版</title>
       <meta name="description" content="This is Jack Hu's blog. use react redux.">
       <meta name="keyword" content="Jackblog react redux react-router react-redux-router react-bootstrap react-alert">
       <link rel="stylesheet" href="/style.css"/>
