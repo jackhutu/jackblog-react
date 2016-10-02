@@ -10,7 +10,7 @@ export default class Footer extends Component{
             <span>©2015 / 鄂ICP备15010989号-1</span>
           </li>
           <li>
-            <a className="github" href="https://github.com/jackhutu/jackblog-react-redux" target="_blank">
+            <a className="github" href="https://github.com/jackhutu/jackblog-react" target="_blank">
               <i className="fa fa-github"></i>
             </a>
           </li>
