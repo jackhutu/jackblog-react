@@ -65106,7 +65106,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 			value: true
 	});
-	var API_ROOT = exports.API_ROOT =  false ? '//api.jackhu.top/' : 'http://localhost:9000/';
+	var API_ROOT = exports.API_ROOT =  false ? 'https://api.jackhu.top/' : 'http://localhost:9000/';
 
 	var CookieDomain = exports.CookieDomain =  false ? '.jackhu.top' : '';
 
@@ -91212,7 +91212,7 @@ module.exports =
 	};
 
 	var renderField = function renderField(prs) {
-	  return _react2.default.createElement('input', _extends({ className: validatorCalss(prs) }, prs.input));
+	  return _react2.default.createElement('input', _extends({ className: validatorCalss(prs.meta), name: prs.name, maxLength: prs.maxLength, minLength: prs.minLength }, prs.input, { placeholder: prs.placeholder, type: prs.type }));
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {

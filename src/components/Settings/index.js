@@ -27,7 +27,7 @@ const validatorCalss = field => {
 }
 
 const renderField = prs => (
-  <input className={validatorCalss(prs)} {...prs.input} />
+  <input className={validatorCalss(prs.meta)} name={prs.name} maxLength={prs.maxLength} minLength={prs.minLength} {...prs.input} placeholder={prs.placeholder} type={prs.type} />
 )
 
 const mapStateToProps = state =>{
