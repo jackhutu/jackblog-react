@@ -52,7 +52,7 @@ const validatorCalss = field => {
 }
 
 const renderField = prs => (
-  <input className={validatorCalss(prs)} {...prs.input} />
+  <input className={validatorCalss(prs.meta)} name={prs.name} maxLength={prs.maxLength} {...prs.input} placeholder={prs.placeholder} type={prs.type} />
 )
 
 @connect(mapStateToProps,mapDispatchToProps)
