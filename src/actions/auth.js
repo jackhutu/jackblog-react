@@ -44,10 +44,10 @@ export function localLogin(userInfo) {
       dispatch(getCaptchaUrl())
       dispatch(showMsg('登录成功,欢迎光临!','success'))
       dispatch(push('/'))
-    }).catch(err=>{
+    }).catch(err => {
       //登录异常
       dispatch(getCaptchaUrl())
-      return dispatch(showMsg(err.data.error_msg || '登录失败'))
+      return dispatch(showMsg(err.response.data.error_msg || '登录失败'))
     })
   }
 }
@@ -91,7 +91,7 @@ export function updateUser(userInfo) {
       return dispatch(successUpdateUser(json.data))
 
     }).catch(err=>{
-      return dispatch(showMsg(err.data.error_msg || '更新用户资料失败'))
+      return dispatch(showMsg(err.response.data.error_msg || '更新用户资料失败'))
     })
   }
 }

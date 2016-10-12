@@ -27,8 +27,8 @@ export function addComment(comment) {
         }
         dispatch(showMsg('添加评论成功','success'))
         return dispatch(receiveAddComment(json.data))
-      }).catch(e=>{
-        return dispatch(showMsg(e.data.error_msg || '添加评论失败'))
+      }).catch(err =>{
+        return dispatch(showMsg(err.response.data.error_msg || '添加评论失败'))
       })
   }
 }
@@ -52,8 +52,8 @@ export function addReply(cid,reply) {
         }
         dispatch(showMsg('添加回复成功','success'))
         return dispatch(receiveAddReply(cid,json.data))
-      }).catch(e=>{
-        return dispatch(showMsg(e.data.error_msg || '添加回复失败'))
+      }).catch(err =>{
+        return dispatch(showMsg(err.response.data.error_msg || '添加回复失败'))
       })
   }
 }
