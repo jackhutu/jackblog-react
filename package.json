@@ -9,6 +9,7 @@
     "dev": "npm-run-all --sequential build-server:dev start-dev",
     "build": "npm-run-all clean --parallel build-all:prod",
     "build-server:dev": "better-npm-run build-dev-server",
+    "build-server:watch": "better-npm-run build-dev-server:watch",
     "build-all:prod": "better-npm-run build-prod",
     "start-dev": "better-npm-run nodemon-dev",
     "start-prod": "better-npm-run node-prod",
@@ -17,7 +18,13 @@
   },
   "betterScripts": {
     "build-dev-server": {
-      "command": "webpack --colors --config ./webpack/webpack.config.dev.server.js",
+      "command": "webpack --colors --progress --config ./webpack/webpack.config.dev.server.js",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "build-dev-server:watch": {
+      "command": "webpack --colors --progress --watch --config ./webpack/webpack.config.dev.server.js",
       "env": {
         "NODE_ENV": "development"
       }

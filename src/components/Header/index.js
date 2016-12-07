@@ -31,7 +31,7 @@ export default class Header extends Component{
             <Link activeClassName="active" className="navbar-item mobile" title="移动应用" to="/apps">
               <i className="fa fa-mobile"></i>
             </Link>
-        </div>   
+        </div>
 
         <div className="navbar-expanded">
             <div>
