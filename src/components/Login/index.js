@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Field,reduxForm } from 'redux-form'
@@ -105,41 +106,40 @@ export default class Login extends Component {
     return (
       <div className="signin-box">
         <div className="signin-container">
-            <h4 className="title">登 录</h4>
-            <form className="signin-form form-horizontal" onSubmit={handleSubmit(this.submitForm)} noValidate>
-                <div className="form-group">
-                  <div className="input-group">
-                    <div className="input-group-addon">
-                      <i className="fa fa-envelope-o"></i>
-                    </div>
-                    <Field name="email" component={renderField} type="email" placeholder="邮箱" />
-                  </div>
+          <h4 className="title">登 录</h4>
+          <form className="signin-form form-horizontal" onSubmit={handleSubmit(this.submitForm)} noValidate>
+            <div className="form-group">
+              <div className="input-group">
+                <div className="input-group-addon">
+                  <i className="fa fa-envelope-o"></i>
                 </div>
-                <div className="form-group">
-                  <div className="input-group">
-                    <div className="input-group-addon"><i className="fa fa-unlock-alt"></i></div>
-                    <Field name="password" component={renderField} type="password" placeholder="密码" />
-                  </div>
-                </div>
-                <div className="form-group" >
-                  <div className="col-xs-6 captcha-code">
-                    <Field name="captcha" component={renderField} type="text" maxLength="6" placeholder="验证码" />
-                  </div>
-                  <div className="col-xs-6 captcha-img">
-                    <a href="javascript:;" onClick={this.changeCaptcha}>
-                      <img src={captchaUrl} />
-                    </a>
-                  </div>
+                <Field name="email" component={renderField} type="email" placeholder="邮箱" />
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="input-group">
+                <div className="input-group-addon"><i className="fa fa-unlock-alt"></i></div>
+                <Field name="password" component={renderField} type="password" placeholder="密码" />
+              </div>
+            </div>
+            <div className="form-group" >
+              <div className="col-xs-6 captcha-code">
+                <Field name="captcha" component={renderField} type="text" maxLength="6" placeholder="验证码" />
+              </div>
+              <div className="col-xs-6 captcha-img">
+                <a href="javascript:;" onClick={this.changeCaptcha}>
+                  <img src={captchaUrl} />
+                </a>
+              </div>
 
-                </div>
-                <div className="form-group">
-                  <button disabled={ dirty && invalid } className="btn btn-primary btn-lg btn-block" type="submit">登 录</button>
-                </div>
+            </div>
+            <div className="form-group">
+              <button disabled={ dirty && invalid } className="btn btn-primary btn-lg btn-block" type="submit">登 录</button>
+            </div>
+          </form>
 
-            </form>
-
-            <p className="text-center">您还可以通过以下方式直接登录</p>
-            <SNSLogin logins={sns.logins} />
+          <p className="text-center">您还可以通过以下方式直接登录</p>
+          <SNSLogin logins={sns.logins} />
         </div>
       </div>
     )

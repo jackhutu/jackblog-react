@@ -1,4 +1,5 @@
-import React,{Component,PropTypes} from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 //列表View
 export default class LoadMore extends Component{

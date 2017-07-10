@@ -24,17 +24,17 @@ function receiveToggleLike(json) {
 export function toggleLike(aid) {
   return (dispatch,getState)=>{
     return api.toggleLike(aid)
-    .then(response => ({json: response.data, status: response.statusText}))
-    .then(({json,status}) => {
-      if(status !== 'OK'){
+      .then(response => ({json: response.data, status: response.statusText}))
+      .then(({json,status}) => {
+        if(status !== 'OK'){
+          return dispatch({ type: types.TOGGLE_LIKE_FAILURE })
+        }
+        dispatch(getUserInfo())
+        return dispatch(receiveToggleLike(json))
+      })
+      .catch(error => {
         return dispatch({ type: types.TOGGLE_LIKE_FAILURE })
-      }
-      dispatch(getUserInfo())
-      return dispatch(receiveToggleLike(json))
-    })
-    .catch(error => {
-      return dispatch({ type: types.TOGGLE_LIKE_FAILURE })
-    })
+      })
   }
 }
 
@@ -55,27 +55,27 @@ export const getArticleDetail = (id) =>{
   return (dispatch, getState) => {
     const auth = getState().auth.toJS()
     return api.getArticleDetaile(id)
-    .then(response => ({json: response.data, status: response.statusText}))
-    .then(({json,status}) => {
-      let isLike = false
-      let article = json.data
-      if(auth.user){
-        auth.user.likes.map(item=>{
-          if(item.toString() === article._id){
-            isLike = true
-          }
+      .then(response => ({json: response.data, status: response.statusText}))
+      .then(({json,status}) => {
+        let isLike = false
+        let article = json.data
+        if(auth.user){
+          auth.user.likes.map(item=>{
+            if(item.toString() === article._id){
+              isLike = true
+            }
+          })
+        }
+        return dispatch({
+          type: types.ARTICLE_DETAIL_SUCCESS,
+          articleDetail: {...article,isLike:isLike}
         })
-      }
-      return dispatch({
-        type: types.ARTICLE_DETAIL_SUCCESS,
-        articleDetail: {...article,isLike:isLike}
       })
-    })
-    .catch(error => {
-      return dispatch({
-        type: types.ARTICLE_DETAIL_FAILURE
+      .catch(error => {
+        return dispatch({
+          type: types.ARTICLE_DETAIL_FAILURE
+        })
       })
-    })
   }
 }
 

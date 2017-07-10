@@ -30,25 +30,25 @@ function loginSuccess(token) {
 export function localLogin(userInfo) {
   return (dispatch,getState) =>{
     return api.localLogin(userInfo)
-    .then(response => ({json: response.data, status: response.statusText}))
-    .then(({json,status}) => {
-      if(status !== 'OK'){
+      .then(response => ({json: response.data, status: response.statusText}))
+      .then(({json,status}) => {
+        if(status !== 'OK'){
+          dispatch(getCaptchaUrl())
+          return dispatch(showMsg(json.data.error_msg || '登录失败'))
+        }
+        //得到token,并存储
+        saveCookie('token',json.token)
+        //获取用户信息
+        dispatch(getUserInfo(json.token))
+        dispatch(loginSuccess(json.token))
         dispatch(getCaptchaUrl())
-        return dispatch(showMsg(json.data.error_msg || '登录失败'))
-      }
-      //得到token,并存储
-      saveCookie('token',json.token)
-      //获取用户信息
-      dispatch(getUserInfo(json.token))
-      dispatch(loginSuccess(json.token))
-      dispatch(getCaptchaUrl())
-      dispatch(showMsg('登录成功,欢迎光临!','success'))
-      dispatch(push('/'))
-    }).catch(err => {
-      //登录异常
-      dispatch(getCaptchaUrl())
-      return dispatch(showMsg(err.response.data.error_msg || '登录失败'))
-    })
+        dispatch(showMsg('登录成功,欢迎光临!','success'))
+        dispatch(push('/'))
+      }).catch(err => {
+        //登录异常
+        dispatch(getCaptchaUrl())
+        return dispatch(showMsg(err.response.data.error_msg || '登录失败'))
+      })
   }
 }
 
@@ -82,16 +82,16 @@ function successUpdateUser(user) {
 export function updateUser(userInfo) {
   return (dispatch,getState)=>{
     return api.mdUser(userInfo)
-    .then(response => ({json: response.data, status: response.statusText}))
-    .then(({json,status}) => {
-      if(status !== 'OK'){
-        return dispatch(showMsg(json.data && json.data.error_msg || '更新用户资料失败'))
-      }
-      dispatch(showMsg('更新用户资料成功','success'))
-      return dispatch(successUpdateUser(json.data))
+      .then(response => ({json: response.data, status: response.statusText}))
+      .then(({json,status}) => {
+        if(status !== 'OK'){
+          return dispatch(showMsg(json.data && json.data.error_msg || '更新用户资料失败'))
+        }
+        dispatch(showMsg('更新用户资料成功','success'))
+        return dispatch(successUpdateUser(json.data))
 
-    }).catch(err=>{
-      return dispatch(showMsg(err.response.data.error_msg || '更新用户资料失败'))
-    })
+      }).catch(err=>{
+        return dispatch(showMsg(err.response.data.error_msg || '更新用户资料失败'))
+      })
   }
 }

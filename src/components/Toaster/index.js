@@ -1,4 +1,5 @@
-import React,{Component,PropTypes} from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Alert from 'react-s-alert'
 import { getCookie,removeCookie } from '../../utils/authService'
 
@@ -7,7 +8,8 @@ export default class toaster extends Component{
     super(props)
   }
   static propTypes = {
-    hideMsg: PropTypes.func.isRequired
+    hideMsg: PropTypes.func.isRequired,
+    msg: PropTypes.object
   }
   componentWillReceiveProps(nextProps){
     const { msg } = nextProps

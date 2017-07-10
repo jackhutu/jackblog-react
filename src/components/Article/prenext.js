@@ -1,4 +1,5 @@
-import React,{Component,PropTypes} from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {Link} from 'react-router'
 
 export default class Prenext extends Component{
@@ -11,18 +12,16 @@ export default class Prenext extends Component{
       <div className="prenext">
         {prenextArticle.prev._id?
           <div className="text-left prev">
-          <Link className="link-title" to={'/article/' + prenextArticle.prev._id }><span>上一篇:</span>{prenextArticle.prev.title} </Link>
+            <Link className="link-title" to={'/article/' + prenextArticle.prev._id }><span>上一篇:</span>{prenextArticle.prev.title} </Link>
           </div>
-        :''}
+          :''}
         
         {prenextArticle.next._id?
           <div className="text-right next">
             <Link className="link-title" to={'/article/' + prenextArticle.next._id }><span>下一篇:</span> {prenextArticle.next.title}</Link>
           </div>
           :''}
-
       </div>
     )
-
   }
 }

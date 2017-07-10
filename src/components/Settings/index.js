@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Field,reduxForm } from 'redux-form'
@@ -76,15 +77,15 @@ export default class Settings extends Component {
           <hr />
           <div className="profile">
             <div className="control-group">
-                <form className="settings-form" onSubmit={handleSubmit(this.submitForm)} noValidate>
-                  <div className="form-group">
-                    <label className="control-label">昵称</label>
-                    <Field name="nickname" component={renderField} type="text" 
-                      minLength="2" maxLength="15"
-                      placeholder="2-15字符，中英文、数字和下划线" />
-                  </div>
-                  <button type="submit" disabled={ dirty && invalid } className="btn btn-block btn-lg btn-primary">保 存</button>
-                </form>
+              <form className="settings-form" onSubmit={handleSubmit(this.submitForm)} noValidate>
+                <div className="form-group">
+                  <label className="control-label">昵称</label>
+                  <Field name="nickname" component={renderField} type="text" 
+                    minLength="2" maxLength="15"
+                    placeholder="2-15字符，中英文、数字和下划线" />
+                </div>
+                <button type="submit" disabled={ dirty && invalid } className="btn btn-block btn-lg btn-primary">保 存</button>
+              </form>
             </div>
           </div>
         </div>

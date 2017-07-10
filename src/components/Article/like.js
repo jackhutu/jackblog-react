@@ -1,4 +1,5 @@
-import React,{Component,PropTypes} from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class Like extends Component{
   static propTypes = {
@@ -11,10 +12,10 @@ export default class Like extends Component{
     return(
       <div className="article-share clearfix">
         <a href="javascript:;" className={isLike?'like-btn note-liked':'like-btn'} onClick={toggleLike}>
-            <span className="like-content">
-              <i className={isLike?'fa fa-heart':'fa fa-heart-o'}></i>  喜欢
-            </span>
-            <span className="like-count">{likeCount}</span>        
+          <span className="like-content">
+            <i className={isLike?'fa fa-heart':'fa fa-heart-o'}></i>  喜欢
+          </span>
+          <span className="like-count">{likeCount}</span>        
         </a>
       </div>
     )

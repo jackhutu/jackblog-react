@@ -1,4 +1,5 @@
-import React,{Component,PropTypes} from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {formatDate} from '../../utils'
 
 export default class Reply extends Component{
@@ -13,21 +14,20 @@ export default class Reply extends Component{
   render(){
     const {replys,k,showReply} = this.props
     return(
-			<div className="reply-list">
-			{replys.map((reply,i)=>
+		  <div className="reply-list">
+			  {replys.map((reply,i)=>
 			    
-			      <div className="reply-item" key={i}>
-			        <p className="reply-content">
-			          <a className="reply-user link-light">{reply.user_info.nickname}</a>：
-			          {reply.content}
-			        </p>
-			        <div className="reply-footer text-right">
-			          <a className="reply" href="javascript:;" onClick={e=>showReply(e,k,reply.user_info.nickname)} >回复</a>
-			          <span className="reply-time pull-left">{formatDate(reply.created)}</span>
-			        </div>
-			      </div>
+			    <div className="reply-item" key={i}>
+					  <p className="reply-content">
+						  <a className="reply-user link-light">{reply.user_info.nickname}</a>：{reply.content}
+					  </p>
+					  <div className="reply-footer text-right">
+						  <a className="reply" href="javascript:;" onClick={e=>showReply(e,k,reply.user_info.nickname)} >回复</a>
+						  <span className="reply-time pull-left">{formatDate(reply.created)}</span>
+					  </div>
+			    </div>
 			  )}
-			</div>
+		  </div>
     )
   }
 }

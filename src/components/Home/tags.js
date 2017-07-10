@@ -1,4 +1,5 @@
-import React,{Component,PropTypes} from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import tiny from '../../assets/images/tiny.gif'
 
 //列表View
@@ -23,7 +24,7 @@ export default class Tags extends Component{
         {
           tagList.map((tag,i)=>
             <li key={i}>
-            <a className={(options.tagId == tag._id)&&'active'} onClick={ e => changeSort(e,{'currentPage':1,'sortName':'','tagId':tag._id})} href="javascript:;">{tag.name}</a>
+              <a className={(options.tagId == tag._id)&&'active'} onClick={ e => changeSort(e,{'currentPage':1,'sortName':'','tagId':tag._id})} href="javascript:;">{tag.name}</a>
             </li>
           )
         }

@@ -1,4 +1,5 @@
-import React,{Component,PropTypes} from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {customTime} from '../../utils'
 import {Link} from 'react-router'
 
@@ -28,11 +29,11 @@ export default class Articles extends Component{
             <li className={(article.images.length > 0)?'article-item have-img':'article-item' } key={i}>
               {(article.images.length > 0)&&
                 <Link to={'/article/' + article._id } className="wrap-img">
-                <img src={article.images[0].url + '-100x100'} />
+                  <img src={article.images[0].url + '-100x100'} />
                 </Link>}
               <div>
                 <p className="list-top">               
-                <span className="time">{ customTime(article.publish_time) }</span>
+                  <span className="time">{ customTime(article.publish_time) }</span>
                 </p>
                 <h4 className="title">
                   <Link to={'/article/' + article._id } className="link-title">{article.title}</Link>

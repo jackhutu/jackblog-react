@@ -28,12 +28,12 @@ export default class scrollTop extends Component{
   render(){
     return (
       <div>
-      {
-        this.state.isShowTop&&
-        <div className="gotop" onClick={this.gotop}>
+        {
+          this.state.isShowTop&&
+          <div className="gotop" onClick={this.gotop}>
             <i className="fa fa-arrow-up"></i>
-        </div>
-      }
+          </div>
+        }
       </div>
     )
   }

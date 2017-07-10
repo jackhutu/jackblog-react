@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from '../../actions'
@@ -118,9 +119,9 @@ export default class Article extends Component {
         <Like likeCount={articleDetail.like_count} isLike={articleDetail.isLike} toggleLike={this.toggleLike} />
         <Prenext prenextArticle={prenextArticle}  />
         <Comment commentList={commentList} auth={auth} 
-                submitComment={this.handleSubmitComment} 
-                submitReply={this.handleSubmitReply}
-                openLoginModal={this.openLoginModal} />
+          submitComment={this.handleSubmitComment} 
+          submitReply={this.handleSubmitReply}
+          openLoginModal={this.openLoginModal} />
         <LoginModal logins={sns.logins} isShowModal={this.state.showModal} closeModal={this.closeLoginModal} />
       </div>
     )

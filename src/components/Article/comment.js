@@ -1,4 +1,5 @@
-import React,{Component,PropTypes} from 'react'
+import React,{Component} from 'react'
+import PropTypes from 'prop-types'
 import defaultAvatar from '../../assets/images/avatar.png'
 import {formatDate} from '../../utils'
 import Reply from './reply'
@@ -74,7 +75,7 @@ export default class Comment extends Component{
       <div className="comment-container clearfix">
         <div className="comment-head clearfix">
           {commentList.items.length || 0}条评论
-            <a href="javascript:;" onClick={e=>this.gotoComment(e)} className="goto-comment pull-right"><i className="fa fa-pencil"></i>添加新评论</a>
+          <a href="javascript:;" onClick={e=>this.gotoComment(e)} className="goto-comment pull-right"><i className="fa fa-pencil"></i>添加新评论</a>
         </div>
         <div id="comment_list">
           {commentList.items.map((comment,i) =>
@@ -95,17 +96,17 @@ export default class Comment extends Component{
                 </div>
                 <Reply replys={comment.replys} k={i} showReply={this.showReply} />
 
-                 <form className="new-reply hide" ref={'reply_form_'+i} id={'reply_form_'+i} onSubmit={e=>this.handleSubmitReply(e,i,comment._id)}> 
-                   <div className="comment-text"> 
-                     <textarea id={'replyContent'+i} 
-                            maxLength="2000" 
-                            ref={'replyContent'+i}
-                            placeholder="写下你的回复…"></textarea> 
-                     <div> 
-                       <input type="submit" value="发 表" className="btn btn-sm btn-info" /> 
-                     </div> 
-                   </div>
-                 </form>
+                <form className="new-reply hide" ref={'reply_form_'+i} id={'reply_form_'+i} onSubmit={e=>this.handleSubmitReply(e,i,comment._id)}> 
+                  <div className="comment-text"> 
+                    <textarea id={'replyContent'+i} 
+                      maxLength="2000" 
+                      ref={'replyContent'+i}
+                      placeholder="写下你的回复…"></textarea> 
+                    <div> 
+                      <input type="submit" value="发 表" className="btn btn-sm btn-info" /> 
+                    </div> 
+                  </div>
+                </form>
 
               </div>
             </div>:''              
@@ -122,15 +123,15 @@ export default class Comment extends Component{
                 onChange={this.handleCommentContentChange}
                 id="comment_content">
               </textarea>
-                <div>
-                  <input type="submit" id="comment_submit_btn" value="发 表" className="btn btn-info" />
-                </div>
+              <div>
+                <input type="submit" id="comment_submit_btn" value="发 表" className="btn btn-info" />
+              </div>
             </div>
           </form>
-        : 
+          : 
           <div>
             <p className="comment-signin">
-                <button className="btn btn-info" onClick={openLoginModal}>登录后发表评论</button>  
+              <button className="btn btn-info" onClick={openLoginModal}>登录后发表评论</button>  
             </p>
           </div>
         }
