@@ -1,13 +1,13 @@
-var webpack = require("webpack")
-var path = require("path")
-var ExtractTextPlugin = require("extract-text-webpack-plugin")
+var webpack = require('webpack')
+var path = require('path')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = [
   {
-    name: "browser",
-    devtool: "source-map",
-    context: path.join(__dirname, "../"),
+    name: 'browser',
+    devtool: 'source-map',
+    context: path.join(__dirname, '../'),
     entry: {
       vendor: ['react','redux','react-redux','react-router'],
       bundle: './src/client.js'
@@ -29,17 +29,17 @@ module.exports = [
       }),
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({
-          compress: { warnings: false }
+        compress: { warnings: false }
       }),
       new webpack.optimize.CommonsChunkPlugin({
-        name: "vendor",
-        //filename:"vendor.js",
+        name: 'vendor',
+        //filename:'vendor.js',
         minChunks: Infinity //Infinity
       }),
       new ExtractTextPlugin('[hash:8].style.css', { allChunks: true }),
       new HtmlWebpackPlugin({
         favicon:path.join(__dirname,'../src/favicon.ico'),
-        title: "Jackblog react 版",
+        title: 'Jackblog react 版',
         template: path.join(__dirname,'../src/index.html'),
         filename: 'index.ejs',
         inject:'body',
@@ -56,20 +56,20 @@ module.exports = [
     ],
     module: {
       preLoaders: [
-        { test: /\.js$|\.jsx$/, loader: "eslint-loader", exclude: /node_modules/ }
+        { test: /\.js$|\.jsx$/, loader: 'eslint-loader', exclude: /node_modules/ }
       ],
       loaders: [{
         test: /\.js$/,
         loader: 'babel',
         query: {
-          "presets": ["es2015", "react", "stage-0"],
-          "plugins":["transform-decorators-legacy"]
+          'presets': ['es2015', 'react', 'stage-0'],
+          'plugins':['transform-decorators-legacy']
         },
         exclude: /node_modules/,
         include: path.join(__dirname,'../src')
       }, 
       { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap' ) },
-      { test: /\.json$/, loader: "json-loader" },
+      { test: /\.json$/, loader: 'json-loader' },
       {
         test: /\.(jpe?g|png|gif)$/i,
         loaders: [
@@ -87,22 +87,22 @@ module.exports = [
     resolve: {
       extensions: ['', '.js', '.jsx', '.css'],
       modulesDirectories: [
-        "src", "node_modules"
+        'src', 'node_modules'
       ]
     }
   }, {
     // The configuration for the server-side rendering
-    name: "server-side rendering",
-    context: path.join(__dirname, "../"),
-    target: "node",
+    name: 'server-side rendering',
+    context: path.join(__dirname, '../'),
+    target: 'node',
     entry: {
       server: ['babel-polyfill','./src/server']
     },
     output: {
       path: './dist',
-      filename: "server.js",
-      publicPath: "/",
-      libraryTarget: "commonjs2"
+      filename: 'server.js',
+      publicPath: '/',
+      libraryTarget: 'commonjs2'
     },
     plugins: [
       new webpack.optimize.OccurenceOrderPlugin(),
@@ -122,20 +122,20 @@ module.exports = [
     ],
     module: {
       preLoaders: [
-        { test: /\.js$|\.jsx$/, loader: "eslint-loader", exclude: /node_modules/ }
+        { test: /\.js$|\.jsx$/, loader: 'eslint-loader', exclude: /node_modules/ }
       ],
       loaders: [
         {
           test: /\.js$|\.jsx$/,
           loader: 'babel',
           query: {
-            "presets": ["es2015", "react", "stage-0"],
-            "plugins":["transform-decorators-legacy","syntax-async-functions"]
+            'presets': ['es2015', 'react', 'stage-0'],
+            'plugins':['transform-decorators-legacy','syntax-async-functions']
           },
           include: path.join(__dirname, '..', 'src'),
           exclude: /node_modules/,
         },
-        { test: /\.json$/, loader: "json-loader" },
+        { test: /\.json$/, loader: 'json-loader' },
         {
           test: /\.(jpe?g|png|gif)$/i,
           loaders: [
@@ -151,7 +151,7 @@ module.exports = [
     resolve: {
       extensions: ['', '.js', '.jsx', '.css'],
       modulesDirectories: [
-        "src", "node_modules"
+        'src', 'node_modules'
       ]
     }
   }

@@ -78,7 +78,7 @@ export default class Comment extends Component{
         </div>
         <div id="comment_list">
           {commentList.items.map((comment,i) =>
-            <div className="comment-item" key={i}>
+            comment.user_id?<div className="comment-item" key={i}>
               <div className="content">
                 <div className="meta-top">
                   <a className="avatar">
@@ -108,9 +108,8 @@ export default class Comment extends Component{
                  </form>
 
               </div>
-            </div>               
-            )
-          }
+            </div>:''              
+          )}
         </div>
 
         { auth.token ?

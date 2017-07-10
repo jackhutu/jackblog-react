@@ -6,7 +6,7 @@ var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&tim
 module.exports = {
   devtool: 'eval-source-map',
   name: 'browser',
-  context: path.join(__dirname, "..","src"),
+  context: path.join(__dirname, '..','src'),
   debug:true,
   entry: {
     vendor: ['react','redux','react-redux','react-router'],
@@ -34,20 +34,20 @@ module.exports = {
   ],
   module: {
     preLoaders: [
-      { test: /\.js$|\.jsx$/, loader: "eslint-loader", exclude: /node_modules/ }
+      { test: /\.js$|\.jsx$/, loader: 'eslint-loader', exclude: /node_modules/ }
     ],
     loaders: [{
-     test: /\.js$|\.jsx$/,
-     loader: 'babel',
+      test: /\.js$|\.jsx$/,
+      loader: 'babel',
       query: {
-        "presets": ["es2015", "react", "stage-0","react-hmre"],
-        "plugins":["transform-decorators-legacy"]
+        'presets': ['es2015', 'react', 'stage-0','react-hmre'],
+        'plugins':['transform-decorators-legacy']
       },
       include: path.join(__dirname, '../src'),
       exclude: /node_modules/
     }, 
     { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap' ) },
-    { test: /\.json$/, loader: "json-loader" },
+    { test: /\.json$/, loader: 'json-loader' },
     {
       test: /\.(jpe?g|png|gif)$/i,
       loaders: [
