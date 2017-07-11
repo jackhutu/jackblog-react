@@ -27,7 +27,7 @@ export default class Comment extends Component{
     e.preventDefault()
     //只有登录过的才可以回复
     const {auth} = this.props
-    if(auth.token){
+    if(auth.token && auth.user){
       const eleForm = this.refs['reply_form_'+k]
       const eleTextarea = eleForm.getElementsByTagName('textarea')[0]
       if(eleForm.className.indexOf('hide') != -1){

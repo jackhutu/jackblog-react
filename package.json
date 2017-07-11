@@ -1,6 +1,6 @@
 {
   "name": "jackblog-react",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Jackblog react 版",
   "repository": "https://github.com/jackhutu/jackblog-react",
   "license": "MIT",
@@ -92,7 +92,7 @@
     "node-libs-browser": "1.0.0",
     "nodemon": "1.11.0",
     "npm-run-all": "3.1.0",
-    "prop-types": "^15.5.10",
+    "prop-types": "15.5.10",
     "react": "15.3.2",
     "react-addons-css-transition-group": "15.3.2",
     "react-addons-test-utils": "15.3.2",
