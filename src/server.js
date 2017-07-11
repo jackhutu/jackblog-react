@@ -10,13 +10,13 @@ import { API_ROOT } from './config'
 
 async function fetchAllData(dispatch, components, params) {
   const needs = components
-      .filter(x=>x.fetchData)
-      .reduce((prev,current)=>{
-        return current.fetchData(params).concat(prev)
-      },[])
-      .map(x=>{
-        return dispatch(x)
-      })
+    .filter(x=>x.fetchData)
+    .reduce((prev,current)=>{
+      return current.fetchData(params).concat(prev)
+    },[])
+    .map(x=>{
+      return dispatch(x)
+    })
   return await Promise.all(needs)
 }
 
