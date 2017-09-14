@@ -53,9 +53,9 @@
   },
   "homepage": "https://github.com/jackhutu/jackblog-react",
   "dependencies": {
-    "ejs": "2.5.6",
-    "express": "4.15.3",
-    "serve-favicon": "2.4.3"
+    "ejs": "^2.5.7",
+    "express": "^4.15.4",
+    "serve-favicon": "^2.4.4"
   },
   "devDependencies": {
     "axios": "0.16.2",
@@ -116,7 +116,7 @@
     "redux-logger": "2.7.0",
     "redux-router": "2.1.2",
     "redux-thunk": "2.1.0",
-    "rimraf": "2.6.1",
+    "rimraf": "^2.6.2",
     "style-loader": "0.18.2",
     "url-loader": "0.5.9",
     "webpack": "1.13.2",
