@@ -4,8 +4,8 @@ import {
   LOGOUT_USER,
   USERINFO_FAILURE,
   UPDATE_USER_SUCCESS
-} from '../actions/types'
-import {getCookie} from '../utils/authService'
+} from 'actions/types'
+import {getCookie} from 'utils/authService'
 import { createReducer } from 'redux-immutablejs'
 import {fromJS} from 'immutable'
 

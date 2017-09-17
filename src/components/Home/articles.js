@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {customTime} from '../../utils'
-import {Link} from 'react-router'
+import {customTime} from 'utils'
+import {Link} from 'react-router-dom'
 
 //列表View
 export default class Articles extends Component{

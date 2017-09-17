@@ -1,4 +1,4 @@
-import { GET_SNSLOGINS_SUCCESS,GET_SNSLOGINS_FAILURE} from '../actions/types'
+import { GET_SNSLOGINS_SUCCESS,GET_SNSLOGINS_FAILURE} from 'actions/types'
 import { createReducer } from 'redux-immutablejs'
 import {fromJS} from 'immutable'
 

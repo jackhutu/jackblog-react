@@ -1,4 +1,4 @@
-import { GET_APPS_SUCCESS,GET_APPS_FAILURE } from '../actions/types'
+import { GET_APPS_SUCCESS,GET_APPS_FAILURE } from 'actions/types'
 import { createReducer } from 'redux-immutablejs'
 import {List} from 'immutable'
 

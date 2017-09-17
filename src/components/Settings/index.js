@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Field,reduxForm } from 'redux-form'
-import * as Actions from '../../actions'
+import * as Actions from 'actions'
 
 const validate = values => {
   const errors = {}

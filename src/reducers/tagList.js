@@ -1,4 +1,4 @@
-import { TAG_LIST_SUCCESS, TAG_LIST_FAILURE } from '../actions/types'
+import { TAG_LIST_SUCCESS, TAG_LIST_FAILURE } from 'actions/types'
 import { createReducer } from 'redux-immutablejs'
 import {List} from 'immutable'
 

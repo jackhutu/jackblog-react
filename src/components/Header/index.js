@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router'
+import { Link, NavLink } from 'react-router-dom'
 import { Dropdown } from 'react-bootstrap'
-import defaultAvatar from '../../assets/images/avatar.png'
+import defaultAvatar from 'assets/images/avatar.png'
 
 export default class Header extends Component{
   constructor(props){
@@ -29,9 +29,9 @@ export default class Header extends Component{
           <Link className={'navbar-item logo ' + (location.pathname !== '/apps'&&'active')} title="首页" to="/">
             Hu
           </Link>
-          <Link activeClassName="active" className="navbar-item mobile" title="移动应用" to="/apps">
+          <NavLink activeClassName="active" className="navbar-item mobile" title="移动应用" to="/apps">
             <i className="fa fa-mobile"></i>
-          </Link>
+          </NavLink>
         </div>
 
         <div className="navbar-expanded">
@@ -60,9 +60,9 @@ export default class Header extends Component{
             </div>
             :
             <div>
-              <Link activeClassName="active" className="navbar-item" title="登录" to="/login">
+              <NavLink activeClassName="active" className="navbar-item" title="登录" to="/login">
                 <i className="fa fa-sign-in"></i>
-              </Link>    
+              </NavLink>    
             </div>
           }
         </div>
@@ -102,7 +102,7 @@ export default class Header extends Component{
           </a>
           <a className="pull-right expanded-var angular2" href="//angular2.jackhu.top" title="Agnular2.x版">
           </a>
-        </div>
+        </div>        
       </div>
     )
   }

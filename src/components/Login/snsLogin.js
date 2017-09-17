@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {getCookie} from '../../utils/authService'
+import {getCookie} from 'utils/authService'
 import {API_ROOT} from '../../config'
 
 export default class snsLogin extends Component{

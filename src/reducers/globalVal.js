@@ -3,12 +3,12 @@ import {
   GET_INDEX_IMG_SUCCESS,
   GET_INDEX_IMG_FAILURE,
   GET_CAPTCHAURL
-} from '../actions/types'
+} from 'actions/types'
 import { createReducer } from 'redux-immutablejs'
 import { fromJS } from 'immutable'
-import img from '../assets/images/shanghai.jpg'
+import img from 'assets/images/shanghai.jpg'
 import { API_ROOT } from '../config'
-import { getCookie,saveCookie } from '../utils/authService'
+import { getCookie,saveCookie } from 'utils/authService'
 
 export default createReducer(fromJS({
   indexImg:'',

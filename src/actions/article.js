@@ -1,5 +1,5 @@
 import * as types from './types'
-import api from '../api'
+import api from 'api'
 import { getUserInfo } from './auth'
 
 //获取标签列表.

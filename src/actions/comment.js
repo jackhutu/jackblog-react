@@ -1,5 +1,5 @@
 import * as types from './types'
-import api from '../api'
+import api from 'api'
 import { showMsg } from './other'
 
 //获取评论

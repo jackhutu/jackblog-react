@@ -1,20 +1,21 @@
-var path = require('path')
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true'
+const path = require('path')
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true'
+const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin')
 
 module.exports = {
-  devtool: 'eval-source-map',
+  devtool: 'cheap-module-source-map',
   name: 'browser',
   context: path.join(__dirname, '..','src'),
-  debug:true,
   entry: {
-    vendor: ['react','redux','react-redux','react-router'],
+    vendor: ['react','redux','react-redux','react-router-dom'],
     bundle: ['./client.js',hotMiddlewareScript]
   },
   output: {
     path: path.join(__dirname, '../dist'),
     filename: '[name].js',
+    chunkFilename: '[name].js',
     publicPath: '/'
   },
   plugins: [
@@ -27,42 +28,100 @@ module.exports = {
         'NODE_ENV': JSON.stringify('development')
       }
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    }),
+    new CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity //Infinity
+    }),    
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin('style.css', { allChunks: true })
+    new webpack.NoEmitOnErrorsPlugin(),
+    new ExtractTextPlugin({ 
+      filename: 'style.css', 
+      disable: false, allChunks: true 
+    }),    
   ],
   module: {
-    preLoaders: [
-      { test: /\.js$|\.jsx$/, loader: 'eslint-loader', exclude: /node_modules/ }
-    ],
-    loaders: [{
-      test: /\.js$|\.jsx$/,
-      loader: 'babel',
-      query: {
-        'presets': ['es2015', 'react', 'stage-0','react-hmre'],
-        'plugins':['transform-decorators-legacy']
+    rules: [
+      { enforce: 'pre', test: /\.js$|\.jsx$/, exclude: /node_modules/, use: ['eslint-loader'] },
+      { 
+        test: /\.js$|\.jsx$/,
+        loader: 'babel-loader',
+        include: path.join(__dirname,'..','src'),
+        exclude: /node_modules/
       },
-      include: path.join(__dirname, '../src'),
-      exclude: /node_modules/
-    }, 
-    { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap' ) },
-    { test: /\.json$/, loader: 'json-loader' },
-    {
-      test: /\.(jpe?g|png|gif)$/i,
-      loaders: [
-        'url?limit=10000&name=images/[hash:8].[name].[ext]',
-        'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
-      ]
-    },{
-      test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
-    }]
-  },
-  eslint: {
-    configFile: path.join(__dirname, '../.eslintrc.json')
+      { 
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: 'images/[hash:8].[name].[ext]'
+            }
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                quality: 65
+              },
+              pngquant:{
+                quality: '65-90',
+                speed: 4
+              },
+              svgo:{
+                plugins: [
+                  {
+                    removeViewBox: false
+                  },
+                  {
+                    removeEmptyAttrs: false
+                  }
+                ]
+              },
+              gifsicle: {
+                optimizationLevel: 7,
+                interlaced: false
+              },
+              optipng: {
+                optimizationLevel: 7,
+                interlaced: false
+              }
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: 'fonts/[hash:8].[name].[ext]'
+          }
+        }]
+      },      
+      { test: /\.json$/, use: ['json-loader'] },
+    ],
   },
   resolve: {
-    extensions: ['','.js','.jsx','.scss','.css']
+    extensions: ['.js','.jsx','.scss','.css'],
+    alias: {
+      components: path.resolve(__dirname, '../src/components'),
+      actions: path.resolve(__dirname, '../src/actions'),
+      reducers: path.resolve(__dirname, '../src/reducers'),
+      api: path.resolve(__dirname, '../src/api'),
+      assets: path.resolve(__dirname, '../src/assets'),
+      utils: path.resolve(__dirname, '../src/assets'),
+    }    
   }
 }

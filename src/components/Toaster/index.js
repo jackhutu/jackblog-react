@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Alert from 'react-s-alert'
-import { getCookie,removeCookie } from '../../utils/authService'
+import { getCookie,removeCookie } from 'utils/authService'
 
 export default class toaster extends Component{
   constructor(props){

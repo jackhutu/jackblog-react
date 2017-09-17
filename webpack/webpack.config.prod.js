@@ -9,7 +9,7 @@ module.exports = [
     devtool: 'source-map',
     context: path.join(__dirname, '../'),
     entry: {
-      vendor: ['react','redux','react-redux','react-router'],
+      vendor: ['react','redux','react-redux','react-router-dom','react-router-config'],
       bundle: './src/client.js'
     },
     output: {
@@ -81,14 +81,16 @@ module.exports = [
         loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
       }]
     },
-    eslint: {
-      configFile: path.join(__dirname, '../.eslintrc.json')
-    },
     resolve: {
-      extensions: ['', '.js', '.jsx', '.css'],
-      modulesDirectories: [
-        'src', 'node_modules'
-      ]
+      extensions: ['.js', '.jsx', '.css'],
+      alias: {
+        components: path.resolve(__dirname, '../src/components'),
+        actions: path.resolve(__dirname, '../src/actions'),
+        reducers: path.resolve(__dirname, '../src/reducers'),
+        api: path.resolve(__dirname, '../src/api'),
+        assets: path.resolve(__dirname, '../src/assets'),
+        utils: path.resolve(__dirname, '../src/assets'),
+      }
     }
   }, {
     // The configuration for the server-side rendering
@@ -145,14 +147,16 @@ module.exports = [
         }
       ]
     },
-    eslint: {
-      configFile: path.join(__dirname, '../.eslintrc.json')
-    },
     resolve: {
-      extensions: ['', '.js', '.jsx', '.css'],
-      modulesDirectories: [
-        'src', 'node_modules'
-      ]
+      extensions: ['.js', '.jsx', '.css'],
+      alias: {
+        components: path.resolve(__dirname, '../src/components'),
+        actions: path.resolve(__dirname, '../src/actions'),
+        reducers: path.resolve(__dirname, '../src/reducers'),
+        api: path.resolve(__dirname, '../src/api'),
+        assets: path.resolve(__dirname, '../src/assets'),
+        utils: path.resolve(__dirname, '../src/assets'),
+      }        
     }
   }
 ]

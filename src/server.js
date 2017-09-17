@@ -1,23 +1,77 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import { RouterContext, match, createMemoryHistory } from 'react-router'
+import { StaticRouter } from 'react-router-dom'
+import { matchRoutes, renderRoutes } from 'react-router-config'
+import createMemoryHistory from 'history/createMemoryHistory'
 import { Provider } from 'react-redux'
-import reactCookie from 'react-cookie'
+import Cookies from 'universal-cookie'
 import { fromJS } from 'immutable'
 import configureStore from './store/configureStore'
 import routes from './routes'
 import { API_ROOT } from './config'
 
-async function fetchAllData(dispatch, components, params) {
-  const needs = components
-    .filter(x=>x.fetchData)
+async function fetchAllData(batch, dispatch) {
+  const needs = batch.map(({route, match}, index)=>{
+    return { component:route.component, params: match.params }
+  }).filter(x=>x.component.fetchData)
     .reduce((prev,current)=>{
-      return current.fetchData(params).concat(prev)
+      return current.component.fetchData(current.params).concat(prev)
     },[])
     .map(x=>{
       return dispatch(x)
     })
   return await Promise.all(needs)
+}
+
+export default function render(req, res) {
+  const cookies = new Cookies(req.headers.cookie)
+  const history = createMemoryHistory()
+  const token = cookies.get('token') || null
+  const styleMode = cookies.get('styleMode') || 'day-mode'
+  const store = configureStore({
+    auth:fromJS({
+      token: token,
+      user: null
+    }),
+    globalVal:fromJS({
+      styleMode: styleMode,
+      captchaUrl: API_ROOT + 'users/getCaptcha?'
+    })
+  }, history)
+  const batch = matchRoutes(routes, req.url)
+  return fetchAllData(batch, store.dispatch).then(function(data){
+    const context = {}
+    const initialState = store.getState()
+    const InitialView = (
+      <Provider store={store}>
+        <StaticRouter location={ req.url } context={ context }>
+          {renderRoutes(routes)}
+        </StaticRouter>
+      </Provider>)
+    const componentHTML = renderToString(InitialView)    
+    
+
+    if (context.status === 404) {
+      res.status(404)
+    }
+    if (context.status === 302) {
+      return res.redirect(302, context.url)
+    }
+    if(__DEVSERVER__){
+      res.set('Content-Type', 'text/html')
+      return res.status(200).send(renderFullPage(componentHTML, initialState, styleMode))
+    }else{
+      return res.render('index', {__html__: componentHTML,__state__: JSON.stringify(initialState), __styleMode__: styleMode})
+    }
+
+  }).catch(err => {
+    if(__DEVSERVER__){
+      res.set('Content-Type', 'text/html')
+      return res.status(200).send(renderFullPage('',{}))
+    }else{
+      return res.render('index', {__html__: '',__state__: {}})
+    }
+  })
 }
 
 function renderFullPage(renderedContent, initialState, styleMode) {
@@ -46,53 +100,4 @@ function renderFullPage(renderedContent, initialState, styleMode) {
     </body>
   </html>
   `
-}
-export default function render(req, res) {
-  reactCookie.plugToRequest(req, res)
-  const history = createMemoryHistory()
-  const token = reactCookie.load('token') || null
-  const styleMode = reactCookie.load('styleMode') || 'day-mode'
-  const store = configureStore({
-    auth:fromJS({
-      token: token,
-      user: null
-    }),
-    globalVal:fromJS({
-      styleMode: styleMode,
-      captchaUrl: API_ROOT + 'users/getCaptcha?'
-    })
-  }, history)
-
-  match({ routes:routes(), location: req.url }, (error, redirectLocation, renderProps) => {
-    if (error) {
-      res.status(500).send(error.message)
-    } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-    } else if (renderProps) {
-      return fetchAllData(store.dispatch, renderProps.components, renderProps.params)
-        .then(html=>{
-          const InitialView = (
-            <Provider store={store}>
-              <RouterContext {...renderProps} />
-            </Provider>)
-          const componentHTML = renderToString(InitialView)
-          const initialState = store.getState()
-          if(__DEVSERVER__){
-            res.set('Content-Type', 'text/html')
-            return res.status(200).send(renderFullPage(componentHTML, initialState, styleMode))
-          }else{
-            return res.render('index', {__html__: componentHTML,__state__: JSON.stringify(initialState), __styleMode__: styleMode})
-          }
-        }).catch(err => {
-          if(__DEVSERVER__){
-            res.set('Content-Type', 'text/html')
-            return res.status(200).send(renderFullPage('',{}))
-          }else{
-            return res.render('index', {__html__: '',__state__: {}})
-          }
-        })
-    } else {
-      res.status(404).send('Not Found')
-    }
-  })
 }

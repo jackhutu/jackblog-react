@@ -3,7 +3,7 @@ import {
   COMMENT_LIST_FAILURE,
   ADD_COMMENT_SUCCESS,
   ADD_REPLY_SUCCESS
-} from '../actions/types'
+} from 'actions/types'
 import { createReducer } from 'redux-immutablejs'
 import {fromJS} from 'immutable'
 

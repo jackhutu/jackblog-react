@@ -1,7 +1,7 @@
 require('es6-promise').polyfill()
 import axios from 'axios'
 import { API_ROOT } from '../config'
-import { getCookie,signOut } from '../utils/authService'
+import { getCookie,signOut } from 'utils/authService'
 
 axios.defaults.baseURL = API_ROOT
 axios.defaults.withCredentials = true

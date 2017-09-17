@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
+import { renderRoutes } from 'react-router-config'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Header from '../components/Header'
-import * as Actions from '../actions'
-import Toaster from '../components/Toaster'
-import ScrollTop from '../components/ScrollTop'
+import Header from 'components/Header'
+import Toaster from 'components/Toaster'
+import ScrollTop from 'components/ScrollTop'
+import * as Actions from 'actions'
+
 
 const mapStateToProps = state =>{
   return {
@@ -32,6 +34,7 @@ export default class App extends Component {
   }
 
   static propTypes = {
+    route: PropTypes.object.isRequired,
     globalVal: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
     showmsg: PropTypes.object.isRequired,
@@ -48,11 +51,11 @@ export default class App extends Component {
   }
   
   render() {
-    const { globalVal,actions,children,auth,location,showmsg } = this.props
+    const { globalVal,actions,auth,location,showmsg } = this.props
     return (
       <div>
         <Header styleMode={globalVal.styleMode} auth={auth} logout={actions.logout} location={location} changeStyleMode={actions.changeStyleMode} />
-        {children}
+        {renderRoutes(this.props.route.routes)}
         <Toaster msg={showmsg} hideMsg={actions.hideMsg} />
         <ScrollTop />
       </div>

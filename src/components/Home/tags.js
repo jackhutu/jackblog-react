@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import tiny from '../../assets/images/tiny.gif'
+import tiny from 'assets/images/tiny.gif'
 
 //列表View
 export default class Tags extends Component{

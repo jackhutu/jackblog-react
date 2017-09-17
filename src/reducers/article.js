@@ -8,7 +8,7 @@ import {
   PRENEXT_ARTICLE_FAILURE,
   TOGGLE_LIKE_SUCCESS,
   TOGGLE_LIKE_FAILURE
-} from '../actions/types'
+} from 'actions/types'
 import { createReducer } from 'redux-immutablejs'
 import {fromJS} from 'immutable'
 

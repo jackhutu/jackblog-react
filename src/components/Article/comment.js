@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
-import defaultAvatar from '../../assets/images/avatar.png'
-import {formatDate} from '../../utils'
+import defaultAvatar from 'assets/images/avatar.png'
+import {formatDate} from 'utils'
 import Reply from './reply'
 
 export default class Comment extends Component{
