@@ -8,7 +8,6 @@ import Toaster from 'components/Toaster'
 import ScrollTop from 'components/ScrollTop'
 import * as Actions from 'actions'
 
-
 const mapStateToProps = state =>{
   return {
     globalVal: state.globalVal.toJS(),
@@ -29,8 +28,8 @@ export default class App extends Component {
     super(props)
   }
 
-  static fetchData(params){
-    return [Actions.getUserInfo(),Actions.getIndexImage()]
+  static fetchData({token}){
+    return [Actions.getUserInfo(token),Actions.getIndexImage()]
   }
 
   static propTypes = {

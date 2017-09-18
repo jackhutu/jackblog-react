@@ -29,16 +29,7 @@ module.exports = {
       { enforce: 'pre', test: /\.js$|\.jsx$/, exclude: /node_modules/, use: ['eslint-loader'] },
       { 
         test: /\.js$|\.jsx$/,
-        loader: 'babel-loader',
-        // options: {
-        //   'presets': [['env',{
-        //     'targets': {
-        //       'browsers': ['> 5%','ie > 9'],
-        //       'uglify': true
-        //     }            
-        //   }],['react']],
-        //   'plugins': ['react-hot-loader/babel', 'transform-decorators-legacy','syntax-async-functions','transform-object-rest-spread','transform-class-properties'],
-        // },        
+        loader: 'babel-loader',        
         include: path.join(__dirname,'..','src'),
         exclude: /node_modules/
       },
@@ -95,7 +86,7 @@ module.exports = {
       reducers: path.resolve(__dirname, '../src/reducers'),
       api: path.resolve(__dirname, '../src/api'),
       assets: path.resolve(__dirname, '../src/assets'),
-      utils: path.resolve(__dirname, '../src/assets'),
+      utils: path.resolve(__dirname, '../src/utils'),
     }    
   }
 }

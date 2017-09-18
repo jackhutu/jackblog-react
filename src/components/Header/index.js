@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link, NavLink } from 'react-router-dom'
 import { Dropdown } from 'react-bootstrap'
 import defaultAvatar from 'assets/images/avatar.png'
+import Avatar from './avatar'
 
 export default class Header extends Component{
   constructor(props){
@@ -69,9 +70,7 @@ export default class Header extends Component{
         <div className="navbar-shrink">
           {(auth.token && auth.user)?
             <Dropdown id="dropdown-menu" className="pull-right">
-              <a href="javascript:;" className="shrink-avatar" bsRole="toggle">
-                <img src={ auth.user.avatar || defaultAvatar} /> 
-              </a>
+              <Avatar auth={auth} bsRole="toggle" />
               <Dropdown.Menu className="dropdown-menu">
                 <li>
                   <Link to="/settings"><i className="fa fa-cog"></i> 设置</Link>

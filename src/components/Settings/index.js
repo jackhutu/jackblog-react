@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Field,reduxForm } from 'redux-form'
 import * as Actions from 'actions'
+import { isLogin } from 'utils/authService'
 
 const validate = values => {
   const errors = {}
@@ -44,6 +46,7 @@ const mapDispatchToProps = dispatch =>{
   }
 }
 
+@withRouter
 @connect(mapStateToProps,mapDispatchToProps)
 @reduxForm({
   form: 'settings',
@@ -60,9 +63,16 @@ export default class Settings extends Component {
     auth: PropTypes.object.isRequired,
     dirty: PropTypes.bool,
     invalid: PropTypes.bool,
-    handleSubmit: PropTypes.func
+    handleSubmit: PropTypes.func,
+    history: PropTypes.object
   }
-  
+
+  componentWillMount(){
+    if(!isLogin()) {
+      this.props.history.replace('/login')
+    }    
+  }
+
   submitForm (values) {
     const { actions } = this.props
     actions.updateUser(values)

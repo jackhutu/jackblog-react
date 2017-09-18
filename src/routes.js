@@ -4,7 +4,6 @@ import Article from 'components/Article'
 import Login from 'components/Login'
 import Settings from 'components/Settings'
 import MobileApps from 'components/MobileApps'
-// import {redirectToBack,redirectToLogin} from 'utils/authService'
 import NotFound from 'components/NotFound'
 
 const routes = [

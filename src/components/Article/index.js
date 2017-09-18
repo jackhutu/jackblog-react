@@ -44,7 +44,8 @@ export default class Article extends Component {
     prenextArticle: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
     sns: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
   }
 
   static fetchData({id}){
@@ -57,16 +58,16 @@ export default class Article extends Component {
   }
 
   componentDidMount() {
-    const { params: { id },actions,articleDetail } = this.props
-    if(!articleDetail._id || articleDetail._id !== id){
-      this.fetchArticleData(id)
+    const { match,actions,articleDetail } = this.props
+    if(!articleDetail._id || articleDetail._id !== match.params.id){
+      this.fetchArticleData(match.params.id)
       actions.getSnsLogins()
     }
   }
 
   componentWillReceiveProps(nextProps){
-    if (nextProps.params.id !== this.props.params.id){
-      this.fetchArticleData(nextProps.params.id)
+    if (nextProps.match.params.id !== this.props.match.params.id){
+      this.fetchArticleData(nextProps.match.params.id)
     }
   }
 
@@ -83,18 +84,18 @@ export default class Article extends Component {
   }
 
   toggleLike(){
-    const {actions,params,auth} = this.props
+    const {actions,match,auth} = this.props
     if(auth.token){
-      actions.toggleLike(params.id)
+      actions.toggleLike(match.params.id)
     }else{
       this.openLoginModal()
     }
   }
   handleSubmitComment(e,content){
     e.preventDefault()
-    const {actions,params} = this.props
+    const {actions,match} = this.props
     //提交新评论
-    actions.addComment({aid:params.id,content:content})
+    actions.addComment({aid:match.params.id,content:content})
   }
   //提交回复
   handleSubmitReply(e,cid,content){

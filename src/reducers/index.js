@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
   options,
   auth,
   showmsg,
-  routing: routerReducer,
+  router: routerReducer,
   form: formReducer
 })
 

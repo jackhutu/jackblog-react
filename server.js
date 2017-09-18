@@ -9,7 +9,6 @@ var defaultPort = isDev? 3000 : 8300
 var port = process.env.PORT || defaultPort
 
 app.use(express.static(path.join(__dirname, 'dist')))
-
 if (isDev) {
   var config = require('./webpack/webpack.config.dev.client.js')
   var compiler = require('webpack')(config)

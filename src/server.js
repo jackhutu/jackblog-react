@@ -10,8 +10,9 @@ import configureStore from './store/configureStore'
 import routes from './routes'
 import { API_ROOT } from './config'
 
-async function fetchAllData(batch, dispatch) {
+async function fetchAllData(batch, dispatch, token) {
   const needs = batch.map(({route, match}, index)=>{
+    match.params = Object.assign({}, match.params, {token:token})
     return { component:route.component, params: match.params }
   }).filter(x=>x.component.fetchData)
     .reduce((prev,current)=>{
@@ -39,7 +40,7 @@ export default function render(req, res) {
     })
   }, history)
   const batch = matchRoutes(routes, req.url)
-  return fetchAllData(batch, store.dispatch).then(function(data){
+  return fetchAllData(batch, store.dispatch, token).then(function(data){
     const context = {}
     const initialState = store.getState()
     const InitialView = (

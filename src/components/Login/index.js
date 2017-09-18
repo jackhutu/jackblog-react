@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Field,reduxForm } from 'redux-form'
 import * as Actions from 'actions'
 import SNSLogin from './snsLogin'
+import { isLogin } from 'utils/authService'
 
 const mapStateToProps = state =>{
   return {
@@ -56,6 +58,7 @@ const renderField = prs => (
   <input className={validatorCalss(prs.meta)} name={prs.name} maxLength={prs.maxLength} {...prs.input} placeholder={prs.placeholder} type={prs.type} />
 )
 
+@withRouter
 @connect(mapStateToProps,mapDispatchToProps)
 @reduxForm({
   form: 'signin',
@@ -75,7 +78,15 @@ export default class Login extends Component {
     sns: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func,
     dirty: PropTypes.bool,
-    invalid: PropTypes.bool
+    invalid: PropTypes.bool,
+    history: PropTypes.object
+  }
+
+  componentWillMount(){
+    // const { auth } = this.props
+    if(isLogin()) {
+      this.props.history.replace('/')
+    }    
   }
 
   static fetchData(params){

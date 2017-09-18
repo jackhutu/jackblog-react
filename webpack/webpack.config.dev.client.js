@@ -9,7 +9,7 @@ module.exports = {
   name: 'browser',
   context: path.join(__dirname, '..','src'),
   entry: {
-    vendor: ['react','redux','react-redux','react-router-dom'],
+    vendor: ['react','redux','react-redux','react-router-redux','react-router-dom','react-router-config'],
     bundle: ['./client.js',hotMiddlewareScript]
   },
   output: {
@@ -121,7 +121,7 @@ module.exports = {
       reducers: path.resolve(__dirname, '../src/reducers'),
       api: path.resolve(__dirname, '../src/api'),
       assets: path.resolve(__dirname, '../src/assets'),
-      utils: path.resolve(__dirname, '../src/assets'),
+      utils: path.resolve(__dirname, '../src/utils'),
     }    
   }
 }

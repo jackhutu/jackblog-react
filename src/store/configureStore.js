@@ -10,7 +10,7 @@ import rootReducer from 'reducers'
 
 export default function configureStore(initialState, history) {
   const stateTransformer = (state) => {
-    let newSate = {}
+    const newSate = {}
     Object.keys(state).forEach(x=>{
       if(Iterable.isIterable(state[x])){
         newSate[x] = state[x].toJS()
@@ -20,7 +20,7 @@ export default function configureStore(initialState, history) {
     })
     return newSate
   }
-  let middleware = [ thunkMiddleware, promiseMiddleware, routerMiddleware(history) ]
+  const middleware = [ thunkMiddleware, promiseMiddleware, routerMiddleware(history) ]
   let finalCreateStore
   if (__DEVCLIENT__) {
     if(__DEVLOGGER__){

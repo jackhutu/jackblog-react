@@ -44,10 +44,12 @@ export function localLogin(userInfo) {
         dispatch(getCaptchaUrl())
         dispatch(showMsg('登录成功,欢迎光临!','success'))
         dispatch(push('/'))
+        window.location.reload()
       }).catch(err => {
+        const error_msg = err.response?(err.response.data && err.response.data.error_msg)?err.response.data.error_msg:'登录失败':'登录失败'
         //登录异常
         dispatch(getCaptchaUrl())
-        return dispatch(showMsg(err.response.data.error_msg || '登录失败'))
+        return dispatch(showMsg(error_msg))
       })
   }
 }
