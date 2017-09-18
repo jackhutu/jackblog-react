@@ -15,7 +15,7 @@ module.exports = [
       bundle: './src/client.js'
     },
     output: {
-      path: './dist',
+      path: path.join(__dirname, '../dist'),
       filename: '[hash:8].[name].js',
       publicPath: '/'
     },
@@ -29,7 +29,7 @@ module.exports = [
           'NODE_ENV': JSON.stringify('production')
         }
       }),
-      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.optimize.OccurrenceOrderPlugin(),
       new UglifyJSPlugin({
         compress: { warnings: false }
       }),
@@ -149,7 +149,7 @@ module.exports = [
       server: ['babel-polyfill','./src/server']
     },
     output: {
-      path: './dist',
+      path: path.join(__dirname, '../dist'),
       filename: 'server.js',
       publicPath: '/',
       libraryTarget: 'commonjs2'

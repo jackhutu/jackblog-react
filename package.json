@@ -42,7 +42,7 @@
       }
     },
     "build-prod": {
-      "command": "webpack --colors --progres --config ./webpack/webpack.config.prod.js",
+      "command": "webpack --colors --progress --config ./webpack/webpack.config.prod.js",
       "env": {
         "NODE_ENV": "production"
       }
