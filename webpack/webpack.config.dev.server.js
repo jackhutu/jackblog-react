@@ -44,36 +44,6 @@ module.exports = {
               name: 'images/[hash:8].[name].[ext]'
             }
           },
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              mozjpeg: {
-                quality: 65
-              },
-              pngquant:{
-                quality: '65-90',
-                speed: 4
-              },
-              svgo:{
-                plugins: [
-                  {
-                    removeViewBox: false
-                  },
-                  {
-                    removeEmptyAttrs: false
-                  }
-                ]
-              },
-              gifsicle: {
-                optimizationLevel: 7,
-                interlaced: false
-              },
-              optipng: {
-                optimizationLevel: 7,
-                interlaced: false
-              }
-            }
-          }
         ]
       },         
     ],

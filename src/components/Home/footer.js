@@ -7,7 +7,7 @@ export default class Footer extends Component{
         <div className="footer-container">
           <ul>
             <li>
-              <span>©2015 / 鄂ICP备15010989号-1</span>
+              <a className="beianhao" href="https://beian.miit.gov.cn/" rel="noopener noreferrer" target="_blank">©2015 / 鄂ICP备15010989号-1</a>
             </li>
             <li>
               <a className="github" href="https://github.com/jackhutu/jackblog-react" rel="noopener noreferrer">
