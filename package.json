@@ -54,7 +54,7 @@
   "homepage": "https://github.com/jackhutu/jackblog-react",
   "dependencies": {
     "ejs": "2.5.7",
-    "express": "4.15.4",
+    "express": "4.17.3",
     "serve-favicon": "2.4.4",
     "through2": "2.0.3",
     "xtend": "4.0.1"
